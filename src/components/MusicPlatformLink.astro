@@ -1,0 +1,37 @@
+---
+const { url, svg } = Astro.props;
+---
+<li class="music-platform">
+  <a href={url}>
+    <div class="icon" set:html={svg} />
+  </a>
+</li>
+
+<style>
+  .music-platform {
+    border-bottom: 3px solid transparent;
+    border-bottom-style: solid;
+  }
+  .music-platform:hover {
+    border-bottom: 3px solid var(--color-light);
+  }
+
+  .icon {
+    padding: 0.5rem;
+    height: 2rem;
+    width: fit-content;
+  }
+
+  .icon :global(svg path) {
+    fill: var(--color-light);;
+  }
+
+  .icon:hover :global(svg path)  {
+    fill: var(--color-primary);
+  }
+
+  .icon :global(svg) {
+    height: 100%;
+    width: 100%;
+  }
+</style>
