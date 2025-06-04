@@ -1,4 +1,6 @@
 ---
+const { img } = Astro.props;
+const bgImage = `url("${img}")`;
 ---
 <div class="entry-picture">
   <span class="text-overlay">
@@ -10,10 +12,10 @@
   </span>
 </div>
 
-<style>
+<style define:vars={{ bgImage }}>
   .entry-picture {
     position: relative;
-    background-image: url("./../assets/nelu-portrait.jpg");
+    background-image: var(--bgImage);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;

@@ -3,17 +3,23 @@ import Layout from '../layouts/Layout.astro';
 import MusicPlatformsLinks from '../components/MusicPlatformsLinks.astro';
 import EntryPicture from '../components/EntryPicture.astro';
 import SectionRect from '../components/SectionRect.astro';
+
+import NeluPortraitPicture from "./../assets/nelu-portrait.jpg?url";
+import NeluGuitarPicture from "./../assets/nelu-guitar.jpg?url";
 ---
 <Layout>
   <header>
     <MusicPlatformsLinks />
-    <EntryPicture />
+    <EntryPicture img={NeluPortraitPicture}/>
   </header>
   <main>
     <SectionRect title="Bienvenido" bg="dark" fg="light">
       Inserte contenido aquí.
     </SectionRect>
     <SectionRect title="Ultimos lanzamientos" bg="light" fg="dark">
+      Inserte otro contenido aquí tambien.
+    </SectionRect>
+    <SectionRect title="Proximos eventos" bg={NeluGuitarPicture} fg="light">
       Inserte otro contenido aquí tambien.
     </SectionRect>
   </main>
