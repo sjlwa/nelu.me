@@ -1,0 +1,24 @@
+---
+const { title, bg, fg } =  Astro.props;
+const bgColor = `var(--color-${bg})`;
+const fgColor = `var(--color-${fg})`;
+---
+<section>
+  <h2>{title}</h2>
+  <slot />
+</section>
+
+<style define:vars={{ bgColor, fgColor }}>
+  section {
+    padding: 2rem;
+    width: 100%;
+    background-color: var(--bgColor);
+    color: var(--fgColor);
+    height: 36rem;
+  }
+
+  h2 {
+    font-size: 2rem;
+    font-style: italic;
+  }
+</style>

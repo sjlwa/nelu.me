@@ -2,10 +2,19 @@
 import Layout from '../layouts/Layout.astro';
 import MusicPlatformsLinks from '../components/MusicPlatformsLinks.astro';
 import EntryPicture from '../components/EntryPicture.astro';
+import SectionRect from '../components/SectionRect.astro';
 ---
 <Layout>
   <header>
     <MusicPlatformsLinks />
     <EntryPicture />
   </header>
+  <main>
+    <SectionRect title="Bienvenido" bg="dark" fg="light">
+      Inserte contenido aquí.
+    </SectionRect>
+    <SectionRect title="Ultimos lanzamientos" bg="light" fg="dark">
+      Inserte otro contenido aquí tambien.
+    </SectionRect>
+  </main>
 </Layout>
