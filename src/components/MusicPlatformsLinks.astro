@@ -5,7 +5,6 @@ import SpotifyLogo from './../assets/music-platforms-logos/spotify.svg?raw';
 import YoutubeLogo from './../assets/music-platforms-logos/youtube.svg?raw';
 import AppleLogo from './../assets/music-platforms-logos/apple.svg?raw';
 import AmazonLogo from './../assets/music-platforms-logos/amazon.svg?raw';
-
 ---
 <ul class="music-platforms">
   <MusicPlatformLink name="spotify" svg={SpotifyLogo}
@@ -20,16 +19,26 @@ import AmazonLogo from './../assets/music-platforms-logos/amazon.svg?raw';
 
 <style>
   .music-platforms {
+    background: linear-gradient(0deg, rgba(0,0,0,0), rgba(0,0,0,0.7));
+    position: fixed;
+    padding: 0;
+    margin: 0;
     width: 100%;
     display: flex;
     flex-direction: row;
     list-style-type: none;
-    gap: 1rem;
-    align-items: center;
-    justify-content: flex-end;
-    right: 2rem;
-    position: absolute;
     top: 0;
-    z-index: 1;
+    gap: 0.6rem;
+    padding: 6px;
+    height: 4rem;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+  }
+
+  @media (min-width: 720px) {
+    .music-platforms {
+      gap: 1rem;
+    }
   }
 </style>
