@@ -1,0 +1,58 @@
+---
+const { img } = Astro.props;
+const bgImage = `url("${img}")`;
+---
+<div class="entry-picture">
+  <slot />
+</div>
+<span class="bottom-gradient"></span>
+
+<style define:vars={{ bgImage }}>
+  .entry-picture {
+    background-image: var(--bgImage);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    width: 100%;
+  }
+
+  .bottom-gradient {
+    position: absolute;
+    background: linear-gradient(0deg, var(--color-dark), 60%, rgba(0,0,0,0.0));
+    height: 15rem;
+    width: 100%;
+    transform-origin: bottom;
+    margin-top: -15rem;
+    z-index: 0;
+  }
+
+  @media (min-width: 768px) {
+    .bottom-gradient {
+      display: none;
+      background: none;
+    }
+  .entry-picture {
+    background-position: center -50px;
+    }
+  }
+
+  @media (min-width: 1200px) {
+  .entry-picture {
+    background-position: center -500px;
+    height: 50vh;
+    }
+  }
+
+  @media (min-width: 1500px) {
+  .entry-picture {
+    background-position: center -50rem;
+    }
+  }
+
+  @media (min-width: 1800px) {
+  .entry-picture {
+    background-position: center -65rem;
+    }
+  }
+</style>
