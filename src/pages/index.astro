@@ -27,3 +27,30 @@ import NeluGuitarPicture from "./../assets/nelu-guitar.jpg?url";
     </SectionRect>
   </main>
 </Layout>
+
+<style>
+  main {
+    display: grid;
+    grid-template-rows: auto;
+    justify-items: center;
+  }
+
+  @media (min-width: 720px) {
+    main {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    :global(main > section:nth-child(3n)) {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    main {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    :global(main > section:nth-child(3n)) {
+      grid-column:  auto;
+    }
+  }
+</style>
