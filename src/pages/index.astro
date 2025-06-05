@@ -4,6 +4,7 @@ import MusicPlatformsLinks from '../components/MusicPlatformsLinks.astro';
 import HeaderText from '../components/HeaderText.astro';
 import HeaderPicture from '../components/HeaderPicture.astro';
 import SectionRect from '../components/SectionRect.astro';
+import Events from '../components/Events.astro';
 
 import NeluPortraitPicture from "./../assets/nelu-portrait.jpg?url";
 import NeluGuitarPicture from "./../assets/nelu-guitar.jpg?url";
@@ -23,7 +24,7 @@ import NeluGuitarPicture from "./../assets/nelu-guitar.jpg?url";
       Inserte otro contenido aquí tambien.
     </SectionRect>
     <SectionRect title="Proximos eventos" bg={NeluGuitarPicture} fg="light">
-      Inserte otro contenido aquí tambien.
+      <Events />
     </SectionRect>
   </main>
 </Layout>

@@ -13,7 +13,7 @@ const fgColor = `var(--color-${fg})`;
 </section>
 
 <style define:vars={{ bgColor, fgColor, bgImage }}>
-  :global(.custom-section) {
+  .custom-section {
     padding: 2rem;
     box-sizing: border-box;
     width: 100%;
@@ -27,9 +27,6 @@ const fgColor = `var(--color-${fg})`;
 
   .has-image {
     background-image: var(--bgImage);
-  }
-
-  :global(.has-image) {
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;

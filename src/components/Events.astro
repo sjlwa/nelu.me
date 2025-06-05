@@ -1,0 +1,25 @@
+---
+import Event from "./Event.astro";
+---
+<span class="events">
+  <Event datetime={Date.now()}
+         location={"Villa de Alvarez, Colima. Mi casita."}/>
+  <Event datetime={Date.now()}
+         location={"Un lugar desconocido. Por ahi."}/>
+  <Event datetime={Date.now()}
+         location={"Villa de Alvarez, Colima. Mi casita."}/>
+  <Event datetime={Date.now()}
+         location={"Un lugar desconocido. Por ahi."}/>
+  <Event datetime={Date.now()}
+         location={"Villa de Alvarez, Colima. Mi casita."}/>
+  <Event datetime={Date.now()}
+         location={"Un lugar desconocido. Por ahi."}/>
+</span>
+
+<style>
+  .events {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+</style>
