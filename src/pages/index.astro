@@ -2,56 +2,43 @@
 import Layout from '../layouts/Layout.astro';
 import MusicPlatformsLinks from '../components/MusicPlatformsLinks.astro';
 import HeaderText from '../components/HeaderText.astro';
-import HeaderPicture from '../components/HeaderPicture.astro';
-import SectionRect from '../components/SectionRect.astro';
 import Events from '../components/Events.astro';
 
 import NeluPortraitPicture from "./../assets/nelu-portrait.jpg?url";
 import NeluGuitarPicture from "./../assets/nelu-guitar.jpg?url";
 ---
 <Layout>
-  <header>
-    <MusicPlatformsLinks />
-    <HeaderPicture img={NeluPortraitPicture}>
+  <header class="relative">
+    <section
+        style={{backgroundImage: `url('${NeluPortraitPicture}')`}}
+        class="flex flex-col
+               bg-cover bg-center
+               min-h-[100dvh] md:min-h-[50vh]
+               transition-[background-size]">
+      <MusicPlatformsLinks />
       <HeaderText />
-    </HeaderPicture>
+      <div class="absolute bottom-0 w-full h-36 mt-auto sm:hidden
+                  bg-linear-to-t from-dark to-[rgba(0,0,0,0)]"></div>
+    </section>
   </header>
-  <main>
-    <SectionRect title="Bienvenido" bg="dark" fg="light">
-      Inserte contenido aquí.
-    </SectionRect>
-    <SectionRect title="Ultimos lanzamientos" bg="light" fg="dark">
-      Inserte otro contenido aquí tambien.
-    </SectionRect>
-    <SectionRect title="Proximos eventos" bg={NeluGuitarPicture} fg="light">
+
+  <main class="grid sm:grid-cols-2 xl:grid-cols-3
+    [&>section]:p-4 [&>section>h2]:text-2xl [&>section>h2]:font-bold [&>section>h2]:mb-3
+    ">
+    <section class="bg-dark text-light">
+      <h2>Bienvenido</h2>
+      <p>Inserte texto aqui</p>
+    </section>
+    <section class="bg-light text-dark">
+      <h2>Ultimos lanzamientos</h2>
+      Inserte sus canciones aqui.
+    </section>
+    <section
+      style={{backgroundImage: `url('${NeluGuitarPicture}')`}}
+      class="bg-cover bg-center text-light col-span-full xl:col-auto">
+      <h2>Proximos eventos</h2>
       <Events />
-    </SectionRect>
+    </section>
+
   </main>
 </Layout>
-
-<style>
-  main {
-    display: grid;
-    grid-template-rows: auto;
-    justify-items: center;
-  }
-
-  @media (min-width: 720px) {
-    main {
-      grid-template-columns: repeat(2, 1fr);
-    }
-
-    :global(main > section:nth-child(3n)) {
-      grid-column: 1 / -1;
-    }
-  }
-
-  @media (min-width: 1200px) {
-    main {
-      grid-template-columns: repeat(3, 1fr);
-    }
-    :global(main > section:nth-child(3n)) {
-      grid-column:  auto;
-    }
-  }
-</style>

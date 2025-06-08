@@ -10,34 +10,11 @@ const date = new Intl.DateTimeFormat(
   'es-ES', { day: 'numeric', month: 'short', year: 'numeric' }).format(datetime)
 const time = new Intl.DateTimeFormat(
   'en-US', { hour: '2-digit', minute: '2-digit', hour12: true }).format(datetime)
-
 ---
-<div class="event">
-  <span class="date">
+<div class="bg-dark p-3 flex flex-row justify-between rounded-md">
+  <span class="text-primary font-bold">
     <div>{date}</div>
     <div>{time}</div>
   </span>
-  <div class="location">{location}</div>
+  <div class="italic text-right">{location}</div>
 </div>
-
-<style>
-  .event {
-    background-color: var(--color-dark);
-    border-radius: 0.5rem;
-    padding: 1rem;
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-  }
-
-  .event .date  {
-    color: var(--color-primary);
-    font-weight: bold;
-    width: 50%;
-  }
-
-  .location {
-    color: var(--color-light);
-    font-style: italic;
-  }
-</style>
