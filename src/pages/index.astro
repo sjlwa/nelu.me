@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import MusicPlatformsLinks from '../components/MusicPlatformsLinks.astro';
 import HeaderText from '../components/HeaderText.astro';
 import Events from '../components/Events.astro';
+import Footer from '../components/Footer.astro';
 
 import NeluPortraitPicture from "./../assets/nelu-portrait.jpg?url";
 import NeluGuitarPicture from "./../assets/nelu-guitar.jpg?url";
@@ -31,7 +32,16 @@ import NeluGuitarPicture from "./../assets/nelu-guitar.jpg?url";
     </section>
     <section class="bg-light text-dark">
       <h2>Ultimos lanzamientos</h2>
-      Inserte sus canciones aqui.
+      <iframe
+        style="border-radius:12px"
+        src="https://open.spotify.com/embed/album/10l6R2qwQwPBMRTPMCANkJ?utm_source=generator&theme=0"
+        width="100%"
+        height="512"
+        frameBorder="0"
+        allowfullscreen=""
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+        loading="lazy">
+      </iframe>
     </section>
     <section
       style={{backgroundImage: `url('${NeluGuitarPicture}')`}}
@@ -41,4 +51,5 @@ import NeluGuitarPicture from "./../assets/nelu-guitar.jpg?url";
     </section>
 
   </main>
+  <Footer />
 </Layout>
