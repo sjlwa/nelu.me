@@ -2,7 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import MusicPlatformsLinks from '../components/MusicPlatformsLinks.astro';
 import HeaderText from '../components/HeaderText.astro';
-import Events from '../components/Events.astro';
+import EventsComponent from '../components/EventsComponent.astro';
 import Footer from '../components/Footer.astro';
 
 import NeluPortraitPicture from "./../assets/nelu-portrait.jpg?url";
@@ -47,9 +47,9 @@ import NeluGuitarPicture from "./../assets/nelu-guitar.jpg?url";
       style={{backgroundImage: `url('${NeluGuitarPicture}')`}}
       class="bg-cover bg-center text-light col-span-full xl:col-auto">
       <h2>Proximos eventos</h2>
-      <Events />
+      <EventsComponent />
     </section>
-
   </main>
+
   <Footer />
 </Layout>

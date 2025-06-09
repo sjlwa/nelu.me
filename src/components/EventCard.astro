@@ -11,10 +11,10 @@ const date = new Intl.DateTimeFormat(
 const time = new Intl.DateTimeFormat(
   'en-US', { hour: '2-digit', minute: '2-digit', hour12: true }).format(datetime)
 ---
-<div class="bg-dark p-3 flex flex-row justify-between rounded-md">
+<article class="bg-dark p-3 flex flex-row justify-between rounded-md">
   <span class="text-primary font-bold">
     <div>{date}</div>
     <div>{time}</div>
   </span>
   <div class="italic text-right">{location}</div>
-</div>
+</article>
