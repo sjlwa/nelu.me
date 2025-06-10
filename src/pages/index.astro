@@ -1,8 +1,10 @@
 ---
+export const prerender = true;
+
 import Layout from '../layouts/Layout.astro';
 import MusicPlatformsLinks from '../components/MusicPlatformsLinks.astro';
 import HeaderText from '../components/HeaderText.astro';
-import EventsComponent from '../components/EventsComponent.astro';
+import EventsList from '../components/events/EventsList';
 import Footer from '../components/Footer.astro';
 
 import NeluPortraitPicture from "./../assets/nelu-portrait.jpg?url";
@@ -47,7 +49,7 @@ import NeluGuitarPicture from "./../assets/nelu-guitar.jpg?url";
       style={{backgroundImage: `url('${NeluGuitarPicture}')`}}
       class="bg-cover bg-center text-light col-span-full xl:col-auto">
       <h2>Proximos eventos</h2>
-      <EventsComponent />
+      <EventsList client:load />
     </section>
   </main>
 
