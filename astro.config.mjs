@@ -7,6 +7,8 @@ import db from '@astrojs/db';
 
 import node from '@astrojs/node';
 
+import preact from '@astrojs/preact';
+
 // https://astro.build/config
 export default defineConfig({
   inlineStylesheets: 'never',
@@ -16,7 +18,7 @@ export default defineConfig({
     plugins: [tailwindcss()]
   },
 
-  integrations: [db()],
+  integrations: [db(), preact()],
 
   adapter: node({
     mode: 'standalone',
