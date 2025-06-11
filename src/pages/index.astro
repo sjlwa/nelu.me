@@ -4,7 +4,7 @@ export const prerender = true;
 import Layout from '../layouts/Layout.astro';
 import MusicPlatformsLinks from '../components/MusicPlatformsLinks.astro';
 import HeaderText from '../components/HeaderText.astro';
-import EventsList from '../components/events/EventsList';
+import EventsSection from '../components/events/EventsSection';
 
 import NeluPortraitPicture from "./../assets/nelu-portrait.jpg?url";
 import NeluGuitarPicture from "./../assets/nelu-guitar.jpg?url";
@@ -45,11 +45,9 @@ import NeluGuitarPicture from "./../assets/nelu-guitar.jpg?url";
     </section>
     <section
       style={{backgroundImage: `url('${NeluGuitarPicture}')`}}
-      class="bg-cover bg-center text-light col-span-full xl:col-auto">
+      class="bg-cover bg-center text-light col-span-full xl:col-auto relative">
       <h2>Proximos eventos</h2>
-      <EventsList client:load />
+      <EventsSection client:load />
     </section>
   </main>
-
-  <Footer />
 </Layout>
