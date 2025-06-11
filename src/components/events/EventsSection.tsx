@@ -1,8 +1,15 @@
+import { useRef } from "preact/hooks";
 import EventsList from "./EventsList";
 import useFetchEvents from "./useFetchEvents";
+import AddEventDialog from "./AddEventDialog";
 
 export default function EventsSection() {
     const [events, setEvents, loading] = useFetchEvents();
+    const dialogAdd = useRef<HTMLDialogElement>(null);
+
+    const openDialog = () => {
+        dialogAdd.current?.showModal();
+    }
 
     return (
         <>
@@ -12,6 +19,7 @@ export default function EventsSection() {
                 class="button bg-primary text-dark hover:bg-light mt-4">
                 Agrega un nuevo evento
             </button>
+            <AddEventDialog htmlRef={dialogAdd} />
         </>
     );
 }
