@@ -1,7 +1,7 @@
 import { type Event } from "./../../types/event";
 
 interface Props {
-  event: Event;
+    event: Event;
 }
 
 export default function EventCard(props: Props) {
@@ -12,12 +12,15 @@ export default function EventCard(props: Props) {
     const time = new Intl.DateTimeFormat(
         'en-US', { hour: '2-digit', minute: '2-digit', hour12: true }).format(event.date)
     return (
-        <article class="bg-dark p-3 flex flex-row justify-between rounded-md">
-            <span class="text-primary font-bold">
-                <div>{date}</div>
-                <div>{time}</div>
+        <article class="flex bg-dark p-3 w-[100%]
+                       flex-col mx-auto rounded-md
+                       md:flex-row md:mx-0 md:justify-between">
+            <span class="text-primary font-bold flex
+                         flex-row justify-center span-2 gap-3">
+                <span>{date}</span>
+                <span>{time}</span>
             </span>
-            <div class="italic text-right">{event.location}</div>
+            <div class="italic text-center">{event.location}</div>
         </article>
     );
 }
