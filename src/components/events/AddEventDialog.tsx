@@ -3,6 +3,7 @@ import Dialog from "./Dialog";
 import { type NewEvent } from "../../types/event";
 import { useCallback, useState } from "preact/hooks";
 import { actions } from "astro:actions";
+import ActionButton from "./ActionButton";
 
 type Props = {
     htmlRef: RefObject<HTMLDialogElement>,
@@ -62,11 +63,7 @@ export default function AddEventDialog(props: Props) {
                 </div>
             </div>
             <div class="flex flex-row gap-3 w-[100%]">
-                <button
-                    class="button bg-primary text-dark hover:bg-light w-[50%]"
-                    onClick={createEvent}>
-                    Guardar
-                </button>
+                <ActionButton onClick={createEvent} spinner={creating} />
                 <form method="dialog" class="w-[50%]">
                     <button class="button bg-orange-300 text-dark hover:bg-light w-[100%]">
                         Cancelar
