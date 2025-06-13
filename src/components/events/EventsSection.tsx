@@ -19,7 +19,9 @@ export default function EventsSection() {
                 class="button bg-primary text-dark hover:bg-light mt-4">
                 Agrega un nuevo evento
             </button>
-            <AddEventDialog htmlRef={dialogAdd} />
+            <AddEventDialog
+                htmlRef={dialogAdd}
+                onEventAdded={fetchEvents} />
         </>
     );
 }
