@@ -4,7 +4,7 @@ import useFetchEvents from "./useFetchEvents";
 import AddEventDialog from "./AddEventDialog";
 
 export default function EventsSection() {
-    const [events, setEvents, loading] = useFetchEvents();
+    const [events, loading, fetchEvents] = useFetchEvents();
     const dialogAdd = useRef<HTMLDialogElement>(null);
 
     const openDialog = () => {

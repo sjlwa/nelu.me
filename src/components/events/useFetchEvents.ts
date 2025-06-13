@@ -1,20 +1,22 @@
 import { useEffect, useState, type Dispatch } from "preact/hooks";
 import { actions } from 'astro:actions';
-import type { SetStateAction } from "preact/compat";
 import { type Event } from "./../../types/event";
 
-export default function useFetchEvents(): [Event[], Dispatch<SetStateAction<Event[]>>, boolean] {
+type Return = [Event[], boolean, () => void];
+
+export default function useFetchEvents(): Return {
   const [events, setEvents] = useState<Event[]>([]);
   const [loading, setIsLoading] = useState<boolean>(true);
 
+  async function fetchEvents() : Promise<void> {
+    const { data, error } = await actions.events.getAll(); // TODO: handle error
+    setEvents(data as Event[]);
+    setIsLoading(false);
+  };
+
   useEffect(() => {
-    async function getEvents() {
-      const { data, error } = await actions.events.getAll();
-      setEvents(data);
-      setIsLoading(false);
-    };
-    getEvents();
+    fetchEvents();
   }, []);
 
-  return [events, setEvents, loading];
+  return [events, loading, fetchEvents];
 }
