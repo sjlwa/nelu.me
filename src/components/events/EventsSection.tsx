@@ -1,6 +1,6 @@
 import { useRef } from "preact/hooks";
 import EventsList from "./EventsList";
-import useEvents from "./useEvents";
+import useEvents from "./../../hooks/useEvents";
 import AddEventDialog from "./AddEventDialog";
 
 export default function EventsSection() {

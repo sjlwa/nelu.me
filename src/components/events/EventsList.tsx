@@ -1,15 +1,16 @@
 import EventCard from "./EventCard";
 import { type Event } from "./../../types/event";
+import type { Signal } from "@preact/signals";
 
 type Props = {
-    events: Event[],
-    loading: boolean,
+    events: Signal<Event[]>,
+    loading: Signal<boolean>,
 };
 
 export default function EventsList(props: Props) {
     const { events, loading } = props;
 
-    if (loading) return (
+    if (loading.value) return (
         <div class="bg-dark p-3 flex flex-row justify-between rounded-md text-light">
             Cargando eventos ...
         </div>
@@ -19,7 +20,7 @@ export default function EventsList(props: Props) {
         <div class="flex flex-col gap-4">
             <div class="flex flex-col gap-4">
                 {
-                    events.map((event: Event, index: number) => (
+                    events.value.map((event: Event, index: number) => (
                         <EventCard key={index} event={event} />
                     ))
                 }

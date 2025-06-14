@@ -1,48 +1,23 @@
 import type { RefObject } from "preact";
 import Dialog from "./Dialog";
-import { type NewEvent } from "../../types/event";
-import { useCallback, useState } from "preact/hooks";
-import { actions } from "astro:actions";
 import ActionButton from "./ActionButton";
+import useNewEvent from "./../../hooks/useNewEvent";
 
 type Props = {
     htmlRef: RefObject<HTMLDialogElement>,
     onEventAdded: () => void,
 };
 
-const initialNewEvent = () => ({ date: new Date, location: '' });
-
 export default function AddEventDialog(props: Props) {
-    const [newEvent, setNewEvent] = useState<NewEvent>(initialNewEvent());
-    const [creating, setCreating] = useState<boolean>(false);
 
-    const inputDateTime = newEvent.date.toLocaleString('sv-SE', { timeZone: 'America/Mexico_City', });
-
-    const updateDatetime = useCallback((event: Event) => {
-        const input = event.target as HTMLInputElement;
-        setNewEvent({ ...newEvent, date: input.valueAsDate as Date });
-    }, []);
-
-    const updateLocation = useCallback((event: Event) => {
-        const input = event.target as HTMLInputElement;
-        setNewEvent({ ...newEvent, location: input.value });
-    }, []);
-
-    const createEvent = async () => {
-        setCreating(true);
-        const { data, error } = await actions.events.create({
-            date: newEvent.date.toISOString(),
-            location: newEvent.location,
-        });
-        setCreating(false);
-        if (error) {
-            console.log(error)
-            return;
-        }
-        setNewEvent(initialNewEvent);
+    const onEventAdded = () => {
         props.htmlRef?.current?.close();
         props.onEventAdded();
     }
+
+    const { newEvent, updateDatetime, updateLocation, createEvent, creating } = useNewEvent({ onEventAdded });
+
+    const datetime = newEvent.value.date.toLocaleString('sv-SE', { timeZone: 'America/Mexico_City' });
 
     return (
         <Dialog htmlRef={props.htmlRef}>
@@ -52,14 +27,14 @@ export default function AddEventDialog(props: Props) {
                     <label>Fecha y hora</label>
                     <input
                         type="datetime-local" class="input"
-                        value={inputDateTime} onChange={updateDatetime} />
+                        value={datetime} onChange={updateDatetime} />
                 </div>
                 <div class="flex flex-col w-full">
                     <label>Lugar</label>
                     <input
                         type="text" class="input"
                         placeholder="Mi casita"
-                        value={newEvent.location} onChange={updateLocation} />
+                        value={newEvent.value.location} onChange={updateLocation} />
                 </div>
             </div>
             <div class="flex flex-row gap-3 w-[100%]">
