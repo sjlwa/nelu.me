@@ -1,21 +1,9 @@
 ---
-import Prefix from "./../assets/nelu-prefix.svg?raw";
 import Name from "./../assets/nelu-name.svg?raw";
 import Subtext from "./../assets/nelu-subtext.svg?raw";
 ---
-<div class="text-overlay md:bottom-[50vh] size-fit mt-auto text-light p-4 flex flex-col gap-2 z-1
-           [&_svg]:w-60 md:[&_svg]:w-90 xl:[&_svg]:w-110 [&_svg]:transition-all">
+<div class="size-fit mt-auto text-light p-4 flex flex-col gap-2 z-1 [&_svg]:w-60">
   <h1 class="sr-only">Me llamo Nelú. Música y compositora</h1>
-
-  <div set:html={Prefix}
-       class="prefix [&_svg]:fill-light size-fit origin-left
-             [transform:rotate(-90deg)_translateX(-50%)_translateY(50%)]
-             md:[transform:rotate(0deg)_translateX(0%)_translateY(0%)]"/>
-  <div set:html={Name}
-       class="[&_svg]:fill-primary size-fit
-              [transform:translateX(25%)_translateY(-8%)] md:[transform:translateX(0%)_translateY(0%)]"/>
-
+  <div set:html={Name} class="[&_svg]:fill-light size-fit"/>
   <div class="[&_svg]:fill-light" set:html={Subtext} />
-
-  <span class="mt-50 left-0 bg-black/75 w-70 h-20 absolute blur-3xl z-[-1]"></span>
 </div>
