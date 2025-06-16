@@ -49,3 +49,7 @@ dialog[open] > span > #dialog-content {
     transform: translateY(0%);
   }
 }
+
+.subtitle {
+  @apply text-2xl font-bold mb-3 italic;
+}

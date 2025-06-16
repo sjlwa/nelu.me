@@ -1,0 +1,12 @@
+---
+interface Props {
+  src: string;
+  class?: string;
+}
+
+const { class: classList, src } = Astro.props;
+---
+<div class={`w-full h-full bg-center bg- over flex flex-col overflow-hidden ${classList}`}
+      style={{backgroundImage: `url('${src}')`}}>
+  <slot/>
+</div>

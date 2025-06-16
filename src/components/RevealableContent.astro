@@ -1,0 +1,42 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: classList } = Astro.props;
+---
+<div data-revealable
+     class={`reveal w-full h-full z-1 flex flex-col overflow-hidden ${classList}`}>
+  <slot/>
+</div>
+
+<style is:global>
+  .reveal {
+    opacity: 0;
+    transform: scale(75%);
+    transform-origin: top;
+    border-radius: 1rem;
+  }
+
+  [data-revealable] {
+    transition: all 750ms;
+  }
+</style>
+
+<script >
+  const sections = document.querySelectorAll('[data-revealable]');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.remove('reveal');
+        console.log("visible");
+      } else {
+        entry.target.classList.add('reveal');
+        console.log("not visible");
+      }
+    });
+  });
+
+  sections.forEach(section => observer.observe(section));
+</script>
