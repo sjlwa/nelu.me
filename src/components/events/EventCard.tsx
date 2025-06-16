@@ -12,10 +12,10 @@ export default function EventCard(props: Props) {
     const time = new Intl.DateTimeFormat(
         'en-US', { hour: '2-digit', minute: '2-digit', hour12: true }).format(event.date)
     return (
-        <article class="flex bg-dark p-3 w-[100%]
-                       flex-col mx-auto rounded-md
+        <article class="flex bg-dark p-2 w-[100%]
+                       flex-col mx-auto rounded-sm
                        md:flex-row md:mx-0 md:justify-between">
-            <span class="text-primary font-bold flex
+            <span class="text-primary flex
                          flex-row justify-center span-2 gap-3">
                 <span>{date}</span>
                 <span>{time}</span>

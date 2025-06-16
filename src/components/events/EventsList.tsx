@@ -11,14 +11,14 @@ export default function EventsList(props: Props) {
     const { events, loading } = props;
 
     if (loading.value) return (
-        <div class="bg-dark p-3 flex flex-row justify-between rounded-md text-light">
+        <div class="bg-dark p-2 flex flex-row justify-between rounded-sm text-light">
             Cargando eventos ...
         </div>
     );
 
     return (
-        <div class="flex flex-col gap-4">
-            <div class="flex flex-col gap-4">
+        <div class="flex flex-col gap-1">
+            <div class="flex flex-col gap-1">
                 {
                     events.value.map((event: Event, index: number) => (
                         <EventCard key={index} event={event} />
