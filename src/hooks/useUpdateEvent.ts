@@ -28,10 +28,10 @@ export default function useCreateEvent(props: Props): Return {
 
     updating.value = false;
 
-    if (error) {
-      console.log(error);
-      return;
-    }
+    // if (error) {
+    //   console.log(error);
+    //   return;
+    // }
 
     currentEvent.value = { date: new Date(), location: '' };
     props.onUpdate();

@@ -1,36 +1,34 @@
-import type { RefObject } from "preact";
 import Dialog from "./Dialog";
 import useEvent from "../../hooks/useEvent";
 import EventForm from "./EventForm";
-import type { Event as NeluEvent } from "../../types/event";
 import useUpdateEvent from "../../hooks/useUpdateEvent";
-import { Signal } from "@preact/signals";
 
-interface Props {
-    htmlRef: RefObject<HTMLDialogElement>;
-    onUpdate: () => void;
-    currentEvent: Signal<NeluEvent>
-}
+import { dialogs, editableEvent } from "./../../globals/eventGlobals";
+import { useEffect, useRef } from "preact/hooks";
 
-export default function EventDialogUpdate(props: Props) {
-    const { currentEvent } = props;
+export default function EventDialogUpdate() {
 
     const onUpdate = () => {
-        props.htmlRef?.current?.close();
-        props.onUpdate();
+        dialogs.update.peek()?.close();
+        console.log(editableEvent.value);
     }
 
-    const { onChangeDatetime, onChangeLocation, datetimeISO } = useEvent(currentEvent);
-    const { updateEvent, updating } = useUpdateEvent({ currentEvent, onUpdate });
+    const dialogRef = useRef<HTMLDialogElement>(null);
+
+    useEffect(() => {
+        dialogs.update.value = dialogRef.current;
+    }, [dialogRef]);
+
+    const { onChangeDatetime, onChangeLocation, datetimeISO } = useEvent(editableEvent);
+    const { updateEvent, updating } = useUpdateEvent({ currentEvent: editableEvent, onUpdate });
 
     return (
-        <Dialog htmlRef={props.htmlRef}>
-            <></>
+        <Dialog htmlRef={dialogRef}>
             <EventForm
                 title="Modificar evento"
                 btnText="Guardar cambios"
                 datetimeISO={datetimeISO} onChangeDatetime={onChangeDatetime}
-                location={currentEvent.value.location} onChangeLocation={onChangeLocation}
+                location={editableEvent.value.location} onChangeLocation={onChangeLocation}
                 processEvent={updateEvent}
                 processing={updating}
             />

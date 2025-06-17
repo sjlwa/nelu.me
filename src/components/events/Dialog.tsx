@@ -2,7 +2,7 @@ import type { Ref, VNode } from "preact";
 
 type Props = {
     htmlRef: Ref<HTMLDialogElement>,
-    children: VNode[],
+    children: VNode | VNode[],
 };
 
 export default function Dialog(props: Props) {

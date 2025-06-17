@@ -1,11 +1,8 @@
-import type { RefObject } from "preact";
 import type { Event as NeluEvent } from "./../../types/event";
-import type { Signal } from "@preact/signals";
+import { dialogs, editableEvent } from "./../.././globals/eventGlobals";
 
 interface Props {
     event: NeluEvent;
-    dialogUpdateRef: RefObject<HTMLDialogElement>;
-    editableEvent: Signal<NeluEvent>;
 }
 
 function extractDateAndTime(datetime: Date) {
@@ -21,8 +18,9 @@ export default function EventCard(props: Props) {
     const { date, time } = extractDateAndTime(event.date);
 
     const openUpdateDialog = (selectedEvent: NeluEvent) => {
-        props.editableEvent.value = selectedEvent;
-        props.dialogUpdateRef.current?.show();
+        editableEvent.value = selectedEvent;
+        dialogs.update.peek()?.show();
+        console.log(editableEvent.peek());
     };
 
     return (
