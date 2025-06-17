@@ -1,18 +1,29 @@
 import type { RefObject } from "preact";
-import { type Event } from "./../../types/event";
+import type { Event as NeluEvent } from "./../../types/event";
+import type { Signal } from "@preact/signals";
 
 interface Props {
-    event: Event;
+    event: NeluEvent;
     dialogUpdateRef: RefObject<HTMLDialogElement>;
+    editableEvent: Signal<NeluEvent>;
+}
+
+function extractDateAndTime(datetime: Date) {
+    const date = new Intl.DateTimeFormat(
+        'es-ES', { day: 'numeric', month: 'short', year: 'numeric' }).format(datetime)
+    const time = new Intl.DateTimeFormat(
+        'en-US', { hour: '2-digit', minute: '2-digit', hour12: true }).format(datetime)
+    return { date, time };
 }
 
 export default function EventCard(props: Props) {
     const event = props.event;
+    const { date, time } = extractDateAndTime(event.date);
 
-    const date = new Intl.DateTimeFormat(
-        'es-ES', { day: 'numeric', month: 'short', year: 'numeric' }).format(event.date)
-    const time = new Intl.DateTimeFormat(
-        'en-US', { hour: '2-digit', minute: '2-digit', hour12: true }).format(event.date)
+    const openUpdateDialog = (selectedEvent: NeluEvent) => {
+        props.editableEvent.value = selectedEvent;
+        props.dialogUpdateRef.current?.show();
+    };
 
     return (
         <article class="flex rounded-sm bg-dark p-2 gap-4">
@@ -26,7 +37,7 @@ export default function EventCard(props: Props) {
             <div>
                 <button
                     class="btn-sm bg-brown text-light ml-auto"
-                    onClick={() => { props.dialogUpdateRef.current?.show() }}>
+                    onClick={() => { openUpdateDialog(event) }}>
                     Editar
                 </button>
             </div>

@@ -1,11 +1,10 @@
-import { useSignal } from "@preact/signals";
+import { Signal } from "@preact/signals";
 import { useCallback } from "preact/hooks";
 import type { Event as EventRecord, NewEvent as NewEventRecord } from "./../types/event";
 
 type TEvent = EventRecord | NewEventRecord;
 
-export default function useEvent(initialValues: TEvent) {
-  const currentEvent = useSignal<TEvent>(initialValues);
+export default function useEvent(currentEvent: Signal<TEvent>) {
 
   const onChangeDatetime = useCallback((event: Event) => {
     const input = event.target as HTMLInputElement;
