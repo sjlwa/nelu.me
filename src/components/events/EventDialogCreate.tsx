@@ -1,4 +1,5 @@
-import Dialog from "./Dialog";
+import Dialog from "./../dialog/Dialog";
+import DialogActions from "./../dialog/DialogActions";
 import useEvent from "../../hooks/useEvent";
 import EventForm from "./EventForm";
 
@@ -31,14 +32,13 @@ export default function EventDialogCreate(props: Props) {
 
     return (
         <Dialog htmlRef={dialogRef}>
+            <h3 class="text-2xl italic font-bold">Registro de nuevo evento</h3>
             <EventForm
-                title="Registro de nuevo evento"
-                btnText="Registrar"
-                datetimeISO={datetimeISO} onChangeDatetime={onChangeDatetime}
-                location={currentEvent.value.location} onChangeLocation={onChangeLocation}
-                processEvent={createEvent}
-                processing={creating}
-            />
+                datetimeISO={datetimeISO}
+                location={currentEvent.value.location}
+                onChangeDatetime={onChangeDatetime}
+                onChangeLocation={onChangeLocation} />
+            <DialogActions btnText="Registrar" processEvent={createEvent} processing={creating} />
         </Dialog>
     );
 }

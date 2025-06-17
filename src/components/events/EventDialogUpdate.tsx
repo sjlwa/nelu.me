@@ -1,4 +1,5 @@
-import Dialog from "./Dialog";
+import Dialog from "./../dialog/Dialog";
+import DialogActions from "./../dialog/DialogActions";
 import useEvent from "../../hooks/useEvent";
 import EventForm from "./EventForm";
 import useUpdateEvent from "../../hooks/useUpdateEvent";
@@ -6,6 +7,7 @@ import useUpdateEvent from "../../hooks/useUpdateEvent";
 import { dialogs, editableEvent } from "./../../globals/eventGlobals";
 import { useEffect, useRef } from "preact/hooks";
 import type { NeluEvent } from "../../types/event";
+
 
 interface Props {
     setEventItem: (event: NeluEvent) => void;
@@ -32,14 +34,13 @@ export default function EventDialogUpdate(props: Props) {
 
     return (
         <Dialog htmlRef={dialogRef}>
+            <h3 class="text-2xl italic font-bold">Modificar evento</h3>
             <EventForm
-                title="Modificar evento"
-                btnText="Guardar cambios"
-                datetimeISO={datetimeISO} onChangeDatetime={onChangeDatetime}
-                location={editableEvent.value.location} onChangeLocation={onChangeLocation}
-                processEvent={updateEvent}
-                processing={updating}
-            />
+                 datetimeISO={datetimeISO} 
+                 location={editableEvent.value.location}
+                 onChangeDatetime={onChangeDatetime}
+                 onChangeLocation={onChangeLocation}/>
+            <DialogActions btnText="Guardar cambios" processEvent={updateEvent} processing={updating} />
         </Dialog>
     );
 }

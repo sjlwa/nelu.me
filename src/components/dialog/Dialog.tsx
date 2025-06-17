@@ -1,15 +1,15 @@
 import type { Ref, VNode } from "preact";
 
-type Props = {
-    htmlRef: Ref<HTMLDialogElement>,
-    children: VNode | VNode[],
-};
+interface Props {
+    htmlRef: Ref<HTMLDialogElement>;
+    children: VNode | VNode[];
+}
 
 export default function Dialog(props: Props) {
     return (
         <dialog
             ref={props.htmlRef}
-            class="fixed inset-0 min-w-full h-full min-h-[100vh] z-1 bg-dark/75">
+            class="fixed inset-0 min-w-full h-full min-h-[100vh] z-1 bg-dark/75 text-left">
             <div class="flex flex-col h-full text-light justify-between">
                 <form method="dialog" class="h-[40%]">
                     <button class="w-full h-full"></button>
