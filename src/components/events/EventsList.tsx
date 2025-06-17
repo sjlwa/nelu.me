@@ -18,7 +18,7 @@ export default function EventsList(props: Props) {
 
     return (
         <div class="flex flex-col gap-1">
-            <div class="flex flex-col gap-1">
+            <div class="flex flex-col gap-1 @container">
                 {
                     events.value.map((event: Event, index: number) => (
                         <EventCard key={index} event={event} />
