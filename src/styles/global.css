@@ -4,6 +4,7 @@
   --color-primary: #BFD000;
   --color-light: #e7eFdF;
   --color-dark: #110001;
+  --color-brown: #342223;
 }
 
 html,
@@ -19,6 +20,10 @@ body {
 .button {
   @apply font-bold rounded-sm cursor-pointer py-2 px-4;
   transition: 100ms background-color;
+}
+
+.btn-sm {
+  @apply cursor-pointer font-semibold text-sm rounded-xs px-1;
 }
 
 .input {

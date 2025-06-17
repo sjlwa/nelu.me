@@ -1,7 +1,9 @@
+import type { RefObject } from "preact";
 import { type Event } from "./../../types/event";
 
 interface Props {
     event: Event;
+    dialogUpdateRef: RefObject<HTMLDialogElement>;
 }
 
 export default function EventCard(props: Props) {
@@ -20,6 +22,13 @@ export default function EventCard(props: Props) {
                     <span>{time}</span>
                 </span>
                 <div class="italic">{event.location}</div>
+            </div>
+            <div>
+                <button
+                    class="btn-sm bg-brown text-light ml-auto"
+                    onClick={() => { props.dialogUpdateRef.current?.show() }}>
+                    Editar
+                </button>
             </div>
         </article>
     );

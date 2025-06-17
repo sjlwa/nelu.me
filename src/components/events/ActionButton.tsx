@@ -4,6 +4,7 @@ import { memo } from "preact/compat";
 interface Props {
     onClick: () => void;
     spinner: Signal<boolean>;
+    text: string;
 }
 
 function ActionButton(props: Props) {
@@ -19,7 +20,7 @@ function ActionButton(props: Props) {
                            border-dark border-6 border-t-[transparent] rounded-xl">
                 </span>
             }
-            Guardar
+            {props.text}
         </button>
     );
 }
