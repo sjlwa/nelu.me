@@ -24,9 +24,9 @@ export default function EventCard(props: Props) {
     };
 
     return (
-        <article class="flex rounded-sm bg-dark p-2 gap-4">
+        <article class="flex p-2 gap-4 border-b-1 border-light/25">
             <div class="flex flex-col @2xl:flex-row @2xl:justify-between items-center w-full">
-                <span class="flex justify-center gap-1 text-primary">
+                <span class="flex justify-center gap-1 text-light font-semibold">
                     <span>{date}</span>-
                     <span>{time}</span>
                 </span>
@@ -34,7 +34,7 @@ export default function EventCard(props: Props) {
             </div>
             <div>
                 <button
-                    class="btn-sm bg-brown text-light ml-auto"
+                    class="btn-sm bg-primary/50 text-light hover:bg-dark ml-auto"
                     onClick={() => { openUpdateDialog(event) }}>
                     Editar
                 </button>

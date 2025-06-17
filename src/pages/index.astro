@@ -12,15 +12,14 @@ import NeluGuitarPicture from "./../assets/nelu-guitar.jpg?url";
 
 import RevealableContent from "./../components/RevealableContent.astro";
 import BackgroundImage from "./../components/BackgroundImage.astro";
-
 ---
 <Layout>
   <header slot="header" class="relative">
-    <section class="min-h-[100dvh] md:min-h-[50vh]">
+    <section class="min-h-[75dvh] md:min-h-[50vh]">
       <RevealableContent class="absolute">
         <BackgroundImage src={NeluPortraitPicture} class="items-center">
           <MusicPlatformsLinks />
-          <div class="absolute bottom-0 w-full h-36 mt-auto md:hidden bg-linear-to-t from-dark to-[rgba(0,0,0,0)]"></div>
+          <div class="absolute bottom-0 w-full h-36 mt-auto sm:hidden bg-linear-to-t from-dark to-[rgba(0,0,0,0)]"></div>
           <HeaderText />
         </BackgroundImage>
       </RevealableContent>
@@ -28,23 +27,23 @@ import BackgroundImage from "./../components/BackgroundImage.astro";
   </header>
   <main slot="main" class="grid sm:grid-cols-2 xl:grid-cols-3 h-full">
     <section class="bg-dark text-light">
-      <RevealableContent class="p-4">
+      <RevealableContent class="p-4 text-center">
         <h2 class="subtitle">Bienvenido</h2>
         <p>Inserte texto aqui</p>
       </RevealableContent>
     </section>
-    <section class="bg-light text-dark">
-      <RevealableContent class="p-4">
+    <section class="bg-light text-dark mx-auto w-full">
+      <RevealableContent class="p-4 text-center">
         <h2 class="subtitle">Ultimos lanzamientos</h2>
         <SpotifyIframe />
       </RevealableContent>
     </section>
     <section class="flex flex-col relative text-light col-span-full xl:col-auto">
       <RevealableContent>
-        <BackgroundImage class="p-4" src={NeluGuitarPicture}>
-        <h2 class="subtitle">Proximos eventos</h2>
-        <EventsSection client:load />
-        </BackgroundImage>
+        <div class="z-1 p-4 text-center">
+          <h2 class="subtitle text-primary">Proximos eventos</h2>
+          <EventsSection client:load />
+        </div>
       </RevealableContent>
     </section>
   </main>
