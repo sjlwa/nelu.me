@@ -1,5 +1,5 @@
 import EventCard from "./EventCard";
-import type { Event as NeluEvent } from "./../../types/event";
+import type { NeluEvent } from "./../../types/event";
 import type { Signal } from "@preact/signals";
 
 interface Props {

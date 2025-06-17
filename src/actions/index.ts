@@ -1,9 +1,15 @@
 import { defineAction } from "astro:actions";
 import { z } from "astro:schema";
-import { db, Event as EventEntity } from "astro:db";
-import type { NewEvent, NewEventDTO } from "../types/event";
+import { db, Event as EventsTable, eq } from "astro:db";
+import type { NewNeluEvent, NewNeluEventDTO, NeluEvent, NeluEventDTO } from "../types/event";
 
 const newEventSchema = z.object({
+  date: z.string().datetime(),
+  location: z.string().nonempty(),
+});
+
+const EventSchema = z.object({
+  id: z.number().positive(),
   date: z.string().datetime(),
   location: z.string().nonempty(),
 });
@@ -12,20 +18,33 @@ const events = {
   getAll: defineAction({
     handler: async () => {
       await new Promise(resolve => setTimeout(resolve, 500)); // TODO: remove delay
-      const data = await db.select().from(EventEntity).all();
+      const data = await db.select().from(EventsTable).all();
       return data;
     },
   }),
   create: defineAction({
     accept: "json",
     input: newEventSchema,
-    handler: async (event: NewEventDTO) => {
-      const newEvent: NewEvent = {
+    handler: async (event: NewNeluEventDTO) => {
+      const newEvent: NewNeluEvent = {
         date: new Date(event.date),
         location: event.location,
       };
       await new Promise(resolve => setTimeout(resolve, 1000)); // TODO: remove delay
-      await db.insert(EventEntity).values(newEvent);
+      await db.insert(EventsTable).values(newEvent);
+    },
+  }),
+  update: defineAction({
+    accept: "json",
+    input: EventSchema,
+    handler: async (event: NeluEventDTO) => {
+      const neluEvent: NeluEvent = {
+        id: event.id,
+        date: new Date(event.date),
+        location: event.location,
+      };
+      await new Promise(resolve => setTimeout(resolve, 2000)); // TODO: remove delay
+      await db.update(EventsTable).set(neluEvent).where(eq(EventsTable.id, neluEvent.id));
     },
   }),
 }

@@ -5,7 +5,7 @@ import EventDialogUpdate from "./EventDialogUpdate";
 import { dialogs } from "./../../globals/eventGlobals";
 
 export default function EventsSection() {
-    const { events, loading, loadEvents } = useEvents();
+    const { events, loading, loadEvents, setEventItem } = useEvents();
 
     const openEventDialogCreation = () => {
         dialogs.create.peek()?.showModal();
@@ -20,7 +20,7 @@ export default function EventsSection() {
                 Agrega un nuevo evento
             </button>
             <EventDialogCreate onCreate={loadEvents} />
-            <EventDialogUpdate />
+            <EventDialogUpdate setEventItem={setEventItem} />
         </>
     );
 }

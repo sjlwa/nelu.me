@@ -1,10 +1,10 @@
 import { actions } from "astro:actions";
-import { type NewEvent } from "../types/event";
+import { type NewNeluEvent } from "../types/event";
 import { useCallback } from "preact/hooks";
 import { Signal, useSignal } from "@preact/signals";
 
 interface Props {
-  newEvent: Signal<NewEvent>;
+  newEvent: Signal<NewNeluEvent>;
   onCreate: () => void;
 }
 

@@ -1,4 +1,4 @@
-import type { Event as NeluEvent } from "./../../types/event";
+import type { NeluEvent } from "./../../types/event";
 import { dialogs, editableEvent } from "./../.././globals/eventGlobals";
 
 interface Props {
@@ -20,7 +20,6 @@ export default function EventCard(props: Props) {
     const openUpdateDialog = (selectedEvent: NeluEvent) => {
         editableEvent.value = selectedEvent;
         dialogs.update.peek()?.show();
-        console.log(editableEvent.peek());
     };
 
     return (

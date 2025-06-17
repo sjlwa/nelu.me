@@ -1,6 +1,6 @@
 import { Signal } from "@preact/signals";
 import { useCallback } from "preact/hooks";
-import type { Event as EventRecord, NewEvent as NewEventRecord } from "./../types/event";
+import type { NeluEvent as EventRecord, NewNeluEvent as NewEventRecord } from "./../types/event";
 
 type TEvent = EventRecord | NewEventRecord;
 

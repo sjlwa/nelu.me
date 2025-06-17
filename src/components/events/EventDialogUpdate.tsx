@@ -5,12 +5,20 @@ import useUpdateEvent from "../../hooks/useUpdateEvent";
 
 import { dialogs, editableEvent } from "./../../globals/eventGlobals";
 import { useEffect, useRef } from "preact/hooks";
+import type { NeluEvent } from "../../types/event";
 
-export default function EventDialogUpdate() {
+interface Props {
+    setEventItem: (event: NeluEvent) => void;
+}
 
+export default function EventDialogUpdate(props: Props) {
+
+    // Runs after event was successfully updated.
     const onUpdate = () => {
         dialogs.update.peek()?.close();
-        console.log(editableEvent.value);
+
+        // Set the new defined values of event on events list.
+        props.setEventItem(editableEvent.peek());
     }
 
     const dialogRef = useRef<HTMLDialogElement>(null);
