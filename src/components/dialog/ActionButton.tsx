@@ -2,16 +2,17 @@ import type { Signal } from "@preact/signals";
 import { memo } from "preact/compat";
 
 interface Props {
+    class?: string;
     onClick: () => void;
     spinner: Signal<boolean>;
     text: string;
 }
 
 function ActionButton(props: Props) {
-    const { onClick, spinner } = props;
+    const { onClick, spinner, class: classList } = props;
     return (
         <button
-            class="button bg-primary text-dark hover:bg-light w-[50%]"
+            class={`button w-[50%] ${classList ? classList : 'bg-primary text-dark hover:bg-light'}`}
             onClick={onClick}>
             {
                 spinner.value &&
