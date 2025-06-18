@@ -32,7 +32,7 @@ export default function EventCard(props: Props) {
                 <div class="italic">{event.location}</div>
             </div>
             <button
-                class="btn-sm bg-primary/50 text-light hover:bg-dark my-auto h-fit"
+                class="btn-sm bg-yellow-200/40 text-light hover:bg-light hover:text-dark my-auto h-fit"
                 onClick={() => { openUpdateDialog(event) }}>
                 Editar
             </button>

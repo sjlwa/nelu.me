@@ -25,22 +25,22 @@ import BackgroundImage from "./../components/BackgroundImage.astro";
       </RevealableContent>
     </section>
   </header>
-  <main slot="main" class="grid sm:grid-cols-2 xl:grid-cols-3 h-full">
+  <main slot="main" class="grid sm:grid-cols-2 xl:grid-cols-3 flex-grow-1">
     <section class="bg-dark text-light">
       <RevealableContent class="p-4 text-center">
         <h2 class="subtitle">Bienvenido</h2>
         <p>Inserte texto aqui</p>
       </RevealableContent>
     </section>
-    <section class="bg-light text-dark mx-auto w-full">
-      <RevealableContent class="p-4 text-center">
+    <section class="mx-auto w-full">
+      <RevealableContent class="p-4 text-center bg-light text-dark">
         <h2 class="subtitle">Ultimos lanzamientos</h2>
         <SpotifyIframe />
       </RevealableContent>
     </section>
     <section class="flex flex-col relative text-light col-span-full xl:col-auto">
       <RevealableContent>
-        <div class="z-1 p-4 text-center">
+        <div class="z-1 p-4 text-center flex flex-col">
           <h2 class="subtitle text-primary">Proximos eventos</h2>
           <EventsSection client:load />
         </div>

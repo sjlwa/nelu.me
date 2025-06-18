@@ -17,7 +17,7 @@ export default function EventsSection() {
             <EventsList events={events} loading={loading} />
             <button
                 onClick={openEventDialogCreation}
-                class="button bg-primary/50 text-light hover:bg-dark mt-4">
+                class="button bg-primary text-dark hover:bg-light mt-4 w-fit self-end">
                 Agrega un nuevo evento
             </button>
             <EventDialogCreate onCreate={loadEvents} />

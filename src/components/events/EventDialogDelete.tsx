@@ -34,7 +34,7 @@ export default function EventDialogDelete(props: Props) {
                 <h3 class="text-2xl italic font-bold">¿Eliminar evento?</h3>
             </div>
             <DialogActions
-                btnText="Eliminar definitivamente"
+                btnText="Eliminar"
                 btnClass="bg-orange-900 text-light hover:bg-light hover:text-dark"
                 processEvent={deleteEvent}
                 processing={deleting} />
