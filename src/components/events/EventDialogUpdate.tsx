@@ -19,10 +19,11 @@ export default function EventDialogUpdate(props: Props) {
     const onUpdate = () => {
         dialogs.update.peek()?.close();
 
-        // Set the new defined values of event on events list.
+        // Set the new defined values of event to refresh events list.
         props.setEventItem(editableEvent.peek());
     }
 
+    // dialogs refs used to asign global variables on change.
     const dialogRef = useRef<HTMLDialogElement>(null);
 
     useEffect(() => {
@@ -32,14 +33,23 @@ export default function EventDialogUpdate(props: Props) {
     const { onChangeDatetime, onChangeLocation, datetimeISO } = useEvent(editableEvent);
     const { updateEvent, updating } = useUpdateEvent({ currentEvent: editableEvent, onUpdate });
 
+    const openDeleteDialog = () => {
+        dialogs.delete.peek()?.showModal();
+    }
+
     return (
         <Dialog htmlRef={dialogRef}>
-            <h3 class="text-2xl italic font-bold">Modificar evento</h3>
+            <div class="flex justify-between items-center">
+                <h3 class="text-2xl italic font-bold">Modificar evento</h3>
+                <button onClick={openDeleteDialog} class="btn-sm bg-orange-900 hover:bg-orange-800">
+                    Eliminar
+                </button>
+            </div>
             <EventForm
-                 datetimeISO={datetimeISO} 
-                 location={editableEvent.value.location}
-                 onChangeDatetime={onChangeDatetime}
-                 onChangeLocation={onChangeLocation}/>
+                datetimeISO={datetimeISO}
+                location={editableEvent.value.location}
+                onChangeDatetime={onChangeDatetime}
+                onChangeLocation={onChangeLocation} />
             <DialogActions btnText="Guardar cambios" processEvent={updateEvent} processing={updating} />
         </Dialog>
     );

@@ -7,6 +7,7 @@ type Return = {
   loading: Signal<boolean>;
   loadEvents: () => void;
   setEventItem: (event: NeluEvent) => void;
+  dropEventItem: (event: NeluEvent) => void;
 };
 
 export default function useEvents(): Return {
@@ -23,9 +24,13 @@ export default function useEvents(): Return {
     events.value = events.peek().map(e => e.id === event.id ? event : e);
   }
 
+  const dropEventItem = (event: NeluEvent) => {
+    events.value = events.peek().filter(e => e.id != event.id);
+  }
+
   useSignalEffect(() => {
     loadEvents();
   });
 
-  return { events, loading, loadEvents, setEventItem };
+  return { events, loading, loadEvents, setEventItem, dropEventItem };
 }
