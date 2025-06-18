@@ -31,13 +31,11 @@ export default function EventCard(props: Props) {
                 </span>
                 <div class="italic">{event.location}</div>
             </div>
-            <div>
-                <button
-                    class="btn-sm bg-primary/50 text-light hover:bg-dark ml-auto"
-                    onClick={() => { openUpdateDialog(event) }}>
-                    Editar
-                </button>
-            </div>
+            <button
+                class="btn-sm bg-primary/50 text-light hover:bg-dark my-auto h-fit"
+                onClick={() => { openUpdateDialog(event) }}>
+                Editar
+            </button>
         </article>
     );
 }
