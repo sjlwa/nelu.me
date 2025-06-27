@@ -2,6 +2,8 @@ import { defineAction } from "astro:actions";
 import { z } from "astro:schema";
 import { db, Event as EventsTable, eq } from "astro:db";
 import type { NewNeluEvent, NewNeluEventDTO, NeluEvent, NeluEventDTO } from "../types/event";
+import { authorizeResource } from "../lib/server/auth";
+
 
 const EventSchemaCreate = z.object({
   date: z.string().datetime(),
@@ -32,7 +34,9 @@ export const events = {
   create: defineAction({
     accept: "json",
     input: EventSchemaCreate,
-    handler: async (event: NewNeluEventDTO) => {
+    handler: async (event: NewNeluEventDTO, context) => {
+      await authorizeResource(context.request);
+
       const newEvent: NewNeluEvent = {
         date: new Date(event.date),
         location: event.location,
@@ -45,7 +49,9 @@ export const events = {
   update: defineAction({
     accept: "json",
     input: EventSchemaUpdate,
-    handler: async (event: NeluEventDTO) => {
+    handler: async (event: NeluEventDTO, context) => {
+      await authorizeResource(context.request);
+
       const neluEvent: NeluEvent = {
         id: event.id,
         date: new Date(event.date),
@@ -59,7 +65,9 @@ export const events = {
   delete: defineAction({
     accept: "json",
     input: EventSchemaDelete,
-    handler: async (data: { id: number }) => {
+    handler: async (data: { id: number }, context) => {
+      await authorizeResource(context.request);
+
       await new Promise(resolve => setTimeout(resolve, 2000)); // TODO: remove delay
       await db.delete(EventsTable).where(eq(EventsTable.id, data.id));
     },
