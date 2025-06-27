@@ -1,0 +1,12 @@
+---
+---
+<p class="bg-dark rounded-xs text-red-200 px-1">No autorizado.</p>
+
+<script>
+  (async () => {
+    const { signOut } = await import("auth-astro/client");
+    setTimeout(() => {
+      signOut();
+    }, 2000);
+  })();
+</script>

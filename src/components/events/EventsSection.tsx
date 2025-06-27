@@ -4,6 +4,7 @@ import EventDialogCreate from "./EventDialogCreate";
 import EventDialogUpdate from "./EventDialogUpdate";
 import EventDialogDelete from "./EventDialogDelete";
 import { dialogs } from "./../../globals/eventGlobals";
+import { isAuthorized } from "./../../lib/client/authData";
 
 export default function EventsSection() {
     const { events, loading, loadEvents, setEventItem, dropEventItem } = useEvents();
@@ -15,14 +16,23 @@ export default function EventsSection() {
     return (
         <>
             <EventsList events={events} loading={loading} />
-            <button
-                onClick={openEventDialogCreation}
-                class="button bg-primary text-dark hover:bg-light mt-4 w-fit self-end">
-                Agrega un nuevo evento
-            </button>
-            <EventDialogCreate onCreate={loadEvents} />
-            <EventDialogUpdate setEventItem={setEventItem} />
-            <EventDialogDelete dropEventItem={dropEventItem} />
+            {
+                isAuthorized.value &&
+                (
+                    <>
+
+                        <button
+                            onClick={openEventDialogCreation}
+                            class="button bg-primary text-dark hover:bg-light mt-4 w-fit self-end">
+                            Agrega un nuevo evento
+                        </button>
+
+                        <EventDialogCreate onCreate={loadEvents} />
+                        <EventDialogUpdate setEventItem={setEventItem} />
+                        <EventDialogDelete dropEventItem={dropEventItem} />
+                    </>
+                )
+            }
         </>
     );
 }

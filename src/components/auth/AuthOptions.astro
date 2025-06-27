@@ -1,0 +1,29 @@
+ ---
+import { getSession } from "auth-astro/server";
+import SignInButton from "./SignInButton";
+import SignOutButton from "./SignOutButton";
+import NonAuthorized from "./NonAuthorized.astro";
+
+const session = await getSession(Astro.request);
+
+const whitelist: string[] = import.meta.env.ADMIN_WHITELIST.split(' ');
+const isAuthorized: boolean = whitelist.includes(session?.user?.email!);
+---
+<div class="flex justify-end text-sm">
+{
+  session
+  ?
+  (
+    <div class="flex gap-4">
+      {
+        isAuthorized
+        ? <p>¡Hola! {session?.user?.name}</p>
+        : <NonAuthorized />
+      }
+      <SignOutButton client:load isAuthorized={isAuthorized} />
+    </div>
+  )
+  :
+  <SignInButton client:load />
+}
+</div>
