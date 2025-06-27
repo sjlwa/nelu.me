@@ -17,6 +17,9 @@ importers:
       '@astrojs/preact':
         specifier: ^4.1.0
         version: 4.1.0(@babel/core@7.27.4)(@types/node@22.15.30)(jiti@2.4.2)(lightningcss@1.30.1)(preact@10.26.8)
+      '@auth/core':
+        specifier: ^0.37.4
+        version: 0.37.4
       '@preact/signals':
         specifier: ^2.2.0
         version: 2.2.0(preact@10.26.8)
@@ -26,6 +29,9 @@ importers:
       astro:
         specifier: ^5.8.1
         version: 5.9.1(@types/node@22.15.30)(jiti@2.4.2)(lightningcss@1.30.1)(rollup@4.42.0)(typescript@5.8.3)
+      auth-astro:
+        specifier: ^4.2.0
+        version: 4.2.0(@auth/core@0.37.4)(astro@5.9.1(@types/node@22.15.30)(jiti@2.4.2)(lightningcss@1.30.1)(rollup@4.42.0)(typescript@5.8.3))
       preact:
         specifier: ^10.26.8
         version: 10.26.8
@@ -76,6 +82,20 @@ packages:
   '@astrojs/telemetry@3.3.0':
     resolution: {integrity: sha512-UFBgfeldP06qu6khs/yY+q1cDAaArM2/7AEIqQ9Cuvf7B1hNLq0xDrZkct+QoIGyjq56y8IaE2I3CTvG99mlhQ==}
     engines: {node: 18.20.8 || ^20.3.0 || >=22.0.0}
+
+  '@auth/core@0.37.4':
+    resolution: {integrity: sha512-HOXJwXWXQRhbBDHlMU0K/6FT1v+wjtzdKhsNg0ZN7/gne6XPsIrjZ4daMcFnbq0Z/vsAbYBinQhhua0d77v7qw==}
+    peerDependencies:
+      '@simplewebauthn/browser': ^9.0.1
+      '@simplewebauthn/server': ^9.0.2
+      nodemailer: ^6.8.0
+    peerDependenciesMeta:
+      '@simplewebauthn/browser':
+        optional: true
+      '@simplewebauthn/server':
+        optional: true
+      nodemailer:
+        optional: true
 
   '@babel/code-frame@7.27.1':
     resolution: {integrity: sha512-cjQ7ZlQ0Mv3b47hABuTevyTuYN4i+loJKGeV9flcCgIK37cCXRh+L1bd3iBHlynerhQ7BhCkn2BPbQUL+rGqFg==}
@@ -516,6 +536,9 @@ packages:
   '@oslojs/encoding@1.1.0':
     resolution: {integrity: sha512-70wQhgYmndg4GCPxPPxPGevRKqTIJ2Nh4OkiMWmDAVYsTQ+Ta7Sq+rPevXyXGdzr30/qZBnyOalCszoMxlyldQ==}
 
+  '@panva/hkdf@1.2.1':
+    resolution: {integrity: sha512-6oclG6Y3PiDFcoyk8srjLfVKyMfVCKJ27JwNPViuXziFpmdz+MZnZN/aKY0JGXgYuO/VghU0jcOAZgWXZ1Dmrw==}
+
   '@preact/preset-vite@2.10.1':
     resolution: {integrity: sha512-59lyGBXNfZIr5OOuBUB4/IB8AqF/ULbvYnyItgK/2BJnsGJqaeaJobRVtMp1129obHQuj8oZ/dVxB9inmH8Xig==}
     peerDependencies:
@@ -852,6 +875,13 @@ packages:
   async-listen@3.1.0:
     resolution: {integrity: sha512-TkOhqze98lP+6e7SPbrBpyhTpfvqqX8VYKGn4uckrgPan4WQIHnTaUD2zZzZS18eVVDj4rHPcIZa1PGgvo1DfA==}
     engines: {node: '>= 14'}
+
+  auth-astro@4.2.0:
+    resolution: {integrity: sha512-Jx0dFAvwJ5UJ6E/2J6rqPNhXzTX6Fj18sIq12U7n+J15TV7etpXSHFPPcQdAmfDmX3RCURp253Vxe4l/keNW1g==}
+    engines: {node: '>=17.4'}
+    peerDependencies:
+      '@auth/core': ^0.37.3
+      astro: '>=4.0.0'
 
   axobject-query@4.1.0:
     resolution: {integrity: sha512-qIj0G9wZbMGNLjLmg1PT6v2mE9AH2zlnADJD/2tC6E00hgmhUOfEB6greHPAfLRSufHqROIUTkw6E+M3lH0PTQ==}
@@ -1378,6 +1408,9 @@ packages:
     resolution: {integrity: sha512-rg9zJN+G4n2nfJl5MW3BMygZX56zKPNVEYYqq7adpmMh4Jn2QNEwhvQlFy6jPVdcod7txZtKHWnyZiA3a0zP7A==}
     hasBin: true
 
+  jose@5.10.0:
+    resolution: {integrity: sha512-s+3Al/p9g32Iq+oqXxkW//7jk2Vig6FF1CFqzVXoTUXt2qz89YWbL+OwS17NFYEvxC35n0FKeGO2LGYSxeM2Gg==}
+
   js-base64@3.7.7:
     resolution: {integrity: sha512-7rCnleh0z2CkXhH67J8K1Ytz0b2Y+yxTPL+/KOJoa20hfnVQ/3/T6W/KflYI4bRHRagNeXeU2bkNGI3v1oS/lw==}
 
@@ -1703,6 +1736,9 @@ packages:
   nth-check@2.1.1:
     resolution: {integrity: sha512-lqjrjmaOoAnWfMmBPL+XNnynZh2+swxiX3WUE0s4yEHI6m+AwrK2UZOimIRl3X/4QctVqS8AiZjFqyOGrMXb/w==}
 
+  oauth4webapi@3.5.3:
+    resolution: {integrity: sha512-2bnHosmBLAQpXNBLOvaJMyMkr4Yya5ohE5Q9jqyxiN+aa7GFCzvDN1RRRMrp0NkfqRR2MTaQNkcSUCCjILD9oQ==}
+
   ofetch@1.4.1:
     resolution: {integrity: sha512-QZj2DfGplQAr2oj9KzceK9Hwz6Whxazmn85yYeVuS3u9XTMOGMRx0kO95MQ+vLsj/S/NwBDMMLU5hpxvI6Tklw==}
 
@@ -1762,10 +1798,18 @@ packages:
     resolution: {integrity: sha512-QSa9EBe+uwlGTFmHsPKokv3B/oEMQZxfqW0QqNCyhpa6mB1afzulwn8hihglqAb2pOw+BJgNlmXQ8la2VeHB7w==}
     engines: {node: ^10 || ^12 || >=14}
 
+  preact-render-to-string@6.5.11:
+    resolution: {integrity: sha512-ubnauqoGczeGISiOh6RjX0/cdaF8v/oDXIjO85XALCQjwQP+SB4RDXXtvZ6yTYSjG+PC1QRP2AhPgCEsM2EvUw==}
+    peerDependencies:
+      preact: '>=10'
+
   preact-render-to-string@6.5.13:
     resolution: {integrity: sha512-iGPd+hKPMFKsfpR2vL4kJ6ZPcFIoWZEcBf0Dpm3zOpdVvj77aY8RlLiQji5OMrngEyaxGogeakTb54uS2FvA6w==}
     peerDependencies:
       preact: '>=10'
+
+  preact@10.24.3:
+    resolution: {integrity: sha512-Z2dPnBnMUfyQfSQ+GBdsGa16hz35YmLmtTLhM169uW944hYL6xzTYkJjC07j+Wosz733pMWx0fgON3JNw1jJQA==}
 
   preact@10.26.8:
     resolution: {integrity: sha512-1nMfdFjucm5hKvq0IClqZwK4FJkGXhRrQstOQ3P4vp8HxKrJEMFcY6RdBRVTdfQS/UlnX6gfbPuTvaqx/bDoeQ==}
@@ -1874,6 +1918,9 @@ packages:
 
   server-destroy@1.0.1:
     resolution: {integrity: sha512-rb+9B5YBIEzYcD6x2VKidaa+cqYBJQKnU4oe4E3ANwRRN56yk/ua1YCJT1n21NTS8w6CcOclAKNP3PhdCXKYtQ==}
+
+  set-cookie-parser@2.7.1:
+    resolution: {integrity: sha512-IOc8uWeOZgnb3ptbCURJWNjWUPcO3ZnTTdzsurqERrP6nPyv+paC55vJM0LpOlT2ne+Ix+9+CRG1MNLlyZ4GjQ==}
 
   setprototypeof@1.2.0:
     resolution: {integrity: sha512-E5LDX7Wrp85Kil5bhZv46j8jOeboKq5JMmYM3gVGdGH8xFpPWXUMsNrlODCrkoxMEeNi/XZIwuRvY4XNwYMJpw==}
@@ -2390,6 +2437,14 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  '@auth/core@0.37.4':
+    dependencies:
+      '@panva/hkdf': 1.2.1
+      jose: 5.10.0
+      oauth4webapi: 3.5.3
+      preact: 10.24.3
+      preact-render-to-string: 6.5.11(preact@10.24.3)
+
   '@babel/code-frame@7.27.1':
     dependencies:
       '@babel/helper-validator-identifier': 7.27.1
@@ -2766,6 +2821,8 @@ snapshots:
   '@neon-rs/load@0.0.4': {}
 
   '@oslojs/encoding@1.1.0': {}
+
+  '@panva/hkdf@1.2.1': {}
 
   '@preact/preset-vite@2.10.1(@babel/core@7.27.4)(preact@10.26.8)(vite@6.3.5(@types/node@22.15.30)(jiti@2.4.2)(lightningcss@1.30.1))':
     dependencies:
@@ -3153,6 +3210,12 @@ snapshots:
       - yaml
 
   async-listen@3.1.0: {}
+
+  auth-astro@4.2.0(@auth/core@0.37.4)(astro@5.9.1(@types/node@22.15.30)(jiti@2.4.2)(lightningcss@1.30.1)(rollup@4.42.0)(typescript@5.8.3)):
+    dependencies:
+      '@auth/core': 0.37.4
+      astro: 5.9.1(@types/node@22.15.30)(jiti@2.4.2)(lightningcss@1.30.1)(rollup@4.42.0)(typescript@5.8.3)
+      set-cookie-parser: 2.7.1
 
   axobject-query@4.1.0: {}
 
@@ -3609,6 +3672,8 @@ snapshots:
       is-inside-container: 1.0.0
 
   jiti@2.4.2: {}
+
+  jose@5.10.0: {}
 
   js-base64@3.7.7: {}
 
@@ -4078,6 +4143,8 @@ snapshots:
     dependencies:
       boolbase: 1.0.0
 
+  oauth4webapi@3.5.3: {}
+
   ofetch@1.4.1:
     dependencies:
       destr: 2.0.5
@@ -4145,9 +4212,15 @@ snapshots:
       picocolors: 1.1.1
       source-map-js: 1.2.1
 
+  preact-render-to-string@6.5.11(preact@10.24.3):
+    dependencies:
+      preact: 10.24.3
+
   preact-render-to-string@6.5.13(preact@10.26.8):
     dependencies:
       preact: 10.26.8
+
+  preact@10.24.3: {}
 
   preact@10.26.8: {}
 
@@ -4322,6 +4395,8 @@ snapshots:
       - supports-color
 
   server-destroy@1.0.1: {}
+
+  set-cookie-parser@2.7.1: {}
 
   setprototypeof@1.2.0: {}
 

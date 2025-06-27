@@ -1,5 +1,5 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
+import { defineConfig, envField } from 'astro/config';
 
 import tailwindcss from '@tailwindcss/vite';
 
@@ -8,6 +8,8 @@ import db from '@astrojs/db';
 import node from '@astrojs/node';
 
 import preact from '@astrojs/preact';
+
+import auth from 'auth-astro';
 
 // https://astro.build/config
 export default defineConfig({
@@ -18,9 +20,17 @@ export default defineConfig({
     plugins: [tailwindcss()]
   },
 
-  integrations: [db(), preact()],
+  integrations: [db(), preact(), auth()],
 
   adapter: node({
     mode: 'standalone',
   }),
+
+  env: {
+    schema: {
+      GOOGLE_CLIENT_ID: envField.string({ context: "server", access: "secret", optional: false }),
+      GOOGLE_CLIENT_SECRET: envField.string({ context: "server", access: "secret", optional: false }),
+      ADMIN_WHITELIST: envField.string({ context: "server", access: "secret", optional: false }),
+    }
+  }
 });
