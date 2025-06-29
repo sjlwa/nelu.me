@@ -1,32 +1,21 @@
 import { defineAction } from "astro:actions";
-import { z } from "astro:schema";
-import { db, Event as EventsTable, eq } from "astro:db";
+import { db, Event as EventsTable, eq, gte } from "astro:db";
 import type { NewNeluEvent, NewNeluEventDTO, NeluEvent, NeluEventDTO } from "../types/event";
 import { authorizeResource } from "../lib/server/auth";
-
-
-const EventSchemaCreate = z.object({
-  date: z.string().datetime({ offset: true }),
-  location: z.string().nonempty(),
-});
-
-const EventSchemaUpdate = z.object({
-  id: z.number().positive(),
-  date: z.string().datetime({ offset: true }),
-  location: z.string().nonempty(),
-});
-
-const EventSchemaDelete = z.object({
-  id: z.number().positive(),
-});
-
+import { extractDateTime } from "../lib/client/dateFormat";
+import { EventSchemaCreate, EventSchemaUpdate, EventSchemaDelete } from "./eventSchemas";
 
 export const events = {
 
   getAll: defineAction({
     handler: async () => {
       await new Promise(resolve => setTimeout(resolve, 500)); // TODO: remove delay
-      const data = await db.select().from(EventsTable).all();
+
+      const query = db.select().from(EventsTable);
+
+      const { date } = extractDateTime(new Date());
+      const today = new Date(date);
+      const data = await query.where(gte(EventsTable.date, today));
       return data;
     },
   }),
