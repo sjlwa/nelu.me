@@ -1,10 +1,12 @@
 import { actions } from "astro:actions";
-import type { NeluEvent } from "../types/event";
+import type { NeluEventState } from "../types/event";
 import { useCallback } from "preact/hooks";
 import { Signal, useSignal } from "@preact/signals";
+import NeluEventConversor from "../lib/client/eventConversor";
+import { extractDateTime } from "../lib/client/dateFormat";
 
 interface Props {
-  currentEvent: Signal<NeluEvent>;
+  currentEvent: Signal<NeluEventState>;
   onUpdate: () => void;
 }
 
@@ -13,20 +15,16 @@ type Return = {
   updating: Signal<boolean>;
 };
 
-export default function useupdateevent(props: Props): Return {
+export default function useUpdateEvent(props: Props): Return {
   const { currentEvent } = props;
 
   const updating = useSignal<boolean>(false);
 
   const updateEvent = useCallback(async () => {
+    const eventDTO = NeluEventConversor.State2DTO(currentEvent.peek());
+
     updating.value = true;
-
-    const { data, error } = await actions.events.update({
-      id: currentEvent.value.id,
-      date: currentEvent.value.date.toISOString(),
-      location: currentEvent.value.location,
-    });
-
+    const { data, error } = await actions.events.update(eventDTO);
     updating.value = false;
 
     if (error) {
@@ -35,7 +33,9 @@ export default function useupdateevent(props: Props): Return {
     }
 
     props.onUpdate();
-    currentEvent.value = { id: 0, date: new Date(), location: '' };
+    // Reset the form event values
+    const { date, time } = extractDateTime(new Date);
+    currentEvent.value = { id: 0, date, time, location: '' };
   }, []);
 
   return {

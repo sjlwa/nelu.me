@@ -13,3 +13,12 @@ export interface NeluEventDTO {
 };
 
 export type NewNeluEventDTO = Omit<NeluEventDTO, 'id'>;
+
+export interface NeluEventState {
+  id: number;
+  date: string;
+  time: string;
+  location: string;
+};
+
+export type NewNeluEventState = Omit<NeluEventState, 'id'>;

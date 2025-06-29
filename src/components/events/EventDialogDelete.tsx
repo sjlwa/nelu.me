@@ -3,10 +3,10 @@ import { dialogs, editableEvent } from "./../../globals/eventGlobals";
 import Dialog from "./../dialog/Dialog";
 import DialogActions from "./../dialog/DialogActions";
 import useDeleteEvent from "../../hooks/useDeleteEvent";
-import type { NeluEvent } from "../../types/event";
+import type { NeluEventState } from "../../types/event";
 
 interface Props {
-    dropEventItem: (event: NeluEvent) => void;
+    dropEventItem: (event: NeluEventState) => void;
 }
 
 export default function EventDialogDelete(props: Props) {

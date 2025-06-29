@@ -1,10 +1,12 @@
 import { actions } from "astro:actions";
-import { type NewNeluEvent } from "../types/event";
+import type { NewNeluEventState } from "../types/event";
 import { useCallback } from "preact/hooks";
 import { Signal, useSignal } from "@preact/signals";
+import NeluEventConversor from "../lib/client/eventConversor";
+import { extractDateTime } from "../lib/client/dateFormat";
 
 interface Props {
-  newEvent: Signal<NewNeluEvent>;
+  newEventData: Signal<NewNeluEventState>;
   onCreate: () => void;
 }
 
@@ -14,18 +16,16 @@ type Return = {
 };
 
 export default function useCreateEvent(props: Props): Return {
-  const { newEvent } = props;
+  const { newEventData } = props;
 
   const creating = useSignal<boolean>(false);
 
   const createEvent = useCallback(async () => {
+    const newEventDTO =  NeluEventConversor.NewState2DTO(newEventData.peek());
+
+    // Start creation
     creating.value = true;
-
-    const { data, error } = await actions.events.create({
-      date: newEvent.value.date.toISOString(),
-      location: newEvent.value.location,
-    });
-
+    const { data, error } = await actions.events.create(newEventDTO);
     creating.value = false;
 
     if (error) {
@@ -33,7 +33,9 @@ export default function useCreateEvent(props: Props): Return {
       return;
     }
 
-    newEvent.value = { date: new Date(), location: '' };
+    // Reset the form event values
+    const { date, time } = extractDateTime(new Date);
+    newEventData.value = { date, time, location: '' };
     props.onCreate();
   }, []);
 

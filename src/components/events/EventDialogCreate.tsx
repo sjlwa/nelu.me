@@ -6,8 +6,9 @@ import EventForm from "./EventForm";
 import { dialogs } from "./../../globals/eventGlobals";
 import useCreateEvent from "../../hooks/useCreateEvent";
 import { useSignal } from "@preact/signals";
-import type { NewNeluEvent } from "../../types/event";
+import type { NewNeluEventState } from "../../types/event";
 import { useEffect, useRef } from "preact/hooks";
+import { extractDateTime } from "../../lib/client/dateFormat";
 
 interface Props {
     onCreate: () => void;
@@ -26,17 +27,18 @@ export default function EventDialogCreate(props: Props) {
         dialogs.create.value = dialogRef.current;
     }, [dialogRef]);
 
-    const currentEvent = useSignal<NewNeluEvent>({ date: new Date(), location: '' });
-    const { onChangeDatetime, onChangeLocation, datetimeISO } = useEvent(currentEvent);
-    const { createEvent, creating } = useCreateEvent({ newEvent: currentEvent, onCreate });
+    const { date, time } = extractDateTime(new Date);
+    const currentEvent = useSignal<NewNeluEventState>({ date, time, location: '' });
+    const { onChangeDate, onChangeTime, onChangeLocation, } = useEvent(currentEvent);
+    const { createEvent, creating } = useCreateEvent({ newEventData: currentEvent, onCreate });
 
     return (
         <Dialog htmlRef={dialogRef}>
             <h3 class="text-2xl italic font-bold">Registro de nuevo evento</h3>
             <EventForm
-                datetimeISO={datetimeISO}
-                location={currentEvent.value.location}
-                onChangeDatetime={onChangeDatetime}
+                neluEvent={currentEvent}
+                onChangeDate={onChangeDate}
+                onChangeTime={onChangeTime}
                 onChangeLocation={onChangeLocation} />
             <DialogActions btnText="Registrar" processEvent={createEvent} processing={creating} />
         </Dialog>

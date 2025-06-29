@@ -6,11 +6,11 @@ import useUpdateEvent from "../../hooks/useUpdateEvent";
 
 import { dialogs, editableEvent } from "./../../globals/eventGlobals";
 import { useEffect, useRef } from "preact/hooks";
-import type { NeluEvent } from "../../types/event";
+import type { NeluEventState } from "../../types/event";
 
 
 interface Props {
-    setEventItem: (event: NeluEvent) => void;
+    setEventItem: (event: NeluEventState) => void;
 }
 
 export default function EventDialogUpdate(props: Props) {
@@ -30,7 +30,7 @@ export default function EventDialogUpdate(props: Props) {
         dialogs.update.value = dialogRef.current;
     }, [dialogRef]);
 
-    const { onChangeDatetime, onChangeLocation, datetimeISO } = useEvent(editableEvent);
+    const { onChangeDate, onChangeTime, onChangeLocation } = useEvent(editableEvent);
     const { updateEvent, updating } = useUpdateEvent({ currentEvent: editableEvent, onUpdate });
 
     const openDeleteDialog = () => {
@@ -46,9 +46,9 @@ export default function EventDialogUpdate(props: Props) {
                 </button>
             </div>
             <EventForm
-                datetimeISO={datetimeISO}
-                location={editableEvent.value.location}
-                onChangeDatetime={onChangeDatetime}
+                neluEvent={editableEvent}
+                onChangeDate={onChangeDate}
+                onChangeTime={onChangeTime}
                 onChangeLocation={onChangeLocation} />
             <DialogActions btnText="Guardar cambios" processEvent={updateEvent} processing={updating} />
         </Dialog>

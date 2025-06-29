@@ -1,10 +1,11 @@
 import { actions } from "astro:actions";
-import type { NeluEvent } from "../types/event";
+import type { NeluEventState } from "../types/event";
 import { useCallback } from "preact/hooks";
 import { Signal, useSignal } from "@preact/signals";
+import { extractDateTime } from "../lib/client/dateFormat";
 
 interface Props {
-  currentEvent: Signal<NeluEvent>;
+  currentEvent: Signal<NeluEventState>;
   onDelete: () => void;
 }
 
@@ -33,7 +34,9 @@ export default function useDeleteEvent(props: Props): Return {
     }
 
     props.onDelete();
-    currentEvent.value = { id: 0, date: new Date(), location: '' };
+    // Reset the form event values
+    const { date, time } = extractDateTime(new Date);
+    currentEvent.value = { id: 0, date, time, location: '' };
   }, []);
 
   return {

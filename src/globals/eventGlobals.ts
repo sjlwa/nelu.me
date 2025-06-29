@@ -1,5 +1,6 @@
 import { signal } from "@preact/signals";
-import type { Event } from "../types/event";
+import type { NeluEventState } from "../types/event";
+import { extractDateTime } from "../lib/client/dateFormat";
 
 export const dialogs = {
     create: signal<HTMLDialogElement | null>(null),
@@ -7,4 +8,5 @@ export const dialogs = {
     delete: signal<HTMLDialogElement | null>(null),
 };
 
-export const editableEvent = signal<Event>({ id: 0, date: new Date(), location: '' });
+const { date, time } = extractDateTime(new Date);
+export const editableEvent = signal<NeluEventState>({ id: 0, date, time, location: '' });

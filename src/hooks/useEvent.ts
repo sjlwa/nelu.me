@@ -1,22 +1,34 @@
 import { Signal } from "@preact/signals";
 import { useCallback } from "preact/hooks";
-import type { NeluEvent as EventRecord, NewNeluEvent as NewEventRecord } from "./../types/event";
+import type { NeluEventState, NewNeluEventState } from "./../types/event";
 
-type TEvent = EventRecord | NewEventRecord;
+type TEvent = NeluEventState | NewNeluEventState;
 
 export default function useEvent(currentEvent: Signal<TEvent>) {
 
-  const onChangeDatetime = useCallback((event: Event) => {
+  const onChangeDate = useCallback((event: Event) => {
     const input = event.target as HTMLInputElement;
-    currentEvent.value = { ...currentEvent.value, date: input.valueAsDate as Date };
+    currentEvent.value = {
+      ...currentEvent.value,
+      date: input.value,
+    };
+  }, []);
+
+  const onChangeTime = useCallback((event: Event) => {
+    const input = event.target as HTMLInputElement;
+    currentEvent.value = {
+      ...currentEvent.value,
+      time: input.value,
+    };
   }, []);
 
   const onChangeLocation = useCallback((event: Event) => {
     const input = event.target as HTMLInputElement;
-    currentEvent.value = { ...currentEvent.value, location: input.value };
+    currentEvent.value = {
+      ...currentEvent.peek(),
+      location: input.value,
+    };
   }, []);
 
-  const datetimeISO = currentEvent.value.date.toLocaleString('sv-SE', { timeZone: 'America/Mexico_City' });
-
-  return { currentEvent, onChangeDatetime, onChangeLocation, datetimeISO };
+  return { currentEvent, onChangeDate, onChangeTime, onChangeLocation };
 }

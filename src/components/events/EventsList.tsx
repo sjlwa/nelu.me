@@ -1,9 +1,9 @@
 import EventCard from "./EventCard";
-import type { NeluEvent } from "./../../types/event";
+import type { NeluEvent, NeluEventState } from "./../../types/event";
 import type { Signal } from "@preact/signals";
 
 interface Props {
-    events: Signal<NeluEvent[]>;
+    events: Signal<NeluEventState[]>;
     loading: Signal<boolean>;
 }
 
@@ -20,7 +20,7 @@ export default function EventsList(props: Props) {
         <div class="flex flex-col gap-1">
             <div class="flex flex-col gap-1 @container">
                 {
-                    events.value.map((event: NeluEvent, index: number) => (
+                    events.value.map((event: NeluEventState, index: number) => (
                         <EventCard key={index} event={event} />
                     ))
                 }

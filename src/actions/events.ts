@@ -6,13 +6,13 @@ import { authorizeResource } from "../lib/server/auth";
 
 
 const EventSchemaCreate = z.object({
-  date: z.string().datetime(),
+  date: z.string().datetime({ offset: true }),
   location: z.string().nonempty(),
 });
 
 const EventSchemaUpdate = z.object({
   id: z.number().positive(),
-  date: z.string().datetime(),
+  date: z.string().datetime({ offset: true }),
   location: z.string().nonempty(),
 });
 
@@ -41,6 +41,7 @@ export const events = {
         date: new Date(event.date),
         location: event.location,
       };
+
       await new Promise(resolve => setTimeout(resolve, 1000)); // TODO: remove delay
       await db.insert(EventsTable).values(newEvent);
     },
