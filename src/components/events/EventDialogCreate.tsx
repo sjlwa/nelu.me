@@ -1,6 +1,6 @@
 import Dialog from "./../dialog/Dialog";
 import DialogActions from "./../dialog/DialogActions";
-import useEvent from "../../hooks/useEvent";
+import useEventOnChange from "../../hooks/useEventOnChange";
 import EventForm from "./EventForm";
 
 import { dialogs } from "./../../globals/eventGlobals";
@@ -22,6 +22,11 @@ export default function EventDialogCreate(props: Props) {
     }
 
     const dialogRef = useRef<HTMLDialogElement>(null);
+    const inputRefs = {
+        date: useRef<HTMLInputElement>(null),
+        time: useRef<HTMLInputElement>(null),
+        location: useRef<HTMLInputElement>(null),
+    }
 
     useEffect(() => {
         dialogs.create.value = dialogRef.current;
@@ -29,7 +34,7 @@ export default function EventDialogCreate(props: Props) {
 
     const { date, time } = extractDateTime(new Date);
     const currentEvent = useSignal<NewNeluEventState>({ date, time, location: '' });
-    const { onChangeDate, onChangeTime, onChangeLocation, } = useEvent(currentEvent);
+    const { onChangeDate, onChangeTime, onChangeLocation, } = useEventOnChange({ currentEvent, inputRefs });
     const { createEvent, creating } = useCreateEvent({ newEventData: currentEvent, onCreate });
 
     return (
@@ -39,7 +44,9 @@ export default function EventDialogCreate(props: Props) {
                 neluEvent={currentEvent}
                 onChangeDate={onChangeDate}
                 onChangeTime={onChangeTime}
-                onChangeLocation={onChangeLocation} />
+                onChangeLocation={onChangeLocation}
+                inputRefs={inputRefs}
+            />
             <DialogActions btnText="Registrar" processEvent={createEvent} processing={creating} />
         </Dialog>
     );

@@ -1,6 +1,6 @@
 import Dialog from "./../dialog/Dialog";
 import DialogActions from "./../dialog/DialogActions";
-import useEvent from "../../hooks/useEvent";
+import useEventOnChange from "../../hooks/useEventOnChange";
 import EventForm from "./EventForm";
 import useUpdateEvent from "../../hooks/useUpdateEvent";
 
@@ -25,12 +25,17 @@ export default function EventDialogUpdate(props: Props) {
 
     // dialogs refs used to asign global variables on change.
     const dialogRef = useRef<HTMLDialogElement>(null);
+    const inputRefs = {
+        date: useRef<HTMLInputElement>(null),
+        time: useRef<HTMLInputElement>(null),
+        location: useRef<HTMLInputElement>(null),
+    }
 
     useEffect(() => {
         dialogs.update.value = dialogRef.current;
     }, [dialogRef]);
 
-    const { onChangeDate, onChangeTime, onChangeLocation } = useEvent(editableEvent);
+    const { onChangeDate, onChangeTime, onChangeLocation } = useEventOnChange({ currentEvent: editableEvent, inputRefs });
     const { updateEvent, updating } = useUpdateEvent({ currentEvent: editableEvent, onUpdate });
 
     const openDeleteDialog = () => {
@@ -49,7 +54,8 @@ export default function EventDialogUpdate(props: Props) {
                 neluEvent={editableEvent}
                 onChangeDate={onChangeDate}
                 onChangeTime={onChangeTime}
-                onChangeLocation={onChangeLocation} />
+                onChangeLocation={onChangeLocation}
+                inputRefs={inputRefs} />
             <DialogActions btnText="Guardar cambios" processEvent={updateEvent} processing={updating} />
         </Dialog>
     );

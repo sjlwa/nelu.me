@@ -31,3 +31,11 @@ export function extractLocaleOffset(): string {
 export function eventDatetimeToGTM(neluEventState: NewNeluEventState | NeluEventState, localeOffset: string) {
   return `${neluEventState.date}T${neluEventState.time}:00.000${localeOffset}`;
 }
+
+export function eventDatetimeIsAfterNow(event: NewNeluEventState | NeluEventState) {
+    const localeOffset = extractLocaleOffset();
+    const datetimeString = eventDatetimeToGTM(event, localeOffset);
+    const datetime = new Date(datetimeString);
+    const now = new Date();
+    return datetime > now;
+}
