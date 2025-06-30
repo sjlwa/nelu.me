@@ -11,6 +11,8 @@ import preact from '@astrojs/preact';
 
 import auth from 'auth-astro';
 
+import cloudflare from '@astrojs/cloudflare';
+
 // https://astro.build/config
 export default defineConfig({
   inlineStylesheets: 'never',
@@ -22,9 +24,7 @@ export default defineConfig({
 
   integrations: [db(), preact(), auth()],
 
-  adapter: node({
-    mode: 'standalone',
-  }),
+  adapter: cloudflare(),
 
   env: {
     schema: {
