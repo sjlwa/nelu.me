@@ -21,7 +21,7 @@ export default function EventsList(props: Props) {
             <div class="flex flex-col gap-1 @container">
                 {
                     events.value.length === 0 ?
-                        <div class="font-semibold rounde text-center text-pink-200 p-2 mx-6">
+                        <div class="font-semibold rounde text-center text-primary p-2 mx-6">
                             Aún no hay eventos disponibles.
                         </div>
                         : events.value.map((event: NeluEventState, index: number) => (
