@@ -3,11 +3,12 @@ import type { Ref, VNode } from "preact";
 interface Props {
     htmlRef: Ref<HTMLDialogElement>;
     children: VNode | VNode[];
+    open?: boolean;
 }
 
 export default function Dialog(props: Props) {
     return (
-        <dialog
+        <dialog open={props.open}
             ref={props.htmlRef}
             class="fixed inset-0 min-w-full h-full min-h-[100vh] z-1 bg-dark/75 text-left">
             <div class="flex flex-col h-full text-light justify-between">

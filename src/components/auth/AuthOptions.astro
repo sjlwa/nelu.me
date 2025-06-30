@@ -20,10 +20,10 @@ const isAuthorized: boolean = whitelist.includes(session?.user?.email!);
         ? <p>¡Hola! {session?.user?.name}</p>
         : <NonAuthorized />
       }
-      <SignOutButton client:load isAuthorized={isAuthorized} />
+      <SignOutButton client:visible isAuthorized={isAuthorized} />
     </div>
   )
   :
-  <SignInButton client:load />
+  <SignInButton client:visible />
 }
 </div>
