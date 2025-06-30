@@ -13,6 +13,8 @@ import auth from 'auth-astro';
 
 import cloudflare from '@astrojs/cloudflare';
 
+import vercel from '@astrojs/vercel';
+
 // https://astro.build/config
 export default defineConfig({
   inlineStylesheets: 'never',
@@ -24,7 +26,11 @@ export default defineConfig({
 
   integrations: [db(), preact(), auth()],
 
-  adapter: cloudflare(),
+  adapter: vercel({
+    webAnalytics: {
+      enabled: true,
+    },
+  }),
 
   env: {
     schema: {
