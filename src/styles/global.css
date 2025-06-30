@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #BFD000;
+  --color-primary: #99EEBB;
   --color-light: #e7eFdF;
-  --color-dark: #110001;
+  --color-dark: #001111;
   --color-brown: #342223;
 }
 
@@ -14,7 +14,7 @@ body {
   margin: 0;
   width: 100%;
   height: 100%;
-  font-family: "Raleway";
+  font-family: "Fira Sans Condensed", sans-serif;
 }
 
 .button {
@@ -65,5 +65,5 @@ dialog[open] > span > #dialog-content {
 }
 
 .subtitle {
-  @apply text-2xl font-bold mb-3 italic;
+  @apply text-2xl font-bold mb-3 uppercase;
 }

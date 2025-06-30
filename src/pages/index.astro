@@ -19,14 +19,14 @@ import BackgroundImage from "./../components/BackgroundImage.astro";
     <section class="min-h-[75dvh] md:min-h-[50vh]">
       <RevealableContent class="absolute">
         <BackgroundImage src={NeluHeaderPicture}
-          class="md:items-center justify-center flex-col">
+          class="md:items-center justify-center flex-col xl:rounded-b-lg">
           <MusicPlatformsLinks />
           <HeaderText />
-          <div class="absolute bottom-0 w-full h-36 mt-auto sm:hidden bg-linear-to-t from-dark to-[rgba(0,0,0,0)]"></div>
         </BackgroundImage>
       </RevealableContent>
     </section>
   </header>
+
   <main slot="main" class="grid sm:grid-cols-2 xl:grid-cols-3 flex-grow-1 gap-[1px] bg-light/20">
     <section class="bg-dark text-light">
       <RevealableContent class="p-6">
