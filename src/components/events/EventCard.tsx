@@ -22,7 +22,7 @@ export default function EventCard(props: Props) {
     return (
         <article class="flex px-6 py-2 gap-4 border-b-1 border-light/10 last:border-b-0 last:pb-6">
             <div class="flex flex-col @2xl:flex-row @2xl:justify-between w-full">
-                <span class="flex items-center text-lime-200 gap-1 font-semibold gap-3">
+                <span class="flex items-center text-primary gap-1 font-semibold gap-3">
                     <span>{date} - {time}</span>
                     {event.date === today &&
                         <span class="rounded-xl bg-cyan-700 text-xs h-fit px-1">¡Es hoy!</span>
