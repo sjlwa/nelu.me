@@ -1,5 +1,5 @@
 import { defineAction } from "astro:actions";
-import { db, Event as EventsTable, eq, gte } from "astro:db";
+import { db, Event as EventsTable, eq, gte, asc } from "astro:db";
 import type { NewNeluEvent, NewNeluEventDTO, NeluEvent, NeluEventDTO } from "../types/event";
 import { authorizeResource } from "../lib/server/auth";
 import { extractDateTime } from "../lib/client/dateFormat";
@@ -15,7 +15,8 @@ export const events = {
 
       const { date } = extractDateTime(new Date());
       const today = new Date(date);
-      const data = await query.where(gte(EventsTable.date, today));
+      const data = await query.where(gte(EventsTable.date, today)).orderBy(asc(EventsTable.date));
+
       return data;
     },
   }),
