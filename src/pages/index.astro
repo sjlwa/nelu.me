@@ -3,12 +3,13 @@ export const prerender = true;
 
 import Layout from '../layouts/Layout.astro';
 import MusicPlatformsLinks from '../components/MusicPlatformsLinks.astro';
-import HeaderText from '../components/HeaderText.astro';
-import EventsSection from '../components/events/EventsSection';
+import HeaderText from '../components/HeaderText.astro'
+import EventsSection from './../components/events/EventsSection';;
 import SpotifyIframe from '../components/SpotifyIframe.astro';
 
-import NeluPortraitPicture from "./../assets/nelu-portrait.jpg?url";
-import NeluGuitarPicture from "./../assets/nelu-guitar.jpg?url";
+import { Image } from 'astro:assets';
+import NeluHeaderPicture from "./../assets/nelu-blur.jpg?url";
+import NeluPortraitPicture from "./../assets/nelu-portrait.jpg";
 
 import RevealableContent from "./../components/RevealableContent.astro";
 import BackgroundImage from "./../components/BackgroundImage.astro";
@@ -17,32 +18,34 @@ import BackgroundImage from "./../components/BackgroundImage.astro";
   <header slot="header" class="relative">
     <section class="min-h-[75dvh] md:min-h-[50vh]">
       <RevealableContent class="absolute">
-        <BackgroundImage src={NeluPortraitPicture} class="items-center">
+        <BackgroundImage src={NeluHeaderPicture}
+          class="md:items-center justify-center flex-col">
           <MusicPlatformsLinks />
-          <div class="absolute bottom-0 w-full h-36 mt-auto sm:hidden bg-linear-to-t from-dark to-[rgba(0,0,0,0)]"></div>
           <HeaderText />
+          <div class="absolute bottom-0 w-full h-36 mt-auto sm:hidden bg-linear-to-t from-dark to-[rgba(0,0,0,0)]"></div>
         </BackgroundImage>
       </RevealableContent>
     </section>
   </header>
-  <main slot="main" class="grid sm:grid-cols-2 xl:grid-cols-3 flex-grow-1">
+  <main slot="main" class="grid sm:grid-cols-2 xl:grid-cols-3 flex-grow-1 gap-[1px] bg-light/20">
     <section class="bg-dark text-light">
-      <RevealableContent class="p-4 text-center">
-        <h2 class="subtitle">Bienvenido</h2>
-        <p>Inserte texto aqui</p>
+      <RevealableContent class="p-6">
+        <h2 class="subtitle">Me llamo Nelú</h2>
+        <Image class="rounded-lg object-cover h-75" src={NeluPortraitPicture} alt="Una mano sosteniendo una taza de madera con un rostro tallado."/>
+        <p class="text-justify mt-4">Te cuento un chiste? si?... si?... Bueno no importa. ¿Por qué el músico mexicano nunca para de cantar “¡Ay, ay, ay!” en sus conciertos? Porque una vez se le olvidó la letra, y empezo a gritar “¡Ay, ay, ay, ay!” para disimular, el público pensó que era parte de la canción, y ahora siempre lo hace.
+</p>
       </RevealableContent>
     </section>
-    <section class="mx-auto w-full">
-      <RevealableContent class="p-4 text-center bg-light text-dark">
+    <section class="mx-auto w-full bg-dark">
+      <RevealableContent class="p-6">
         <h2 class="subtitle">Ultimos lanzamientos</h2>
         <SpotifyIframe />
       </RevealableContent>
     </section>
-    <section class="flex flex-col relative text-light col-span-full xl:col-auto">
+    <section class="text-light col-span-full xl:col-auto bg-dark text-light">
       <RevealableContent>
-        <div class="z-1 p-4 text-center flex flex-col">
-          <h2 class="subtitle text-primary">Proximos eventos</h2>
-          <EventsSection client:load />
+          <h2 class="subtitle pt-6 pl-6">Eventos</h2>
+          <EventsSection client:only />
         </div>
       </RevealableContent>
     </section>

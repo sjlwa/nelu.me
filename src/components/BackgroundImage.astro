@@ -6,7 +6,7 @@ interface Props {
 
 const { class: classList, src } = Astro.props;
 ---
-<div class={`w-full h-full bg-center xl:bg-cover flex flex-col overflow-hidden absolute z-0 ${classList}`}
+<div class={`w-full h-full bg-cover bg-center flex overflow-hidden absolute z-0 ${classList}`}
       style={{backgroundImage: `url('${src}')`}}>
   <slot/>
 </div>

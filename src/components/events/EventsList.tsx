@@ -11,7 +11,7 @@ export default function EventsList(props: Props) {
     const { events, loading } = props;
 
     if (loading.value) return (
-        <div class="bg-dark p-2 flex flex-row justify-between rounded-sm text-light">
+        <div class="bg-dark p-6 flex flex-row justify-between rounded-sm text-light">
             Cargando eventos ...
         </div>
     );
