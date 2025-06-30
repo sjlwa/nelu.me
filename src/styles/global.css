@@ -27,7 +27,7 @@ body {
 }
 
 .btn-auth {
-  @apply bg-light text-dark hover:bg-dark hover:text-primary;
+  @apply bg-light text-dark hover:bg-dark hover:text-primary h-fit;
 }
 
 .input {

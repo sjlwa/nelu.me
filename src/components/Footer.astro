@@ -1,7 +1,23 @@
 ---
 import AuthOptions from "./../components/auth/AuthOptions.astro";
+import InstagramIcon from './../assets/instagram.svg?raw';
 ---
-<footer class="p-6 text-dark bg- primary border-t-1 border-light/10 border-solid mt-auto">
-  Aqui es el footer?
+<footer class="p-6 border-t-1 border-light/10 border-solid mt-auto flex justify-between">
+
+  <ul class="flex flex-row gap-4">
+    <li class="[&_svg]:fill-light hover:[&_svg]:fill-primary [&_svg]:w-[2rem]">
+      <a href="https://www.instagram.com/mellamo__nelu/">
+        <div set:html={InstagramIcon} />
+      </a>
+    </li>
+  </ul>
+
+  <p>&copy; <span id="copy-year"></span>, Nelú</p>
+  <script>
+    const copyYear = document.getElementById('copy-year')!;
+    copyYear.textContent = (new Date()).getFullYear().toString();
+  </script>
+
   <AuthOptions server:defer />
+
 </footer>

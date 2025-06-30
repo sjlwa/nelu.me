@@ -23,7 +23,7 @@ export default function EventsSection() {
 
                         <button
                             onClick={openEventDialogCreation}
-                            class="button bg-primary text-dark hover:bg-light mt-4 w-fit self-end">
+                            class="button bg-primary text-dark hover:bg-light w-fit self-end m-6">
                             Agrega un nuevo evento
                         </button>
 
