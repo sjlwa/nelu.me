@@ -1,9 +1,11 @@
 ---
 const { url, svg } = Astro.props;
 ---
-<li class="border-b-4 border-primary/0 hover:border-primary/100
-           [&_svg]:fill-light hover:[&_svg]:fill-primary [&_svg]:w-[100%] [&_svg]:h-[100%]">
+<li class="border-b-4 border-primary/0 hover:border-primary/100">
   <a href={url}>
-    <div class="h-[2rem] md:h-[3rem]" set:html={svg} />
+    <div
+      set:html={svg}
+      class="h-[2rem] md:h-[2.6rem] lg:h-[3rem]
+             [&_svg]:fill-light hover:[&_svg]:fill-primary [&_svg]:h-full" />
   </a>
 </li>
