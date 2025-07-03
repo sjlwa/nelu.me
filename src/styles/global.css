@@ -1,10 +1,14 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #99EEBB;
+  --color-primary: #BFD000;
   --color-light: #e7eFdF;
-  --color-dark: #001111;
-  --color-brown: #342223;
+  --color-dark: #111100;
+}
+
+::selection {
+	color: var(--color-dark);
+	background: var(--color-primary);
 }
 
 html,
