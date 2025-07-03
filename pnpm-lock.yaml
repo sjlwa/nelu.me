@@ -29,6 +29,9 @@ importers:
       '@auth/core':
         specifier: ^0.37.4
         version: 0.37.4
+      '@fontsource/fira-sans-extra-condensed':
+        specifier: ^5.2.6
+        version: 5.2.6
       '@preact/signals':
         specifier: ^2.2.0
         version: 2.2.0(preact@10.26.9)
@@ -615,6 +618,9 @@ packages:
   '@fastify/busboy@2.1.1':
     resolution: {integrity: sha512-vBZP4NlzfOlerQTnba4aqZoMhE/a9HY7HRqoOPaETQcSQuWEIyZMHGfVu6w9wGtGK5fED5qRs2DteVCjOH60sA==}
     engines: {node: '>=14'}
+
+  '@fontsource/fira-sans-extra-condensed@5.2.6':
+    resolution: {integrity: sha512-3XH18BouHCSt/9A3kJezxBPBMnRWXeeH77jeDT1h/XNsSLvgGpJToZfjps2I0KAO3SoerFrGIafligW8YspJNQ==}
 
   '@img/sharp-darwin-arm64@0.33.5':
     resolution: {integrity: sha512-UT4p+iz/2H4twwAoLCqfA9UH5pI6DggwKEGuaPy7nCVQ8ZsiY5PIcrRvD1DzuY3qYL07NtIQcWnBSY/heikIFQ==}
@@ -3854,6 +3860,8 @@ snapshots:
     optional: true
 
   '@fastify/busboy@2.1.1': {}
+
+  '@fontsource/fira-sans-extra-condensed@5.2.6': {}
 
   '@img/sharp-darwin-arm64@0.33.5':
     optionalDependencies:
