@@ -1,11 +1,48 @@
 ---
+interface Track {
+  title: string;
+  id: string;
+  img?: string;
+}
+
+const tracks: Track[] = [
+    {
+        title: "Quiero un té, quiero",
+        id: "spotify:track:70XKEDg1fnjLThZTWKcDDn",
+        img: "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/e9/8c/bb/e98cbb5f-e17f-feff-d54c-7e529f6b6083/199257300695_cover.jpg/1200x630bb.jpg",
+    },
+    {
+        title: "What is Backstage?",
+        id: "spotify:episode:43cbJh4ccRD7lzM2730YK3",
+    },
+    {
+        title: "Introducing Nerd Out",
+        id: "spotify:episode:6I3ZzCxRhRkNqnQNo8AZPV",
+    },
+];
 ---
-<iframe
-  src="https://open.spotify.com/embed/album/10l6R2qwQwPBMRTPMCANkJ?utm_source=generator&theme=0"
-  width="100%"
-  height="512"
-  frameBorder="0"
-  allowfullscreen=""
-  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-  loading="lazy">
-</iframe>
+<div class="flex flex-col">
+  {
+    tracks.map(track =>
+      <button
+        class="track hover:bg-dark/10 text-start cursor-pointer px-6 py-3 font-bold flex items-center justify-between border-b-1 border-b-dark/10 "
+        data-spotify-id={track.id}>
+        <div class="flex flex-row gap-6 items-center">
+          <div class={`w-8 h-8 overflow-hidden rounded-3xl ${!track.img && 'bg-primary'}`}>
+            <img class="w-8 scale-200" src={track.img} />
+          </div>
+          {track.title}
+        </div>
+        <span id={track.id} class="play-text-init text-xs rounded-sm px-1">
+          Escuchar
+        </span>
+      </button>)
+  }
+</div>
+
+<div class="p-6 mt-auto">
+  <div id="embed-iframe"></div>
+</div>
+
+<script src="https://open.spotify.com/embed/iframe-api/v1" async></script>
+<script src="./spotifyPlayer.ts"></script>

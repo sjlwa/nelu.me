@@ -1,9 +1,10 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #BFD000;
+  /* --color-primary: #77ff77; */
+  --color-primary: #CCEE22;
   --color-light: #e7eFdF;
-  --color-dark: #111100;
+  --color-dark: #161701;
 }
 
 ::selection {
@@ -70,4 +71,12 @@ dialog[open] > span > #dialog-content {
 
 .subtitle {
   @apply text-2xl font-bold mb-3 uppercase;
+}
+
+.play-text-init {
+  @apply bg-dark text-light;
+}
+
+.play-text-selected {
+  @apply bg-primary text-dark;
 }

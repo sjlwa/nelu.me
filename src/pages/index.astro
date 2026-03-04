@@ -8,18 +8,18 @@ import EventsSection from './../components/events/EventsSection';;
 import SpotifyIframe from '../components/SpotifyIframe.astro';
 
 import { Image } from 'astro:assets';
-import NeluHeaderPicture from "./../assets/nelu-blur.jpg?url";
+import NeluHeaderPicture from "./../assets/DSC06781-2.jpg?url";
 import NeluPortraitPicture from "./../assets/nelu-portrait.jpg";
 
 import RevealableContent from "./../components/RevealableContent.astro";
 import BackgroundImage from "./../components/BackgroundImage.astro";
 ---
 <Layout>
-  <header slot="header" class="relative">
-    <section class="min-h-[75dvh] md:min-h-[50vh]">
-      <RevealableContent class="absolute">
+  <header slot="header">
+    <section>
+      <RevealableContent>
         <BackgroundImage src={NeluHeaderPicture}
-          class="md:items-center justify-between flex-col">
+            class="items-center justify-between flex-col min-h-[100dvh] md:min-h-auto md:h-[max(50dvh,fit-content)]">
           <MusicPlatformsLinks />
           <HeaderText />
         </BackgroundImage>
@@ -37,7 +37,7 @@ import BackgroundImage from "./../components/BackgroundImage.astro";
       </RevealableContent>
     </section>
     <section class="mx-auto w-full bg-dark">
-      <RevealableContent class="bg-light text-dark">
+      <RevealableContent class="bg-black text-light">
         <h2 class="subtitle px-6 pt-6">Mi música</h2>
         <SpotifyIframe />
       </RevealableContent>
