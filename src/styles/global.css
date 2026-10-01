@@ -48,6 +48,27 @@ body {
   html { scroll-behavior: auto; }
 }
 
+/* Barra de desplazamiento: delgada, color primario, visible solo mientras se hace scroll
+   (o al acercar el cursor al borde). El atributo lo controla el script en Layout.astro. */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+html[data-scrolling] {
+  scrollbar-color: var(--color-primary) transparent;
+}
+/* Safari y Chromium antiguos (sin scrollbar-color) */
+@supports not (scrollbar-color: auto) {
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb {
+    background: transparent;
+    border-radius: 9999px;
+    transition: background-color 300ms;
+  }
+  html[data-scrolling] ::-webkit-scrollbar-thumb { background: var(--color-primary); }
+}
+
 /* Tipografía */
 .display {
   font-family: var(--font-display);

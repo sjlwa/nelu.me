@@ -43,5 +43,20 @@ const title = `${site.name} · ${site.tagline}`;
     <slot />
     <Footer />
     <Reveal />
+    <script>
+      // Muestra la barra de desplazamiento mientras se hace scroll y la oculta al detenerse.
+      const root = document.documentElement;
+      let hideTimer: number | undefined;
+      const show = (delay = 900) => {
+        root.dataset.scrolling = '';
+        window.clearTimeout(hideTimer);
+        hideTimer = window.setTimeout(() => { delete root.dataset.scrolling; }, delay);
+      };
+      window.addEventListener('scroll', () => show(), { passive: true });
+      // También al acercar el cursor al borde derecho, para poder arrastrarla.
+      window.addEventListener('mousemove', (e) => {
+        if (e.clientX > window.innerWidth - 24) show(1500);
+      }, { passive: true });
+    </script>
   </body>
 </html>
