@@ -19,12 +19,12 @@ const photos = await Promise.all(
     })
 );
 ---
-<ul class="columns-1 sm:columns-2 lg:columns-3 gap-4 [&>li]:mb-4" data-reveal>
+<ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" data-reveal>
   {photos.map((p, i) => (
-    <li class="break-inside-avoid">
+    <li>
       <button
         type="button"
-        class="group relative isolate block w-full overflow-hidden rounded-2xl cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+        class="group relative block w-full aspect-[4/5] overflow-hidden rounded-2xl cursor-zoom-in transition-transform duration-500 hover:scale-[1.02] focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
         data-photo-index={i}
         aria-label={`Ampliar foto ${i + 1}: ${p.alt}`}>
         <Image
@@ -32,9 +32,9 @@ const photos = await Promise.all(
           alt={p.alt}
           widths={[400, 800, 1200]}
           sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-          class="w-full h-auto rounded-2xl object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+          class="absolute inset-0 h-full w-full rounded-2xl object-cover"
         />
-        <span class="absolute inset-0 bg-gradient-to-t from-dark/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" aria-hidden="true"></span>
+        <span class="absolute inset-0 rounded-2xl bg-gradient-to-t from-dark/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" aria-hidden="true"></span>
       </button>
     </li>
   ))}
