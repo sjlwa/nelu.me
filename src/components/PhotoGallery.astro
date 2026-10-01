@@ -15,23 +15,24 @@ const photos = await Promise.all(
     .map(async ([path, mod]) => {
       const file = path.split("/").pop()!;
       const full = await getImage({ src: mod.default, width: 1800, format: "webp" });
-      return { file, src: mod.default, alt: photoAlts[file] ?? defaultPhotoAlt, full: full.src };
+      const landscape = mod.default.width > mod.default.height;
+      return { file, src: mod.default, alt: photoAlts[file] ?? defaultPhotoAlt, full: full.src, landscape };
     })
 );
 ---
-<ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" data-reveal>
+<ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 grid-flow-dense gap-4" data-reveal>
   {photos.map((p, i) => (
-    <li>
+    <li class={p.landscape ? "sm:col-span-2" : ""}>
       <button
         type="button"
-        class="group relative block w-full aspect-[4/5] overflow-hidden rounded-2xl cursor-zoom-in transition-transform duration-500 hover:scale-[1.02] focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+        class={`group relative block w-full ${p.landscape ? "aspect-[4/3] sm:aspect-[18/11]" : "aspect-[4/5]"} overflow-hidden rounded-2xl cursor-zoom-in transition-transform duration-500 hover:scale-[1.02] focus:outline-none focus-visible:ring-2 focus-visible:ring-primary`}
         data-photo-index={i}
         aria-label={`Ampliar foto ${i + 1}: ${p.alt}`}>
         <Image
           src={p.src}
           alt={p.alt}
           widths={[400, 800, 1200]}
-          sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+          sizes={p.landscape ? "(min-width: 1024px) 66vw, 100vw" : "(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"}
           class="absolute inset-0 h-full w-full rounded-2xl object-cover"
         />
         <span class="absolute inset-0 rounded-2xl bg-gradient-to-t from-dark/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" aria-hidden="true"></span>
