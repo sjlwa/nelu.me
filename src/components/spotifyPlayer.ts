@@ -9,79 +9,60 @@ interface EmbedController {
 }
 
 let currentTrackId: string | null = null;
-
-function restorePreviousBtn() {
-  // Find the previously playing button by its data attribute
-  const previousBtn = document.querySelector(`.track[data-spotify-id="${currentTrackId}"]`);
-  if (previousBtn) {
-    const previousPlayText = previousBtn.querySelector('span');
-    if (previousPlayText) {
-      previousPlayText.textContent = "Escuchar";
-      previousPlayText.classList.add('play-text-init');
-      previousPlayText.classList.remove('play-text-selected');
-    }
-  }
-}
-function toggleOffPlayingState(selectedPlayText: HTMLElement) {
-  // toggle off playing state
-  selectedPlayText.textContent = "Escuchar";
-  selectedPlayText.classList.add('play-text-init');
-  selectedPlayText.classList.remove('play-text-selected');
-}
-function toggleOnPlayingState(selectedPlayText: HTMLElement) {
-  selectedPlayText.textContent = "En reproducción";
-  selectedPlayText.classList.remove('play-text-init');
-  selectedPlayText.classList.add('play-text-selected');
-}
-
 let EmbedController: EmbedController;
 
+function labelOf(button: Element | null): HTMLElement | null {
+  return button?.querySelector<HTMLElement>('[data-play-label]') ?? null;
+}
+
+function setPlaying(label: HTMLElement | null, playing: boolean) {
+  if (!label) return;
+  label.textContent = playing ? "En reproducción" : "Escuchar";
+  label.classList.toggle('play-text-init', !playing);
+  label.classList.toggle('play-text-selected', playing);
+}
+
 function onSelect(event: Event) {
-  const trackButton = event.target as HTMLButtonElement;
+  const trackButton = event.currentTarget as HTMLButtonElement;
   const selectedTrackId = trackButton.dataset.spotifyId!;
-  const selectedPlayText = trackButton.querySelector('span')!;
+  const selectedLabel = labelOf(trackButton);
 
   if (!EmbedController) return;
 
-  if (currentTrackId && currentTrackId !== selectedTrackId) {
-    // If there is a currently playing track and it's different from the clicked one
-    restorePreviousBtn();
-    EmbedController.loadUri(selectedTrackId);
-    toggleOnPlayingState(selectedPlayText);
-    currentTrackId = selectedTrackId;
-    EmbedController.play();
-
-  } else if (selectedTrackId === currentTrackId) {
-    // If clicking the same track, toggle off playing state
-    toggleOffPlayingState(selectedPlayText);
+  if (selectedTrackId === currentTrackId) {
+    setPlaying(selectedLabel, false);
     currentTrackId = null;
     EmbedController.pause();
-  } else {
-    // Set the clicked button to playing
-    toggleOnPlayingState(selectedPlayText)
-    currentTrackId = selectedTrackId;
-    EmbedController.loadUri(selectedTrackId);
-    EmbedController.play();
+    return;
   }
+
+  if (currentTrackId) {
+    const previousBtn = document.querySelector(`.track[data-spotify-id="${currentTrackId}"]`);
+    setPlaying(labelOf(previousBtn), false);
+  }
+
+  setPlaying(selectedLabel, true);
+  currentTrackId = selectedTrackId;
+  EmbedController.loadUri(selectedTrackId);
+  EmbedController.play();
 }
 
 window.onSpotifyIframeApiReady = (IFrameAPI: any) => {
   const element = document.getElementById('embed-iframe');
-
   if (!element) return;
+
+  const first = document.querySelector<HTMLElement>('.track')?.dataset.spotifyId;
 
   const options = {
     width: '100%',
-    height: '100',
-    uri: "spotify:track:70XKEDg1fnjLThZTWKcDDn",
+    height: '152',
+    uri: first ?? "spotify:track:70XKEDg1fnjLThZTWKcDDn",
   };
 
-  const callback = (controller: any) => {
+  IFrameAPI.createController(element, options, (controller: EmbedController) => {
     EmbedController = controller;
-    document.querySelectorAll(".track").forEach((track: any) => {
+    document.querySelectorAll<HTMLButtonElement>(".track").forEach((track) => {
       track.addEventListener('click', onSelect);
     });
-  };
-
-  IFrameAPI.createController(element, options, callback);
+  });
 };

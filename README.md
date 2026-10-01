@@ -1,48 +1,40 @@
-# Astro Starter Kit: Basics
+# nelu.me
+
+Sitio oficial de **Nelú**, cantautora y saxofonista de Comala, Colima. Construido con [Astro](https://astro.build), Tailwind CSS 4, Preact y Astro DB.
+
+## Secciones
+
+| Sección | Dónde se edita |
+| :-- | :-- |
+| Inicio (hero) | `src/components/Hero.astro` |
+| Sobre mí | Textos en `src/data/site.ts` (`bio`, `genres`) |
+| Eventos | Se administran desde el sitio al iniciar sesión con una cuenta de `ADMIN_WHITELIST` |
+| Mi música | `src/data/tracks.ts` (URIs de Spotify) |
+| Fotos | Agrega imágenes a `src/assets/photos/`; los textos alternativos van en `src/data/photos.ts` |
+| Videos | `src/data/videos.ts` (IDs de YouTube) |
+| Contacto | Correo e Instagram en `src/data/site.ts` |
+
+La paleta y la tipografía viven en `src/styles/global.css` (bloque `@theme`).
+
+## Variables de entorno
+
+Crea un archivo `.env` en la raíz:
 
 ```sh
-pnpm create astro@latest -- --template basics
+GOOGLE_CLIENT_ID=...        # OAuth de Google para el acceso de administración
+GOOGLE_CLIENT_SECRET=...
+ADMIN_WHITELIST="correo1@ejemplo.com correo2@ejemplo.com"  # separados por espacio
+AUTH_SECRET=...             # openssl rand -hex 32
 ```
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
+Opcionales: `AUTH_TRUST_HOST=true` (hosts que no sean Vercel), `ASTRO_DB_REMOTE_URL` y `ASTRO_DB_APP_TOKEN` (base de datos remota libSQL/Turso).
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Comandos
 
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
-
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+| Comando | Acción |
+| :-- | :-- |
+| `pnpm install` | Instala dependencias |
+| `pnpm dev` | Servidor local en `localhost:4321` |
+| `pnpm build` | Compila a `./dist/` (local: `ASTRO_DATABASE_FILE=./.astro/content.db pnpm build`, remoto: `pnpm build --remote`) |
+| `pnpm preview` | Previsualiza la compilación |
+| `pnpm astro check` | Revisión de tipos |

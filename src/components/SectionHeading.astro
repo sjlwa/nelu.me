@@ -1,0 +1,15 @@
+---
+interface Props {
+  eyebrow: string;
+  title: string;
+  class?: string;
+}
+const { eyebrow, title, class: classList = "" } = Astro.props;
+---
+<div class={`flex flex-col gap-3 ${classList}`} data-reveal>
+  <span class="eyebrow flex items-center gap-3">
+    <span class="h-px w-8 bg-primary/70" aria-hidden="true"></span>
+    {eyebrow}
+  </span>
+  <h2 class="subtitle">{title}</h2>
+</div>

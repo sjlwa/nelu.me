@@ -1,23 +1,30 @@
 ---
 import AuthOptions from "./../components/auth/AuthOptions.astro";
 import InstagramIcon from './../assets/instagram.svg?raw';
+import Name from "./../assets/nelu-name.svg?raw";
+import { site } from "../data/site";
 ---
-<footer class="p-6 border-t-1 border-light/10 border-solid mt-auto flex flex-col md:flex-row justify-between items-center gap-2 bg-black">
+<footer class="mt-auto bg-ink border-t border-light/10">
+  <div class="mx-auto max-w-6xl px-5 py-10 flex flex-col md:flex-row justify-between items-center gap-6">
+    <div class="flex items-center gap-4">
+      <a href="#inicio" aria-label="Ir al inicio" class="[&_svg]:h-6 [&_svg]:w-auto [&_svg]:fill-light/70 hover:[&_svg]:fill-primary transition-colors" set:html={Name} />
+      <span class="text-sm text-muted hidden sm:inline">{site.tagline} · {site.origin}</span>
+    </div>
 
-  <ul class="flex flex-row gap-4">
-    <li class="[&_svg]:fill-light hover:[&_svg]:fill-primary [&_svg]:w-[2rem]">
-      <a href="https://www.instagram.com/mellamo__nelu/" aria-label="Instagram de Nelú">
-        <div set:html={InstagramIcon} />
-      </a>
-    </li>
-  </ul>
+    <ul class="flex flex-row gap-4">
+      <li class="[&_svg]:fill-light/80 hover:[&_svg]:fill-primary [&_svg]:w-6 transition-colors">
+        <a href={site.instagram.url} target="_blank" rel="noopener" aria-label="Instagram de Nelú">
+          <Fragment set:html={InstagramIcon} />
+        </a>
+      </li>
+    </ul>
 
-  <p>&copy; <span id="copy-year"></span>, Nelú</p>
-  <script>
-    const copyYear = document.getElementById('copy-year')!;
-    copyYear.textContent = (new Date()).getFullYear().toString();
-  </script>
+    <p class="text-sm text-muted">&copy; <span id="copy-year"></span>, {site.name}</p>
+    <script>
+      const copyYear = document.getElementById('copy-year')!;
+      copyYear.textContent = (new Date()).getFullYear().toString();
+    </script>
 
-  <AuthOptions server:defer />
-
+    <AuthOptions server:defer />
+  </div>
 </footer>

@@ -1,47 +1,42 @@
 ---
-interface Track {
-  title: string;
-  id: string;
-  img?: string;
-}
-
-const tracks: Track[] = [
-    {
-        title: "Quiero un té, quiero",
-        id: "spotify:track:70XKEDg1fnjLThZTWKcDDn",
-        img: "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/e9/8c/bb/e98cbb5f-e17f-feff-d54c-7e529f6b6083/199257300695_cover.jpg/1200x630bb.jpg",
-    },
-    {
-        title: "What is Backstage?",
-        id: "spotify:episode:43cbJh4ccRD7lzM2730YK3",
-    },
-    {
-        title: "Introducing Nerd Out",
-        id: "spotify:episode:6I3ZzCxRhRkNqnQNo8AZPV",
-    },
-];
+import { tracks } from "../data/tracks";
+import MusicPlatformsLinks from "./MusicPlatformsLinks.astro";
 ---
-<div class="flex flex-col">
-  {
-    tracks.map(track =>
-      <button
-        class="track hover:bg-dark/10 text-start cursor-pointer px-6 py-3 font-bold flex items-center justify-between border-b-1 border-b-dark/10 "
-        data-spotify-id={track.id}>
-        <div class="flex flex-row gap-6 items-center">
-          <div class={`w-8 h-8 overflow-hidden rounded-3xl ${!track.img && 'bg-primary'}`}>
-            <img class="w-8 scale-200" src={track.img} />
-          </div>
-          {track.title}
-        </div>
-        <span id={track.id} class="play-text-init text-xs rounded-sm px-1">
-          Escuchar
-        </span>
-      </button>)
-  }
-</div>
+<div class="card overflow-hidden flex flex-col lg:flex-row">
+  <div class="flex-1 flex flex-col">
+  <ol class="flex flex-col divide-y divide-light/10">
+    {tracks.map((track, i) => (
+      <li>
+        <button
+          type="button"
+          class="track group w-full text-start cursor-pointer px-5 py-4 flex items-center gap-4 hover:bg-light/5 transition-colors"
+          data-spotify-id={track.uri}>
+          <span class="font-condensed text-primary/70 w-6 tabular-nums text-sm">{String(i + 1).padStart(2, '0')}</span>
+          <span class={`w-12 h-12 shrink-0 overflow-hidden rounded-lg ${!track.img ? 'bg-clay/60' : ''}`}>
+            {track.img && <img class="w-full h-full object-cover" src={track.img} alt="" loading="lazy" />}
+          </span>
+          <span class="flex flex-col flex-1 min-w-0">
+            <span class="font-semibold truncate">{track.title}</span>
+            {track.year && <span class="text-sm text-muted">{track.year}</span>}
+          </span>
+          <span data-play-label class="play-text-init text-xs rounded-full px-2.5 py-1 font-semibold whitespace-nowrap transition-colors">
+            Escuchar
+          </span>
+        </button>
+      </li>
+    ))}
+  </ol>
+  <div class="mt-auto px-5 py-5 border-t border-light/10 flex flex-col gap-3">
+    <span class="eyebrow">También disponible en</span>
+    <MusicPlatformsLinks />
+  </div>
+  </div>
 
-<div class="p-6 mt-auto">
-  <div id="embed-iframe"></div>
+  <div class="lg:w-[26rem] p-5 bg-ink/40 flex flex-col justify-center gap-3 border-t lg:border-t-0 lg:border-l border-light/10">
+    <p class="eyebrow">Reproductor</p>
+    <div id="embed-iframe" class="rounded-xl overflow-hidden min-h-[152px]"></div>
+    <p class="text-xs text-muted">Reproducción mediante Spotify. Inicia sesión en Spotify para escuchar la canción completa.</p>
+  </div>
 </div>
 
 <script src="https://open.spotify.com/embed/iframe-api/v1" async></script>

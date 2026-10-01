@@ -14,17 +14,16 @@ export default function EventsSection() {
     }
 
     return (
-        <>
+        <div class="flex flex-col gap-4">
             <EventsList events={events} loading={loading} />
             {
                 isAuthorized.value &&
                 (
                     <>
-
                         <button
                             onClick={openEventDialogCreation}
-                            class="button bg-primary text-dark hover:bg-light w-fit self-end m-6">
-                            Agrega un nuevo evento
+                            class="button btn-primary w-fit self-end">
+                            Agregar un nuevo evento
                         </button>
 
                         <EventDialogCreate onCreate={loadEvents} />
@@ -33,6 +32,6 @@ export default function EventsSection() {
                     </>
                 )
             }
-        </>
+        </div>
     );
 }

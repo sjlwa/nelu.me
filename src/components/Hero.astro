@@ -1,0 +1,54 @@
+---
+import { Image } from "astro:assets";
+import Name from "./../assets/nelu-name.svg?raw";
+import heroPhoto from "./../assets/photos/nelu-guitarra-libro.jpg";
+import MusicPlatformsLinks from "./MusicPlatformsLinks.astro";
+import { site } from "../data/site";
+
+const bars = Array.from({ length: 14 }, (_, i) => i);
+---
+<section id="inicio" class="relative min-h-dvh flex flex-col justify-end overflow-hidden">
+  <Image
+    src={heroPhoto}
+    alt=""
+    widths={[640, 1024, 1600, 2000]}
+    sizes="100vw"
+    loading="eager"
+    fetchpriority="high"
+    class="absolute inset-0 w-full h-full object-cover object-[50%_35%]"
+  />
+  <div class="absolute inset-0 bg-gradient-to-t from-dark via-dark/60 to-dark/10" aria-hidden="true"></div>
+  <div class="absolute inset-0 bg-gradient-to-r from-dark/70 to-transparent" aria-hidden="true"></div>
+
+  <div class="relative mx-auto w-full max-w-6xl px-5 pb-16 pt-32 flex flex-col gap-8">
+    <div class="flex flex-col gap-5 max-w-2xl">
+      <h1 class="sr-only">{site.name}. {site.tagline} de {site.origin}</h1>
+      <div class="[&_svg]:fill-light [&_svg]:w-[min(70vw,22rem)] [&_svg]:h-auto drop-shadow-[0_8px_30px_rgba(0,0,0,.6)]"
+           set:html={Name} aria-hidden="true" />
+
+      <p class="display text-2xl md:text-4xl text-light/95 italic font-light">
+        Canciones de amor entre mujeres,<br class="hidden sm:block" />
+        con sabor a jazz, bolero y té de la tarde.
+      </p>
+
+      <p class="eyebrow">{site.tagline} · {site.origin}</p>
+
+      <div class="flex flex-wrap gap-3 pt-2">
+        <a href="#musica" class="button btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+          Escuchar
+        </a>
+        <a href="#eventos" class="button btn-ghost">Próximos eventos</a>
+      </div>
+    </div>
+
+    <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-6 border-t border-light/15 pt-6">
+      <MusicPlatformsLinks />
+      <div class="hidden sm:flex items-end gap-1 h-8 text-primary/80" aria-hidden="true">
+        {bars.map((i) => (
+          <span class="wave-bar block w-1 h-full rounded-full bg-current" style={`animation-delay:${(i * 0.09).toFixed(2)}s`}></span>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

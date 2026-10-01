@@ -1,15 +1,29 @@
 @import "tailwindcss";
 
 @theme {
-  /* --color-primary: #77ff77; */
-  --color-primary: #CCEE22;
-  --color-light: #e7eFdF;
-  --color-dark: #161701;
+  /* Paleta cálida y terrosa */
+  --color-primary: #e0a35a;   /* ámbar */
+  --color-clay: #b3613b;      /* barro */
+  --color-olive: #7a8a4a;     /* oliva */
+  --color-light: #f1e7d6;     /* crema */
+  --color-muted: #a89a86;     /* texto secundario */
+  --color-dark: #17120e;      /* fondo principal */
+  --color-surface: #221b15;   /* tarjetas */
+  --color-ink: #0f0c09;       /* pie de página */
+
+  --font-display: 'Fraunces Variable', Georgia, serif;
+  --font-sans: 'Fira Sans', system-ui, sans-serif;
+  --font-condensed: 'Fira Sans Extra Condensed', 'Fira Sans', sans-serif;
 }
 
 ::selection {
-	color: var(--color-dark);
-	background: var(--color-primary);
+  color: var(--color-dark);
+  background: var(--color-primary);
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 4.5rem;
 }
 
 html,
@@ -18,65 +32,137 @@ body {
   color: var(--color-light);
   margin: 0;
   width: 100%;
-  height: 100%;
-  font-family: 'Fira Sans Extra Condensed', sans-serif;
+  min-height: 100%;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
 }
 
+body {
+  background-image:
+    radial-gradient(60rem 40rem at 10% -10%, color-mix(in oklab, var(--color-clay) 18%, transparent), transparent 60%),
+    radial-gradient(50rem 35rem at 110% 20%, color-mix(in oklab, var(--color-olive) 14%, transparent), transparent 60%);
+  background-attachment: fixed;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+/* Tipografía */
+.display {
+  font-family: var(--font-display);
+  font-variation-settings: "opsz" 144, "wght" 500;
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+
+.eyebrow {
+  font-family: var(--font-condensed);
+  @apply uppercase tracking-[0.25em] text-xs font-semibold text-primary;
+}
+
+.subtitle {
+  @apply text-4xl md:text-5xl text-light;
+  font-family: var(--font-display);
+  font-variation-settings: "opsz" 144, "wght" 500;
+  letter-spacing: -0.01em;
+  line-height: 1.05;
+}
+
+.prose-warm p + p {
+  @apply mt-4;
+}
+
+/* Botones */
 .button {
-  @apply font-bold rounded-sm cursor-pointer py-1 px-4;
-  transition: 100ms background-color;
+  @apply font-semibold rounded-full cursor-pointer py-2 px-5 inline-flex items-center justify-center gap-2;
+  transition: background-color 150ms, color 150ms, transform 150ms;
+}
+.button:active { transform: translateY(1px); }
+
+.btn-primary {
+  @apply bg-primary text-dark hover:bg-light;
+}
+
+.btn-ghost {
+  @apply border border-light/30 text-light hover:border-primary hover:text-primary;
 }
 
 .btn-sm {
-  @apply cursor-pointer font-semibold text-sm rounded-sm px-2;
+  @apply cursor-pointer font-semibold text-sm rounded-full px-3 py-1;
+  transition: background-color 150ms, color 150ms;
 }
 
 .btn-auth {
-  @apply bg-light text-dark hover:bg-dark hover:text-primary h-fit;
+  @apply bg-light/10 text-light hover:bg-primary hover:text-dark h-fit;
 }
 
 .input {
-  @apply shadow appearance-none border rounded w-full py-2 px-3 text-light focus:outline-none;
+  @apply appearance-none border border-light/20 bg-surface rounded-lg w-full py-2 px-3 text-light focus:outline-none focus:border-primary;
 }
 
 .input-invalid {
-  @apply border-orange-700 text-orange-700;
+  @apply border-clay text-clay;
 }
 
+/* Tarjetas */
+.card {
+  @apply bg-surface/80 border border-light/10 rounded-2xl;
+  backdrop-filter: blur(6px);
+}
+
+/* Diálogos */
 dialog[open] {
   animation: fadein 100ms ease-in forwards;
 }
 
-dialog[open] > span > #dialog-content {
+dialog[open] > span > #dialog-content,
+dialog[open] > div > #dialog-content {
   animation: slide-top 200ms ease-in forwards;
 }
 
 @keyframes fadein {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
+  0% { opacity: 0; }
+  100% { opacity: 1; }
 }
 
 @keyframes slide-top {
-  0% {
-    transform: translateY(100%);
-  }
-  100% {
-    transform: translateY(0%);
-  }
+  0% { transform: translateY(100%); }
+  100% { transform: translateY(0%); }
 }
 
-.subtitle {
-  @apply text-2xl font-bold mb-3 uppercase;
-}
-
+/* Reproductor */
 .play-text-init {
-  @apply bg-dark text-light;
+  @apply bg-light/10 text-light;
 }
 
 .play-text-selected {
   @apply bg-primary text-dark;
+}
+
+/* Aparición al hacer scroll */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(1.25rem);
+  transition: opacity 700ms ease-out, transform 700ms ease-out;
+}
+[data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] { opacity: 1; transform: none; transition: none; }
+}
+
+/* Barra de ondas del hero */
+@keyframes wave {
+  0%, 100% { transform: scaleY(0.3); }
+  50% { transform: scaleY(1); }
+}
+.wave-bar {
+  transform-origin: bottom;
+  animation: wave 1.4s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .wave-bar { animation: none; transform: scaleY(0.6); }
 }

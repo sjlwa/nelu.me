@@ -1,11 +1,15 @@
 ---
-const { url, svg } = Astro.props;
+interface Props {
+  name: string;
+  url: string;
+  svg: string;
+  class?: string;
+}
+const { url, svg, name, class: classList = "" } = Astro.props;
 ---
-<li class="border-b-4 border-primary/0 hover:border-primary/100">
-  <a href={url}>
-    <div
-      set:html={svg}
-      class="[&_svg]:fill-light hover:[&_svg]:fill-primary
-             h-[clamp(1rem,5vw,3rem)] [&_svg]:h-full"/>
+<li class={classList}>
+  <a href={url} target="_blank" rel="noopener" aria-label={`Escuchar en ${name}`} title={name}
+     class="block [&_svg]:fill-light/80 hover:[&_svg]:fill-primary [&_svg]:h-full [&_svg]:w-auto h-7 transition-colors">
+    <Fragment set:html={svg} />
   </a>
 </li>
