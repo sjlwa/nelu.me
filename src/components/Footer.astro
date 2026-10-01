@@ -1,6 +1,6 @@
 ---
 import AuthOptions from "./../components/auth/AuthOptions.astro";
-import InstagramIcon from './../assets/instagram.svg?raw';
+import SocialLinks from "./SocialLinks.astro";
 import Name from "./../assets/nelu-name.svg?raw";
 import { site } from "../data/site";
 ---
@@ -11,13 +11,7 @@ import { site } from "../data/site";
       <span class="text-sm text-muted hidden sm:inline">{site.tagline} · {site.origin}</span>
     </div>
 
-    <ul class="flex flex-row gap-4">
-      <li class="[&_svg]:fill-light/80 hover:[&_svg]:fill-primary [&_svg]:w-6 transition-colors">
-        <a href={site.instagram.url} target="_blank" rel="noopener" aria-label="Instagram de Nelú">
-          <Fragment set:html={InstagramIcon} />
-        </a>
-      </li>
-    </ul>
+    <SocialLinks />
 
     <p class="text-sm text-muted">&copy; <span id="copy-year"></span>, {site.name}</p>
     <script>

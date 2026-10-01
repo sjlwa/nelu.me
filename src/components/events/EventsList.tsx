@@ -22,7 +22,7 @@ export default function EventsList(props: Props) {
     if (events.value.length === 0) return (
         <div class="card p-8 text-center flex flex-col items-center gap-2">
             <span class="display text-2xl text-primary">Aún no hay fechas próximas</span>
-            <p class="text-muted">Sígueme en Instagram para enterarte de la siguiente.</p>
+            <p class="text-muted">Sígueme en redes para enterarte de la siguiente.</p>
         </div>
     );
 

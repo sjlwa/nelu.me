@@ -1,16 +1,17 @@
 export const site = {
   name: "Nelú",
   tagline: "Cantautora y saxofonista",
-  origin: "Comala, Colima, México",
+  origin: "Colima, México",
   description:
     "Conoce a Nelú, cantautora y saxofonista colimense. Descubre su música, fotos, videos y sus próximas presentaciones.",
   url: "https://nelu.me",
   // TODO: reemplazar por el correo real de contacto / contrataciones.
   contactEmail: "hola@nelu.me",
-  instagram: {
-    handle: "mellamo__nelu",
-    url: "https://www.instagram.com/mellamo__nelu/",
-  },
+  socials: [
+    { name: "Instagram", handle: "@mellamo__nelu", url: "https://www.instagram.com/mellamo__nelu/" },
+    { name: "Facebook", handle: "mellamonelu", url: "https://www.facebook.com/mellamonelu" },
+    { name: "TikTok", handle: "@mellamo_nelu", url: "https://www.tiktok.com/@mellamo_nelu" },
+  ],
   bio: [
     "Nelú es una cantautora y saxofonista independiente de Comala, Colima, México. Se convierte en pan en luna llena, pero todos los demás días es cantautora y saxofonista.",
     "Su música fusiona jazz, bolero y pop, entre otras, creando canciones de amor entre mujeres. Explora el amor y las emociones auténticas a través de metáforas curiosas, creando un espacio honesto y relajado.",
