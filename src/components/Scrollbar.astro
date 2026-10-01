@@ -32,16 +32,15 @@
     min-height: 1.5rem;
     border-radius: 9999px;
     background: var(--color-primary);
-    cursor: grab;
-    transition: width 150ms ease;
+    opacity: 0.6;
+    cursor: default;
+    transition: width 150ms ease, opacity 150ms ease;
     will-change: transform;
   }
   .scrollbar:hover .scrollbar-thumb,
   .scrollbar.is-dragging .scrollbar-thumb {
     width: 0.5rem;
-  }
-  .scrollbar.is-dragging .scrollbar-thumb {
-    cursor: grabbing;
+    opacity: 0.85;
   }
   @media (prefers-reduced-motion: reduce) {
     .scrollbar, .scrollbar-thumb { transition: none; }
