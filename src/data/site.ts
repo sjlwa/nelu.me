@@ -6,7 +6,6 @@ export const site = {
     "Nelú es cantautora y saxofonista de Colima, México. Jazz, bolero y pop con canciones de amor sáficas. Escucha su música, mira fotos y videos y conoce sus próximas presentaciones.",
   url: "https://nelu.me",
   ogImage: "/open-graph-image.jpg",
-  // TODO: reemplazar por el correo real de contacto / contrataciones.
   contactEmail: "hola@nelu.me",
   socials: [
     { name: "Instagram", handle: "@mellamo__nelu", url: "https://www.instagram.com/mellamo__nelu/" },
