@@ -1,0 +1,75 @@
+---
+/**
+ * Metadatos para buscadores y redes: título, descripción, canónica,
+ * Open Graph, Twitter Cards y datos estructurados (JSON-LD).
+ */
+import { site, platforms } from "../data/site";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const title = Astro.props.title ?? `${site.name} · ${site.tagline} de Colima`;
+const description = Astro.props.description ?? site.description;
+const canonical = new URL(Astro.url.pathname, site.url).href.replace(/\/$/, "/");
+const ogImage = new URL(site.ogImage, site.url).href;
+const imageAlt = `Retrato de ${site.name} junto a dos tazas de barro, con su nombre y el texto "${site.tagline}".`;
+
+const sameAs = [...site.socials.map((s) => s.url), ...platforms.map((p) => p.url)];
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "MusicGroup",
+      "@id": `${site.url}/#artist`,
+      name: site.name,
+      alternateName: "Me llamo Nelú",
+      description,
+      url: site.url,
+      image: ogImage,
+      genre: site.genres,
+      foundingLocation: { "@type": "Place", name: "Comala, Colima, México" },
+      email: `mailto:${site.contactEmail}`,
+      sameAs,
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${site.url}/#website`,
+      url: site.url,
+      name: site.name,
+      description,
+      inLanguage: "es-MX",
+      about: { "@id": `${site.url}/#artist` },
+    },
+  ],
+};
+---
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+<meta name="robots" content="index, follow, max-image-preview:large" />
+<meta name="author" content={site.name} />
+
+<meta property="og:type" content="profile" />
+<meta property="og:site_name" content={site.name} />
+<meta property="og:locale" content="es_MX" />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={ogImage} />
+<meta property="og:image:secure_url" content={ogImage} />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content={imageAlt} />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
+<meta name="twitter:image:alt" content={imageAlt} />
+
+<link rel="sitemap" href="/sitemap-index.xml" />
+<script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
