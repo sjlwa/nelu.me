@@ -68,7 +68,6 @@ const photos = await Promise.all(
   <button id="lightbox-prev" class="lb-btn lb-arrow lb-arrow-prev" aria-label="Foto anterior">‹</button>
   <button id="lightbox-next" class="lb-btn lb-arrow lb-arrow-next" aria-label="Foto siguiente">›</button>
 
-  <p id="lightbox-caption" class="lb-caption" aria-live="polite"></p>
 </dialog>
 
 <style>
@@ -119,7 +118,7 @@ const photos = await Promise.all(
     width: auto;
     height: auto;
     max-width: calc(100vw - 1.5rem);
-    max-height: calc(100vh - 10rem);
+    max-height: calc(100vh - 7rem);
     object-fit: contain;
     border-radius: 0.75rem;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
@@ -127,12 +126,12 @@ const photos = await Promise.all(
     -webkit-user-select: none;
   }
   @supports (height: 100dvh) {
-    .lb-img { max-height: calc(100dvh - 10rem); }
+    .lb-img { max-height: calc(100dvh - 7rem); }
   }
   @media (min-width: 640px) {
-    .lb-img { max-width: calc(100vw - 8rem); max-height: calc(100vh - 8rem); }
+    .lb-img { max-width: calc(100vw - 8rem); max-height: calc(100vh - 6rem); }
     @supports (height: 100dvh) {
-      .lb-img { max-height: calc(100dvh - 8rem); }
+      .lb-img { max-height: calc(100dvh - 6rem); }
     }
   }
 
@@ -183,18 +182,6 @@ const photos = await Promise.all(
   .lb-arrow-prev { left: 0.75rem; }
   .lb-arrow-next { right: 0.75rem; }
   @media (min-width: 640px) { .lb-arrow { display: inline-flex; } }
-
-  .lb-caption {
-    position: absolute;
-    left: 0; right: 0; bottom: 0;
-    margin: 0;
-    padding: 1.25rem;
-    text-align: center;
-    font-size: 0.875rem;
-    color: rgb(var(--p-light-rgb) / 0.8);
-    background: linear-gradient(to top, rgb(var(--p-ink-rgb) / 1), rgb(var(--p-ink-rgb) / 0));
-    pointer-events: none;
-  }
 </style>
 
 <script>
@@ -202,7 +189,6 @@ const photos = await Promise.all(
   const dialog = document.getElementById('lightbox') as HTMLDialogElement;
   const track = document.getElementById('lightbox-track')!;
   const slides = Array.from(track.querySelectorAll<HTMLElement>('[data-slide]'));
-  const caption = document.getElementById('lightbox-caption')!;
   const counter = document.getElementById('lightbox-counter')!;
   const total = slides.length;
   let index = 0;
@@ -210,7 +196,6 @@ const photos = await Promise.all(
 
   const updateInfo = (i: number) => {
     index = i;
-    caption.textContent = slides[i].querySelector('img')?.alt ?? '';
     counter.textContent = `${i + 1} / ${total}`;
   };
 
