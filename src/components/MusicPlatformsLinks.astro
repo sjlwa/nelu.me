@@ -6,12 +6,16 @@ import SpotifyLogo from './../assets/music-platforms-logos/spotify.svg?raw';
 import YoutubeLogo from './../assets/music-platforms-logos/youtube.svg?raw';
 import AppleLogo from './../assets/music-platforms-logos/apple.svg?raw';
 import AmazonLogo from './../assets/music-platforms-logos/amazon.svg?raw';
+import DeezerLogo from './../assets/music-platforms-logos/deezer.svg?raw';
+import TidalLogo from './../assets/music-platforms-logos/tidal.svg?raw';
 
 const logos: Record<string, string> = {
   "Spotify": SpotifyLogo,
   "YouTube Music": YoutubeLogo,
   "Apple Music": AppleLogo,
   "Amazon Music": AmazonLogo,
+  "Deezer": DeezerLogo,
+  "Tidal": TidalLogo,
 };
 
 interface Props { class?: string }
@@ -19,6 +23,6 @@ const { class: classList = "" } = Astro.props;
 ---
 <ul class={`list-none flex flex-wrap items-center gap-6 ${classList}`} aria-label="Plataformas de música">
   {platforms.map((p) => (
-    <MusicPlatformLink name={p.name} url={p.url} svg={logos[p.name]} />
+    <MusicPlatformLink name={p.name} url={p.url} comingSoon={p.comingSoon} svg={logos[p.name]} />
   ))}
 </ul>

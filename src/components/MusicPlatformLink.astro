@@ -1,15 +1,27 @@
 ---
 interface Props {
   name: string;
-  url: string;
+  url?: string;
   svg: string;
+  comingSoon?: boolean;
   class?: string;
 }
-const { url, svg, name, class: classList = "" } = Astro.props;
+const { url, svg, name, comingSoon = false, class: classList = "" } = Astro.props;
+const iconClass = "block [&_svg]:h-full [&_svg]:w-auto h-7";
 ---
 <li class={classList}>
-  <a href={url} target="_blank" rel="noopener" aria-label={`Escuchar en ${name}`} title={name}
-     class="block [&_svg]:fill-light/80 hover:[&_svg]:fill-primary [&_svg]:h-full [&_svg]:w-auto h-7 transition-colors">
-    <Fragment set:html={svg} />
-  </a>
+  {comingSoon || !url ? (
+    <span
+      class={`${iconClass} [&_svg]:fill-light/30 cursor-default`}
+      title={`Próximamente en ${name}`}
+      aria-label={`Próximamente en ${name}`}
+      role="img">
+      <Fragment set:html={svg} />
+    </span>
+  ) : (
+    <a href={url} target="_blank" rel="noopener" aria-label={`Escuchar en ${name}`} title={name}
+       class={`${iconClass} [&_svg]:fill-light/80 hover:[&_svg]:fill-primary transition-colors`}>
+      <Fragment set:html={svg} />
+    </a>
+  )}
 </li>

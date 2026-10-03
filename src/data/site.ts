@@ -23,14 +23,21 @@ export const site = {
     { name: "TikTok", handle: "@mellamo_nelu", url: "https://www.tiktok.com/@mellamo_nelu" },
   ],
   bio: [
-    "Soy Nelú, cantautora y saxofonista independiente de Comala, Colima, México.",
-    "Mi música mezcla jazz, bolero y pop para contar historias de amor entre mujeres: amores de todos los días, con sus dudas y sus ternuras, dichos con metáforas curiosas y sin prisa.",
-    "En mis conciertos hay saxofón, guitarra, plantas y tazas de barro. Un espacio honesto y relajado para escucharnos de cerca.",
+    "Soy Nelú una cantautora y saxofonista independiente de Comala, Colima, México.",
+    "Mi música fusiona jazz, bolero y pop para contar historias, explorando el amor entre mujeres y las emociones auténticas a través de metáforas curiosas, creando un espacio honesto y relajado.",
   ],
   genres: ["Jazz", "Bolero", "Pop", "Canción de autora"],
 };
 
-export const platforms = [
+export interface Platform {
+  name: string;
+  /** Enlace a la música. Omitir cuando la plataforma aún no está disponible. */
+  url?: string;
+  /** Se muestra atenuada con la leyenda "Próximamente". */
+  comingSoon?: boolean;
+}
+
+export const platforms: Platform[] = [
   {
     name: "Spotify",
     url: "https://open.spotify.com/artist/7CA2VhlKcqsnQPRyu1fXEV",
@@ -47,4 +54,6 @@ export const platforms = [
     name: "Amazon Music",
     url: "https://music.amazon.com.mx/albums/B0F3ZZSG9F?ref=dm_sh_am4a_B0F3ZNRP1D_6r7PQAiW4nW1HJ&trackAsin=B0F3ZS4JKP",
   },
-] as const;
+  { name: "Deezer", comingSoon: true },
+  { name: "Tidal", comingSoon: true },
+];

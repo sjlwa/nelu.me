@@ -16,7 +16,7 @@ const canonical = new URL(Astro.url.pathname, site.url).href.replace(/\/$/, "/")
 const ogImage = new URL(site.ogImage, site.url).href;
 const imageAlt = `Retrato de ${site.name} junto a dos tazas de barro, con su nombre y el texto "${site.tagline}".`;
 
-const sameAs = [...site.socials.map((s) => s.url), ...platforms.map((p) => p.url)];
+const sameAs = [...site.socials.map((s) => s.url), ...platforms.flatMap((p) => (p.url ? [p.url] : []))];
 
 const jsonLd = {
   "@context": "https://schema.org",
