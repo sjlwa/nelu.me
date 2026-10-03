@@ -21,7 +21,7 @@ const logos: Record<string, string> = {
 interface Props { class?: string }
 const { class: classList = "" } = Astro.props;
 ---
-<ul class={`list-none flex flex-wrap items-center gap-6 ${classList}`} aria-label="Plataformas de música">
+<ul class={`list-none flex flex-wrap items-center gap-x-6 gap-y-3 ${classList}`} aria-label="Plataformas de música">
   {platforms.map((p) => (
     <MusicPlatformLink name={p.name} url={p.url} comingSoon={p.comingSoon} svg={logos[p.name]} />
   ))}
