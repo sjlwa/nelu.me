@@ -3,9 +3,9 @@ import { Image } from "astro:assets";
 import Name from "./../assets/nelu-name.svg?raw";
 import heroPhoto from "./../assets/photos/nelu-guitarra-libro.webp";
 import MusicPlatformsLinks from "./MusicPlatformsLinks.astro";
+import SteamCup from "./SteamCup.astro";
 import { site } from "../data/site";
 
-const bars = Array.from({ length: 14 }, (_, i) => i);
 ---
 
 <section
@@ -72,17 +72,7 @@ const bars = Array.from({ length: 14 }, (_, i) => i);
 
         <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-6 border-t border-light/15 pt-6">
             <MusicPlatformsLinks />
-            <div
-                class="hidden sm:flex items-end gap-1 h-8 text-primary/80"
-                aria-hidden="true"
-            >
-                {bars.map((i) => (
-                    <span
-                        class="wave-bar block w-1 h-full rounded-full bg-current"
-                        style={`animation-delay:${(i * 0.09).toFixed(2)}s`}
-                    ></span>
-                ))}
-            </div>
+            <SteamCup class="hidden sm:block h-12 w-auto" />
         </div>
     </div>
 </section>

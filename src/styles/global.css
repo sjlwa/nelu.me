@@ -200,15 +200,3 @@ dialog[open] > div > #dialog-content {
   [data-reveal] { opacity: 1; transform: none; transition: none; }
 }
 
-/* Barra de ondas del hero */
-@keyframes wave {
-  0%, 100% { transform: scaleY(0.3); }
-  50% { transform: scaleY(1); }
-}
-.wave-bar {
-  transform-origin: bottom;
-  animation: wave 1.4s ease-in-out infinite;
-}
-@media (prefers-reduced-motion: reduce) {
-  .wave-bar { animation: none; transform: scaleY(0.6); }
-}
