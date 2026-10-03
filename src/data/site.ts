@@ -23,7 +23,7 @@ export const site = {
     { name: "TikTok", handle: "@mellamo_nelu", url: "https://www.tiktok.com/@mellamo_nelu" },
   ],
   bio: [
-    "Soy Nelú una cantautora y saxofonista independiente de Comala, Colima, México.",
+    "Soy Nelú, una cantautora y saxofonista independiente de Comala, Colima, México.",
     "Mi música fusiona jazz, bolero y pop para contar historias, explorando el amor entre mujeres y las emociones auténticas a través de metáforas curiosas, creando un espacio honesto y relajado.",
   ],
   genres: ["Jazz", "Bolero", "Pop", "Canción de autora"],
