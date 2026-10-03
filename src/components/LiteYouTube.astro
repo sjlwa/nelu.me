@@ -2,27 +2,45 @@
 interface Props {
   id: string;
   title: string;
+  /** Si es `false`, el botón abre el video en YouTube (el canal no permite insertarlo). */
+  embeddable?: boolean;
 }
-const { id, title } = Astro.props;
+const { id, title, embeddable = true } = Astro.props;
+const watchUrl = `https://www.youtube.com/watch?v=${id}`;
 ---
-<div class="lite-yt relative aspect-video w-full overflow-hidden rounded-2xl bg-ink group" data-yt-id={id} data-yt-title={title}>
+<div class={`lite-yt relative aspect-video w-full overflow-hidden rounded-2xl bg-ink group ${embeddable ? "" : "lite-yt-external"}`}
+     data-yt-id={id} data-yt-title={title}>
   <img
     src={`https://i.ytimg.com/vi/${id}/hqdefault.jpg`}
     alt=""
     loading="lazy"
     class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
   />
-  <button type="button"
-    class="absolute inset-0 flex items-center justify-center cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-    aria-label={`Reproducir video: ${title}`}>
-    <span class="flex h-16 w-16 items-center justify-center rounded-full bg-primary text-dark shadow-xl shadow-black/40 transition-transform group-hover:scale-110">
-      <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
-    </span>
-  </button>
+
+  {embeddable ? (
+    <button type="button"
+      class="absolute inset-0 flex items-center justify-center cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+      aria-label={`Reproducir video: ${title}`}>
+      <span class="flex h-16 w-16 items-center justify-center rounded-full bg-primary text-dark shadow-xl shadow-black/40 transition-transform group-hover:scale-110">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+      </span>
+    </button>
+  ) : (
+    <a href={watchUrl} target="_blank" rel="noopener"
+      class="absolute inset-0 flex flex-col items-center justify-center gap-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+      aria-label={`Ver en YouTube: ${title}`}>
+      <span class="flex h-16 w-16 items-center justify-center rounded-full bg-primary text-dark shadow-xl shadow-black/40 transition-transform group-hover:scale-110">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+      </span>
+      <span class="rounded-full bg-dark/70 px-3 py-1 text-xs font-semibold tracking-wide text-light backdrop-blur-sm">
+        Ver en YouTube ↗
+      </span>
+    </a>
+  )}
 </div>
 
 <script>
-  document.querySelectorAll<HTMLElement>('.lite-yt').forEach((box) => {
+  document.querySelectorAll<HTMLElement>('.lite-yt:not(.lite-yt-external)').forEach((box) => {
     box.querySelector('button')?.addEventListener('click', () => {
       const iframe = document.createElement('iframe');
       iframe.src = `https://www.youtube-nocookie.com/embed/${box.dataset.ytId}?autoplay=1&rel=0&hl=es`;

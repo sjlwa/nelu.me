@@ -1,33 +1,26 @@
 export interface Video {
-  /** ID del video de YouTube (lo que va después de `v=` en la URL). */
+  /** ID del video de YouTube (lo que va después de `v=` o de `youtu.be/` en la URL). */
   id: string;
   title: string;
   description?: string;
-  /** Marca los videos de ejemplo para reemplazarlos después. */
-  placeholder?: boolean;
+  /**
+   * `false` cuando el video no permite insertarse (YouTube > Detalles > "Permitir inserción").
+   * En ese caso el botón abre el video en YouTube en lugar de reproducirlo aquí.
+   */
+  embeddable?: boolean;
 }
 
-/**
- * Lista que alimenta la sección "Videos".
- * Los elementos con `placeholder: true` usan el mismo ID solo para mostrar el diseño.
- * Reemplázalos con los IDs reales y quita la bandera.
- */
+/** Lista que alimenta la sección "Videos". El primero aparece primero. */
 export const videos: Video[] = [
   {
-    id: "ycaHNEyC8J4",
+    id: "NbsH-n8RuRc",
     title: "Quiero un té, quiero",
-    description: "Sencillo · 2025",
+    description: "Visualizador oficial · 2025",
   },
   {
-    id: "ycaHNEyC8J4",
-    title: "Sesión en vivo (ejemplo)",
-    description: "Reemplaza este ID con el video real",
-    placeholder: true,
-  },
-  {
-    id: "ycaHNEyC8J4",
-    title: "Detrás de cámaras (ejemplo)",
-    description: "Reemplaza este ID con el video real",
-    placeholder: true,
+    id: "E7oH6LOPtoc",
+    title: "Nelú en la Caravana de las canciones",
+    description: "En vivo · Teatro Hidalgo, Colima · 25 de abril de 2025",
+    embeddable: false,
   },
 ];
