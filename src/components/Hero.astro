@@ -6,7 +6,6 @@ import MusicPlatformsLinks from "./MusicPlatformsLinks.astro";
 import Equalizer from "./Equalizer.astro";
 import Marquee from "./Marquee.astro";
 import { site } from "../data/site";
-
 ---
 
 <section
@@ -43,14 +42,10 @@ import { site } from "../data/site";
             />
 
             <p class="display text-2xl md:text-4xl text-light/95 !font-light">
-                Canciones de amor sáficas
+                {site.tagline}
             </p>
 
-            <p class="eyebrow">
-                {site.tagline}
-                <br />
-                {site.origin}
-            </p>
+            <p class="eyebrow">{site.origin}</p>
 
             <div class="flex flex-wrap gap-3 pt-2">
                 <a href="#musica" class="button btn-primary">
@@ -78,7 +73,12 @@ import { site } from "../data/site";
 
         <Marquee
             class="-mx-5 border-t border-light/10 py-3"
-            items={[...site.genres, "Canciones de amor sáficas", site.origin, "Cantautora y saxofonista"]}
+            items={[
+                ...site.genres,
+                "Canciones de amor sáficas",
+                site.origin,
+                "Cantautora y saxofonista",
+            ]}
         />
     </div>
 </section>
