@@ -9,7 +9,6 @@ export const events = {
 
   getAll: defineAction({
     handler: async () => {
-      await new Promise(resolve => setTimeout(resolve, 500)); // TODO: remove delay
 
       const query = db.select().from(EventsTable);
 
@@ -32,7 +31,6 @@ export const events = {
         location: event.location,
       };
 
-      await new Promise(resolve => setTimeout(resolve, 1000)); // TODO: remove delay
       await db.insert(EventsTable).values(newEvent);
     },
   }),
@@ -48,7 +46,6 @@ export const events = {
         date: new Date(event.date),
         location: event.location,
       };
-      await new Promise(resolve => setTimeout(resolve, 2000)); // TODO: remove delay
       await db.update(EventsTable).set(neluEvent).where(eq(EventsTable.id, neluEvent.id));
     },
   }),
@@ -59,7 +56,6 @@ export const events = {
     handler: async (data: { id: number }, context) => {
       await authorizeResource(context.request);
 
-      await new Promise(resolve => setTimeout(resolve, 2000)); // TODO: remove delay
       await db.delete(EventsTable).where(eq(EventsTable.id, data.id));
     },
   }),
