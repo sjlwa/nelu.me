@@ -15,7 +15,7 @@ export const videos: Video[] = [
   {
     id: "NbsH-n8RuRc",
     title: "Quiero un té, quiero",
-    description: "Visualizador oficial · 2025",
+    description: "Visualizer oficial · 2025",
   },
   {
     id: "E7oH6LOPtoc",

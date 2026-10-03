@@ -18,7 +18,7 @@ export const site = {
   ogImage: "/open-graph-image.jpg",
   contactEmail: "hola@nelu.me",
   socials: [
-    { name: "Instagram", handle: "@mellamo__nelu", url: "https://www.instagram.com/mellamo__nelu/" },
+    { name: "Instagram", handle: "@mellamo_nelu", url: "https://www.instagram.com/mellamo_nelu" },
     { name: "Facebook", handle: "mellamonelu", url: "https://www.facebook.com/mellamonelu" },
     { name: "TikTok", handle: "@mellamo_nelu", url: "https://www.tiktok.com/@mellamo_nelu" },
   ],
