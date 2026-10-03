@@ -14,7 +14,7 @@ Sitio oficial de **Nelú**, cantautora y saxofonista de Comala, Colima. Construi
 | Videos | `src/data/videos.ts` (IDs de YouTube) |
 | Contacto | Correo e Instagram en `src/data/site.ts` |
 
-La paleta y la tipografía viven en `src/styles/global.css` (bloque `@theme`).
+La paleta activa se elige en `src/data/site.ts` (`palette`); los colores y la tipografía viven en `src/styles/global.css`. Tras cambiar de paleta, regenera la imagen de Open Graph con `pnpm og`.
 
 ## Variables de entorno
 
