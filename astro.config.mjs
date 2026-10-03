@@ -11,12 +11,15 @@ import preact from '@astrojs/preact';
 
 import auth from 'auth-astro';
 
+import sitemap from '@astrojs/sitemap';
+
 import cloudflare from '@astrojs/cloudflare';
 
 import vercel from '@astrojs/vercel';
 
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://nelu.me',
   inlineStylesheets: 'never',
   output: 'server',
 
@@ -24,7 +27,7 @@ export default defineConfig({
     plugins: [tailwindcss()]
   },
 
-  integrations: [db(), preact(), auth()],
+  integrations: [db(), preact(), auth(), sitemap()],
 
   adapter: vercel({
     webAnalytics: {
@@ -38,5 +41,8 @@ export default defineConfig({
       GOOGLE_CLIENT_SECRET: envField.string({ context: "server", access: "secret", optional: false }),
       ADMIN_WHITELIST: envField.string({ context: "server", access: "secret", optional: false }),
     }
+  },
+  server: {
+    allowedHosts: ['mini.noels.dev']
   }
 });

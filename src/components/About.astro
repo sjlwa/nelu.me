@@ -1,0 +1,32 @@
+---
+import { Image } from "astro:assets";
+import SectionHeading from "./SectionHeading.astro";
+import portrait from "./../assets/photos/nelu-retrato-tazas.webp";
+import { site } from "../data/site";
+---
+<section id="sobre-mi" class="mx-auto w-full max-w-6xl px-5 py-24 scroll-mt-16">
+  <div class="grid gap-10 md:grid-cols-12 items-center">
+    <div class="md:col-span-5 relative" data-reveal>
+      <div class="absolute -inset-3 rounded-[2rem] bg-gradient-to-br from-clay/40 to-olive/30 blur-2xl" aria-hidden="true"></div>
+      <Image
+        src={portrait}
+        alt="Retrato de Nelú apoyando los brazos sobre una mesa, junto a dos tazas de barro con rostros tallados."
+        widths={[480, 800, 1200]}
+        sizes="(min-width: 768px) 40vw, 100vw"
+        class="relative rounded-[2rem] object-cover aspect-[4/5] w-full shadow-2xl shadow-black/50"
+      />
+    </div>
+
+    <div class="md:col-span-7 flex flex-col gap-6">
+      <SectionHeading eyebrow="Sobre mí" title="Me llamo Nelú" />
+      <div class="prose-warm text-lg leading-relaxed text-light/85" data-reveal>
+        {site.bio.map((p) => <p>{p}</p>)}
+      </div>
+      <ul class="flex flex-wrap gap-2" data-reveal aria-label="Géneros">
+        {site.genres.map((g) => (
+          <li class="rounded-full border border-light/15 bg-surface/60 px-3 py-1 text-sm text-light/80">{g}</li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>

@@ -1,6 +1,5 @@
  ---
 import { getSession } from "auth-astro/server";
-import SignInButton from "./SignInButton";
 import SignOutButton from "./SignOutButton";
 import NonAuthorized from "./NonAuthorized.astro";
 
@@ -24,6 +23,8 @@ const isAuthorized: boolean = whitelist.includes(session?.user?.email!);
     </div>
   )
   :
-  <SignInButton client:visible />
+  // Botón "Acceder" oculto por ahora. Para administrar eventos, entra en /api/auth/signin
+  // (o vuelve a mostrar <SignInButton client:visible /> aquí).
+  null
 }
 </div>

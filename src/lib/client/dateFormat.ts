@@ -51,3 +51,25 @@ export function eventDatetimeIsAfterNow(event: NewNeluEventState | NeluEventStat
   const now = new Date();
   return datetime > now;
 }
+
+export interface DateParts {
+  weekday: string;
+  day: string;
+  month: string;
+  year: string;
+  time: string;
+}
+
+/** Partes de la fecha en español (México) para mostrar en tarjetas de eventos. */
+export function extractDateParts(datetime: Date): DateParts {
+  const timeZone = 'America/Mexico_City';
+  const part = (options: Intl.DateTimeFormatOptions) =>
+    new Intl.DateTimeFormat('es-MX', { ...options, timeZone }).format(datetime);
+  return {
+    weekday: part({ weekday: 'long' }),
+    day: part({ day: 'numeric' }),
+    month: part({ month: 'short' }).replace('.', ''),
+    year: part({ year: 'numeric' }),
+    time: part({ hour: 'numeric', minute: '2-digit', hour12: true }),
+  };
+}

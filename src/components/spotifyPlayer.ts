@@ -2,86 +2,108 @@ interface Window {
   onSpotifyIframeApiReady: (IFrameAPI: any) => void;
 }
 
+interface PlaybackUpdate {
+  data: { isPaused: boolean; isBuffering: boolean; duration: number; position: number };
+}
+
 interface EmbedController {
-  loadUri: (uri: string) => {};
+  loadUri: (uri: string) => void;
   play: () => void;
   pause: () => void;
+  addListener: (event: "ready" | "playback_update" | "playback_started", cb: (e?: any) => void) => void;
 }
 
-let currentTrackId: string | null = null;
+let controller: EmbedController | undefined;
+let loadedUri: string | null = null;   // contenido cargado en el reproductor
+let activeUri: string | null = null;   // pista marcada como "En reproducción"
+let playWhenReady = false;             // reproducir en cuanto termine de cargar la nueva pista
+let readyTimer: number | undefined;
 
-function restorePreviousBtn() {
-  // Find the previously playing button by its data attribute
-  const previousBtn = document.querySelector(`.track[data-spotify-id="${currentTrackId}"]`);
-  if (previousBtn) {
-    const previousPlayText = previousBtn.querySelector('span');
-    if (previousPlayText) {
-      previousPlayText.textContent = "Escuchar";
-      previousPlayText.classList.add('play-text-init');
-      previousPlayText.classList.remove('play-text-selected');
-    }
-  }
-}
-function toggleOffPlayingState(selectedPlayText: HTMLElement) {
-  // toggle off playing state
-  selectedPlayText.textContent = "Escuchar";
-  selectedPlayText.classList.add('play-text-init');
-  selectedPlayText.classList.remove('play-text-selected');
-}
-function toggleOnPlayingState(selectedPlayText: HTMLElement) {
-  selectedPlayText.textContent = "En reproducción";
-  selectedPlayText.classList.remove('play-text-init');
-  selectedPlayText.classList.add('play-text-selected');
+const trackButtons = () => document.querySelectorAll<HTMLButtonElement>(".track");
+const labelOf = (uri: string | null) =>
+  uri ? document.querySelector<HTMLElement>(`.track[data-spotify-id="${uri}"] [data-play-label]`) : null;
+
+function setLabel(uri: string | null, playing: boolean) {
+  const label = labelOf(uri);
+  if (!label) return;
+  label.textContent = playing ? "En reproducción" : "Escuchar";
+  label.classList.toggle("play-text-init", !playing);
+  label.classList.toggle("play-text-selected", playing);
 }
 
-let EmbedController: EmbedController;
+/** Enciende/apaga el ecualizador del hero (ver Equalizer.astro). */
+function setPlaying(playing: boolean) {
+  if (playing) document.documentElement.dataset.playing = "";
+  else delete document.documentElement.dataset.playing;
+}
+
+function markActive(uri: string | null) {
+  if (activeUri && activeUri !== uri) setLabel(activeUri, false);
+  activeUri = uri;
+  if (uri) setLabel(uri, true);
+}
+
+function playLoaded() {
+  playWhenReady = false;
+  window.clearTimeout(readyTimer);
+  controller?.play();
+}
 
 function onSelect(event: Event) {
-  const trackButton = event.target as HTMLButtonElement;
-  const selectedTrackId = trackButton.dataset.spotifyId!;
-  const selectedPlayText = trackButton.querySelector('span')!;
+  if (!controller) return;
+  const uri = (event.currentTarget as HTMLButtonElement).dataset.spotifyId!;
 
-  if (!EmbedController) return;
-
-  if (currentTrackId && currentTrackId !== selectedTrackId) {
-    // If there is a currently playing track and it's different from the clicked one
-    restorePreviousBtn();
-    EmbedController.loadUri(selectedTrackId);
-    toggleOnPlayingState(selectedPlayText);
-    currentTrackId = selectedTrackId;
-    EmbedController.play();
-
-  } else if (selectedTrackId === currentTrackId) {
-    // If clicking the same track, toggle off playing state
-    toggleOffPlayingState(selectedPlayText);
-    currentTrackId = null;
-    EmbedController.pause();
-  } else {
-    // Set the clicked button to playing
-    toggleOnPlayingState(selectedPlayText)
-    currentTrackId = selectedTrackId;
-    EmbedController.loadUri(selectedTrackId);
-    EmbedController.play();
+  // Misma pista sonando: pausar.
+  if (uri === activeUri) {
+    controller.pause();
+    markActive(null);
+    setPlaying(false);
+    return;
   }
+
+  markActive(uri);
+
+  if (uri === loadedUri) {
+    // Ya está cargada: reproducir directo.
+    playLoaded();
+    return;
+  }
+
+  // Cargar la nueva pista y reproducir cuando el reproductor avise que está lista.
+  loadedUri = uri;
+  playWhenReady = true;
+  controller.loadUri(uri);
+  // Respaldo por si el evento "ready" no llega.
+  window.clearTimeout(readyTimer);
+  readyTimer = window.setTimeout(() => { if (playWhenReady) playLoaded(); }, 1200);
 }
 
 window.onSpotifyIframeApiReady = (IFrameAPI: any) => {
-  const element = document.getElementById('embed-iframe');
-
+  const element = document.getElementById("embed-iframe");
   if (!element) return;
 
-  const options = {
-    width: '100%',
-    height: '100',
-    uri: "spotify:track:70XKEDg1fnjLThZTWKcDDn",
-  };
+  const first = document.querySelector<HTMLElement>(".track")?.dataset.spotifyId
+    ?? "spotify:track:70XKEDg1fnjLThZTWKcDDn";
+  loadedUri = first;
 
-  const callback = (controller: any) => {
-    EmbedController = controller;
-    document.querySelectorAll(".track").forEach((track: any) => {
-      track.addEventListener('click', onSelect);
+  IFrameAPI.createController(element, { width: "100%", height: "152", uri: first }, (ctrl: EmbedController) => {
+    controller = ctrl;
+
+    ctrl.addListener("ready", () => {
+      if (playWhenReady) playLoaded();
     });
-  };
 
-  IFrameAPI.createController(element, options, callback);
+    // Mantener la etiqueta sincronizada con el estado real (p. ej. pausa desde el propio reproductor).
+    ctrl.addListener("playback_update", (e: PlaybackUpdate) => {
+      const { isPaused, isBuffering } = e.data;
+      setPlaying(!isPaused);
+      if (isPaused && !isBuffering && !playWhenReady && activeUri) {
+        markActive(null);
+      } else if (!isPaused && loadedUri && activeUri !== loadedUri) {
+        markActive(loadedUri);
+      }
+    });
+
+    trackButtons().forEach((btn) => btn.addEventListener("click", onSelect));
+  });
 };

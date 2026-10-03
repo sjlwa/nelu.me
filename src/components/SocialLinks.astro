@@ -1,0 +1,43 @@
+---
+import { site } from "../data/site";
+import InstagramLogo from "./../assets/social-logos/instagram.svg?raw";
+import FacebookLogo from "./../assets/social-logos/facebook.svg?raw";
+import TiktokLogo from "./../assets/social-logos/tiktok.svg?raw";
+
+const logos: Record<string, string> = {
+  Instagram: InstagramLogo,
+  Facebook: FacebookLogo,
+  TikTok: TiktokLogo,
+};
+
+interface Props {
+  /** `icons`: solo íconos en fila. `list`: ícono + usuario, en columna. */
+  variant?: "icons" | "list";
+  class?: string;
+}
+const { variant = "icons", class: classList = "" } = Astro.props;
+---
+{variant === "icons" ? (
+  <ul class={`flex flex-row items-center gap-4 ${classList}`} aria-label="Redes sociales">
+    {site.socials.map((s) => (
+      <li class="[&_svg]:fill-light/80 hover:[&_svg]:fill-primary [&_svg]:h-6 [&_svg]:w-6 transition-colors">
+        <a href={s.url} target="_blank" rel="noopener" aria-label={`${s.name} de ${site.name}`} title={s.name}>
+          <Fragment set:html={logos[s.name]} />
+        </a>
+      </li>
+    ))}
+  </ul>
+) : (
+  <ul class={`flex flex-col gap-3 ${classList}`} aria-label="Redes sociales">
+    {site.socials.map((s) => (
+      <li>
+        <a href={s.url} target="_blank" rel="noopener"
+           class="flex items-center gap-3 text-light/85 hover:text-primary transition-colors w-fit [&_svg]:fill-current [&_svg]:h-6 [&_svg]:w-6">
+          <Fragment set:html={logos[s.name]} />
+          <span>{s.handle}</span>
+          <span class="sr-only">en {s.name}</span>
+        </a>
+      </li>
+    ))}
+  </ul>
+)}

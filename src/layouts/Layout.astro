@@ -1,23 +1,40 @@
 ---
 import "./../styles/global.css";
-import Footer from '../components/Footer.astro';
-import '@fontsource/fira-sans-extra-condensed';
+import "@fontsource-variable/outfit";
+import "@fontsource/fira-sans/400.css";
+import "@fontsource/fira-sans/400-italic.css";
+import "@fontsource/fira-sans/500.css";
+import "@fontsource/fira-sans/700.css";
+import "@fontsource/fira-sans-extra-condensed/600.css";
+
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+import Reveal from "../components/Reveal.astro";
+import Scrollbar from "../components/Scrollbar.astro";
+import Seo from "../components/Seo.astro";
+import { palette, themeColor } from "../data/site";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+const { title, description } = Astro.props;
 ---
 <!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-        <meta name="theme-color" content="#000000"/>
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-        <meta name="description" content="Conoce a Nelú, cantautora colimense. Te invita a descubrir su música y sus próximas presentaciones."/>
-		<title>Nelú</title>
-
-	</head>
-	<body class="flex flex-col">
-      <slot name="header"/>
-	  <slot name="main"/>
-      <Footer />
-	</body>
+<html lang="es-MX" data-palette={palette}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content={themeColor[palette]} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <Seo title={title} description={description} />
+  </head>
+  <body class="flex flex-col min-h-dvh">
+    <Nav />
+    <slot />
+    <Footer />
+    <Reveal />
+    <Scrollbar />
+  </body>
 </html>

@@ -1,0 +1,18 @@
+---
+import LiteYouTube from "./LiteYouTube.astro";
+import { videos } from "../data/videos";
+
+// Con uno o dos videos, dos columnas más anchas; con tres o más, tres columnas.
+const cols = videos.length >= 3 ? "md:grid-cols-2 lg:grid-cols-3" : "md:grid-cols-2";
+---
+<ul class={`grid gap-6 ${cols}`} data-reveal>
+  {videos.map((v) => (
+    <li class="flex flex-col gap-3">
+      <LiteYouTube id={v.id} title={v.title} embeddable={v.embeddable ?? true} />
+      <div class="flex flex-col px-1">
+        <h3 class="font-semibold text-lg">{v.title}</h3>
+        {v.description && <p class="text-sm text-muted">{v.description}</p>}
+      </div>
+    </li>
+  ))}
+</ul>

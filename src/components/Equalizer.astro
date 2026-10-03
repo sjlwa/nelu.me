@@ -1,0 +1,36 @@
+---
+/**
+ * Barras de ecualizador. Reposan con un vaivén lento y bailan cuando el reproductor
+ * de Spotify está sonando (atributo data-playing en <html>, puesto por spotifyPlayer.ts).
+ * Enlaza a la sección de música.
+ */
+interface Props { class?: string; bars?: number }
+const { class: classList = "", bars = 14 } = Astro.props;
+---
+<a href="#musica" class={`eq group flex items-end gap-1 h-8 text-primary/80 hover:text-primary transition-colors ${classList}`}
+   aria-label="Ir a Mi música">
+  {Array.from({ length: bars }, (_, i) => (
+    <span class="eq-bar block w-1 h-full rounded-full bg-current" style={`animation-delay:${(i * 0.09).toFixed(2)}s`}></span>
+  ))}
+</a>
+
+<style>
+  .eq-bar {
+    transform-origin: bottom;
+    animation: eq-idle 4.5s ease-in-out infinite;
+  }
+  :global(html[data-playing]) .eq-bar {
+    animation: eq-play 1.1s ease-in-out infinite;
+  }
+  @keyframes eq-idle {
+    0%, 100% { transform: scaleY(0.16); }
+    50%      { transform: scaleY(0.32); }
+  }
+  @keyframes eq-play {
+    0%, 100% { transform: scaleY(0.3); }
+    50%      { transform: scaleY(1); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .eq-bar, :global(html[data-playing]) .eq-bar { animation: none; transform: scaleY(0.3); }
+  }
+</style>

@@ -1,0 +1,54 @@
+---
+/** Cinta de texto en movimiento continuo. Se pausa al pasar el cursor y se detiene con prefers-reduced-motion. */
+interface Props { items: string[]; class?: string }
+const { items, class: classList = "" } = Astro.props;
+---
+<div class={`marquee ${classList}`} aria-label={items.join(". ")}>
+  <div class="marquee-track" aria-hidden="true">
+    {[0, 1].map(() => (
+      <ul class="marquee-group">
+        {items.map((item) => (
+          <li>{item}<span class="marquee-dot">·</span></li>
+        ))}
+      </ul>
+    ))}
+  </div>
+</div>
+
+<style>
+  .marquee {
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  }
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee 48s linear infinite;
+  }
+  .marquee:hover .marquee-track { animation-play-state: paused; }
+  .marquee-group {
+    display: flex;
+    flex: none;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-family: var(--font-condensed);
+    font-size: 0.8rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgb(var(--p-light-rgb) / 0.55);
+    white-space: nowrap;
+  }
+  .marquee-dot {
+    display: inline-block;
+    margin: 0 1.25rem;
+    color: var(--color-primary);
+  }
+  @keyframes marquee {
+    to { transform: translateX(-50%); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track { animation: none; }
+  }
+</style>

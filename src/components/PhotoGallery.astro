@@ -1,0 +1,257 @@
+---
+import { Image, getImage } from "astro:assets";
+import type { ImageMetadata } from "astro";
+import { photoAlts, defaultPhotoAlt } from "../data/photos";
+
+/** Carga automáticamente todas las fotos de `src/assets/photos/`. */
+const modules = import.meta.glob<{ default: ImageMetadata }>(
+  "../assets/photos/*.{jpg,jpeg,png,webp,avif}",
+  { eager: true }
+);
+
+const photos = await Promise.all(
+  Object.entries(modules)
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(async ([path, mod]) => {
+      const file = path.split("/").pop()!;
+      const full = await getImage({ src: mod.default, width: 1800, format: "webp" });
+      const landscape = mod.default.width > mod.default.height;
+      return { file, src: mod.default, alt: photoAlts[file] ?? defaultPhotoAlt, full: full.src, landscape };
+    })
+);
+---
+<ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 grid-flow-dense gap-4" data-reveal>
+  {photos.map((p, i) => (
+    <li class={p.landscape ? "sm:col-span-2" : ""}>
+      <button
+        type="button"
+        class={`group relative block w-full ${p.landscape ? "aspect-[4/3] sm:aspect-[18/11]" : "aspect-[4/5]"} overflow-hidden rounded-2xl cursor-zoom-in transition-transform duration-500 hover:scale-[1.02] focus:outline-none focus-visible:ring-2 focus-visible:ring-primary`}
+        data-photo-index={i}
+        aria-label={`Ampliar foto ${i + 1}: ${p.alt}`}>
+        <Image
+          src={p.src}
+          alt={p.alt}
+          widths={[400, 800, 1200]}
+          sizes={p.landscape ? "(min-width: 1024px) 66vw, 100vw" : "(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"}
+          class="absolute inset-0 h-full w-full rounded-2xl object-cover"
+        />
+        <span class="absolute inset-0 rounded-2xl bg-gradient-to-t from-dark/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" aria-hidden="true"></span>
+      </button>
+    </li>
+  ))}
+</ul>
+
+<dialog id="lightbox" class="lb" aria-label="Galería de fotos">
+
+  <!-- Carrusel deslizable -->
+  <div id="lightbox-track" class="lb-track">
+    {photos.map((p, i) => (
+      <figure data-slide={i} class="lb-slide">
+        <img
+          src={p.full}
+          alt={p.alt}
+          loading="lazy"
+          decoding="async"
+          class="lb-img"
+          draggable="false"
+        />
+      </figure>
+    ))}
+  </div>
+
+  <!-- Controles anclados al diálogo (que ocupa toda la ventana) -->
+  <div class="lb-bar">
+    <span id="lightbox-counter" class="lb-counter"></span>
+    <button id="lightbox-close" class="lb-btn" aria-label="Cerrar">✕</button>
+  </div>
+
+  <button id="lightbox-prev" class="lb-btn lb-arrow lb-arrow-prev" aria-label="Foto anterior">‹</button>
+  <button id="lightbox-next" class="lb-btn lb-arrow lb-arrow-next" aria-label="Foto siguiente">›</button>
+
+</dialog>
+
+<style>
+  /* Estilos sin color-mix ni unidades dvh obligatorias: compatibles con navegadores móviles antiguos. */
+  .lb {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    overflow: hidden;
+    color: var(--color-light);
+    background: rgb(var(--p-ink-rgb) / 0.95);
+  }
+  .lb::backdrop { background: transparent; }
+
+  .lb-track {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .lb-track::-webkit-scrollbar { display: none; }
+
+  .lb-slide {
+    flex: 0 0 100%;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
+  }
+
+  .lb-img {
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: calc(100vw - 1.5rem);
+    max-height: calc(100vh - 7rem);
+    object-fit: contain;
+    border-radius: 0.75rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  @supports (height: 100dvh) {
+    .lb-img { max-height: calc(100dvh - 7rem); }
+  }
+  @media (min-width: 640px) {
+    .lb-img { max-width: calc(100vw - 8rem); max-height: calc(100vh - 6rem); }
+    @supports (height: 100dvh) {
+      .lb-img { max-height: calc(100dvh - 6rem); }
+    }
+  }
+
+  .lb-bar {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    pointer-events: none;
+  }
+  .lb-bar > * { pointer-events: auto; }
+
+  .lb-counter {
+    font-family: var(--font-condensed);
+    letter-spacing: 0.2em;
+    font-size: 0.875rem;
+    color: rgb(var(--p-light-rgb) / 0.7);
+  }
+
+  .lb-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 9999px;
+    border: 1px solid rgb(var(--p-light-rgb) / 0.3);
+    background: rgb(var(--p-dark-rgb) / 0.7);
+    color: var(--color-light);
+    font-size: 1.25rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: color 150ms, border-color 150ms;
+  }
+  .lb-btn:hover { color: var(--color-primary); border-color: var(--color-primary); }
+
+  .lb-arrow {
+    display: none;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3rem;
+    height: 3rem;
+    font-size: 1.75rem;
+  }
+  .lb-arrow-prev { left: 0.75rem; }
+  .lb-arrow-next { right: 0.75rem; }
+  @media (min-width: 640px) { .lb-arrow { display: inline-flex; } }
+</style>
+
+<script>
+  const buttons = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-photo-index]'));
+  const dialog = document.getElementById('lightbox') as HTMLDialogElement;
+  const track = document.getElementById('lightbox-track')!;
+  const slides = Array.from(track.querySelectorAll<HTMLElement>('[data-slide]'));
+  const counter = document.getElementById('lightbox-counter')!;
+  const total = slides.length;
+  let index = 0;
+  let aligning = 0; // timestamp hasta el cual se ignoran los eventos de scroll
+
+  const updateInfo = (i: number) => {
+    index = i;
+    counter.textContent = `${i + 1} / ${total}`;
+  };
+
+  const align = (i: number, behavior: ScrollBehavior) => {
+    aligning = performance.now() + (behavior === 'smooth' ? 600 : 150);
+    slides[i].scrollIntoView({ behavior, block: 'nearest', inline: 'start' });
+  };
+
+  const goTo = (i: number, behavior: ScrollBehavior = 'smooth') => {
+    const target = (i + total) % total;
+    updateInfo(target);
+    align(target, behavior);
+  };
+
+  const open = (i: number) => {
+    dialog.showModal();
+    document.body.style.overflow = 'hidden';
+    updateInfo(i);
+    // El diálogo aún no tiene layout en este frame: alinear ahora y de nuevo al asentarse.
+    align(i, 'instant');
+    requestAnimationFrame(() => align(i, 'instant'));
+    setTimeout(() => align(i, 'instant'), 120);
+  };
+
+  const close = () => dialog.close();
+  dialog.addEventListener('close', () => { document.body.style.overflow = ''; });
+
+  buttons.forEach((b) => b.addEventListener('click', () => open(Number(b.dataset.photoIndex))));
+  document.getElementById('lightbox-close')!.addEventListener('click', close);
+  document.getElementById('lightbox-prev')!.addEventListener('click', () => goTo(index - 1));
+  document.getElementById('lightbox-next')!.addEventListener('click', () => goTo(index + 1));
+
+  // Sincronizar índice al deslizar con el dedo o la rueda.
+  let scrollTimer: number | undefined;
+  track.addEventListener('scroll', () => {
+    if (performance.now() < aligning) return;
+    window.clearTimeout(scrollTimer);
+    scrollTimer = window.setTimeout(() => {
+      const i = Math.round(track.scrollLeft / track.clientWidth);
+      const clamped = Math.min(Math.max(i, 0), total - 1);
+      if (clamped !== index) updateInfo(clamped);
+    }, 80);
+  }, { passive: true });
+
+  // Mantener la diapositiva actual si cambia el tamaño (rotación, barra del navegador, carga de imágenes).
+  new ResizeObserver(() => {
+    if (dialog.open) align(index, 'instant');
+  }).observe(track);
+
+  // Cerrar al tocar el fondo (no la imagen).
+  track.addEventListener('click', (e) => {
+    if ((e.target as HTMLElement).tagName !== 'IMG') close();
+  });
+
+  dialog.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') { e.preventDefault(); goTo(index - 1); }
+    if (e.key === 'ArrowRight') { e.preventDefault(); goTo(index + 1); }
+  });
+</script>

@@ -1,7 +1,7 @@
 import type { NeluEventState } from "./../../types/event";
 import { dialogs, editableEvent } from "./../.././globals/eventGlobals";
 import { isAuthorized } from "./../../lib/client/authData";
-import { eventDatetimeToGTM, extractDateTime, extractDateTimeFancy, extractLocaleOffset } from "../../lib/client/dateFormat";
+import { eventDatetimeToGTM, extractDateTime, extractDateParts, extractLocaleOffset } from "../../lib/client/dateFormat";
 
 interface Props {
     event: NeluEventState;
@@ -17,24 +17,33 @@ export default function EventCard(props: Props) {
 
     const { date: today } = extractDateTime(new Date)
     const datetimeGTM = eventDatetimeToGTM(event, extractLocaleOffset());
-    const { date, time } = extractDateTimeFancy(new Date(datetimeGTM));
+    const { weekday, day, month, year, time } = extractDateParts(new Date(datetimeGTM));
+    const isToday = event.date === today;
+    const currentYear = String(new Date().getFullYear());
 
     return (
-        <article class="flex px-6 py-2 gap-4 border-b-1 border-light/10 last:border-b-0 last:pb-6">
-            <div class="flex flex-col @2xl:flex-row @2xl:justify-between w-full">
-                <span class="flex items-center text-primary gap-1 font-semibold gap-3">
-                    <span>{date} - {time}</span>
-                    {event.date === today &&
-                        <span class="rounded-xl bg-yellow-300 text-dark text-xs h-fit px-1">¡Es hoy!</span>
+        <article class="card flex items-center gap-5 p-4 md:p-5 transition-colors hover:border-primary/40">
+            <div class="flex flex-col items-center justify-center w-16 shrink-0 rounded-xl bg-primary text-dark py-2 leading-none">
+                <span class="font-condensed uppercase text-[0.65rem] tracking-widest">{month}</span>
+                <span class="display text-3xl">{day}</span>
+            </div>
+
+            <div class="flex flex-col flex-1 min-w-0 gap-1">
+                <div class="flex flex-wrap items-center gap-2 text-sm text-muted capitalize">
+                    <span>{weekday}{year !== currentYear ? ` ${year}` : ''}</span>
+                    <span aria-hidden="true">·</span>
+                    <span class="normal-case">{time}</span>
+                    {isToday &&
+                        <span class="rounded-full bg-clay text-light text-xs px-2 py-0.5 normal-case font-semibold">¡Es hoy!</span>
                     }
-                </span>
-                <div class="italic">{event.location}</div>
+                </div>
+                <div class="font-semibold text-lg leading-snug">{event.location}</div>
             </div>
 
             {
                 isAuthorized.peek() && (
                     <button
-                        class="btn-sm bg-light text-dark hover:bg-dark hover:text-primary my-auto h-fit"
+                        class="btn-sm btn-auth"
                         onClick={() => { openUpdateDialog(event) }}>
                         Editar
                     </button>

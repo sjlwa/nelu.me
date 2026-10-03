@@ -1,11 +1,26 @@
 ---
-const { url, svg } = Astro.props;
+interface Props {
+  name: string;
+  url?: string;
+  svg: string;
+  comingSoon?: boolean;
+  class?: string;
+}
+const { url, svg, name, comingSoon = false, class: classList = "" } = Astro.props;
+const base = "inline-flex items-center gap-2 text-sm font-medium whitespace-nowrap [&_svg]:h-5 [&_svg]:w-5 [&_svg]:shrink-0";
 ---
-<li class="border-b-4 border-primary/0 hover:border-primary/100">
-  <a href={url}>
-    <div
-      set:html={svg}
-      class="[&_svg]:fill-light hover:[&_svg]:fill-primary
-             h-[clamp(1rem,5vw,3rem)] [&_svg]:h-full"/>
-  </a>
+<li class={classList}>
+  {comingSoon || !url ? (
+    <span class={`${base} text-light/40 [&_svg]:fill-light/40 cursor-default`} title={`Próximamente en ${name}`}>
+      <Fragment set:html={svg} />
+      <span>{name}</span>
+      <span class="rounded-full border border-light/20 px-1.5 py-px font-condensed text-[0.6rem] uppercase tracking-[0.18em] text-light/60">Pronto</span>
+    </span>
+  ) : (
+    <a href={url} target="_blank" rel="noopener" aria-label={`Escuchar en ${name}`}
+       class={`${base} text-light/85 [&_svg]:fill-light/85 hover:text-primary hover:[&_svg]:fill-primary transition-colors`}>
+      <Fragment set:html={svg} />
+      <span>{name}</span>
+    </a>
+  )}
 </li>

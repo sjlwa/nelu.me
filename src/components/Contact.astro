@@ -1,0 +1,37 @@
+---
+import SectionHeading from "./SectionHeading.astro";
+import MusicPlatformsLinks from "./MusicPlatformsLinks.astro";
+import SocialLinks from "./SocialLinks.astro";
+import { site } from "../data/site";
+
+const subject = encodeURIComponent("Contratación / Booking · Nelú");
+const mailto = `mailto:${site.contactEmail}?subject=${subject}`;
+---
+<section id="contacto" class="mx-auto w-full max-w-6xl px-5 py-24 scroll-mt-16">
+  <div class="card relative overflow-hidden p-8 md:p-14 grid gap-10 md:grid-cols-2 items-center">
+    <div class="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-clay/30 blur-3xl" aria-hidden="true"></div>
+    <div class="absolute -left-24 -bottom-24 h-72 w-72 rounded-full bg-olive/25 blur-3xl" aria-hidden="true"></div>
+
+    <div class="relative flex flex-col gap-6">
+      <SectionHeading eyebrow="Contacto" title="¿Me llevas a tu escenario?" />
+      <p class="text-lg text-light/85 leading-relaxed" data-reveal>
+        Para contrataciones, colaboraciones o simplemente para platicar sobre música, escríbeme.
+        Me presento en cafés, foros, festivales y eventos privados en Colima y donde el camino me lleve.
+      </p>
+    </div>
+
+    <div class="relative flex flex-col gap-6" data-reveal>
+      <a href={mailto} class="button btn-primary text-lg w-fit">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+        Escribir a {site.contactEmail}
+      </a>
+
+      <SocialLinks variant="list" />
+
+      <div class="flex flex-col gap-3 pt-4 border-t border-light/10">
+        <span class="eyebrow">Escúchame en</span>
+        <MusicPlatformsLinks />
+      </div>
+    </div>
+  </div>
+</section>
