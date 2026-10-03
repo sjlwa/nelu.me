@@ -23,8 +23,9 @@ export const site = {
     { name: "TikTok", handle: "@mellamo_nelu", url: "https://www.tiktok.com/@mellamo_nelu" },
   ],
   bio: [
-    "Nelú es una cantautora y saxofonista independiente de Comala, Colima, México. Se convierte en pan en luna llena, pero todos los demás días es cantautora y saxofonista.",
-    "Su música fusiona jazz, bolero y pop, entre otras, creando canciones de amor entre mujeres. Explora el amor y las emociones auténticas a través de metáforas curiosas, creando un espacio honesto y relajado.",
+    "Soy Nelú, cantautora y saxofonista independiente de Comala, Colima, México.",
+    "Mi música mezcla jazz, bolero y pop para contar historias de amor entre mujeres: amores de todos los días, con sus dudas y sus ternuras, dichos con metáforas curiosas y sin prisa.",
+    "En mis conciertos hay saxofón, guitarra, plantas y tazas de barro. Un espacio honesto y relajado para escucharnos de cerca.",
   ],
   genres: ["Jazz", "Bolero", "Pop", "Canción de autora"],
 };
