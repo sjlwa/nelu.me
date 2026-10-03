@@ -1,19 +1,50 @@
 @import "tailwindcss";
 
 @theme {
-  /* Paleta cálida y terrosa */
-  --color-primary: #e0a35a;   /* ámbar */
-  --color-clay: #b3613b;      /* barro */
-  --color-olive: #7a8a4a;     /* oliva */
-  --color-light: #f1e7d6;     /* crema */
-  --color-muted: #a89a86;     /* texto secundario */
-  --color-dark: #17120e;      /* fondo principal */
-  --color-surface: #221b15;   /* tarjetas */
-  --color-ink: #0f0c09;       /* pie de página */
+  /* Paleta activa (se elige en src/data/site.ts → palette). Valores por defecto: "calida". */
+  --color-primary: var(--p-primary);
+  --color-clay: var(--p-clay);
+  --color-olive: var(--p-olive);
+  --color-light: var(--p-light);
+  --color-muted: var(--p-muted);
+  --color-dark: var(--p-dark);
+  --color-surface: var(--p-surface);
+  --color-ink: var(--p-ink);
 
   --font-display: 'Outfit Variable', 'Fira Sans', system-ui, sans-serif;
   --font-sans: 'Fira Sans', system-ui, sans-serif;
   --font-condensed: 'Fira Sans Extra Condensed', 'Fira Sans', sans-serif;
+}
+
+/* Paleta "calida": ámbar, barro, oliva y crema. */
+:root {
+  --p-primary: #e0a35a;   /* ámbar */
+  --p-clay: #b3613b;      /* barro */
+  --p-olive: #7a8a4a;     /* oliva */
+  --p-light: #f1e7d6;     /* crema */
+  --p-muted: #a89a86;     /* texto secundario */
+  --p-dark: #17120e;      /* fondo principal */
+  --p-surface: #221b15;   /* tarjetas */
+  --p-ink: #0f0c09;       /* pie de página */
+  /* Componentes RGB para usar con transparencia: rgb(var(--p-ink-rgb) / .9) */
+  --p-ink-rgb: 15 12 9;
+  --p-dark-rgb: 23 18 14;
+  --p-light-rgb: 241 231 214;
+}
+
+/* Paleta "verde": follaje profundo, hoja al sol y barro, tomada de las fotos entre plantas. */
+:root[data-palette="verde"] {
+  --p-primary: #b9d45c;   /* hoja al sol */
+  --p-clay: #b3613b;      /* barro (se conserva) */
+  --p-olive: #4f7a4a;     /* verde hoja */
+  --p-light: #eef1e3;     /* blanco cálido con tinte verde */
+  --p-muted: #9aa78f;
+  --p-dark: #0f1711;      /* verde-negro */
+  --p-surface: #18241a;
+  --p-ink: #0a100b;
+  --p-ink-rgb: 10 16 11;
+  --p-dark-rgb: 15 23 17;
+  --p-light-rgb: 238 241 227;
 }
 
 ::selection {

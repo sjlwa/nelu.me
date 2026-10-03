@@ -12,6 +12,7 @@ import Footer from "../components/Footer.astro";
 import Reveal from "../components/Reveal.astro";
 import Scrollbar from "../components/Scrollbar.astro";
 import Seo from "../components/Seo.astro";
+import { palette, themeColor } from "../data/site";
 
 interface Props {
   title?: string;
@@ -20,11 +21,11 @@ interface Props {
 const { title, description } = Astro.props;
 ---
 <!doctype html>
-<html lang="es-MX">
+<html lang="es-MX" data-palette={palette}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#17120e" />
+    <meta name="theme-color" content={themeColor[palette]} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <Seo title={title} description={description} />

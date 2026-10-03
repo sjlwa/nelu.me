@@ -1,3 +1,13 @@
+/** Paleta de colores activa. Opciones: "calida" (ámbar) o "verde" (hoja). Se definen en src/styles/global.css. */
+export type Palette = "calida" | "verde";
+export const palette = "verde" as Palette;
+
+/** Color de la barra del navegador en móviles, por paleta. */
+export const themeColor: Record<Palette, string> = {
+  calida: "#17120e",
+  verde: "#0f1711",
+};
+
 export const site = {
   name: "Nelú",
   tagline: "Cantautora y saxofonista",
