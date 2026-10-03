@@ -21,6 +21,5 @@ export const videos: Video[] = [
     id: "E7oH6LOPtoc",
     title: "Nelú en la Caravana de las canciones",
     description: "En vivo · Teatro Hidalgo, Colima · 25 de abril de 2025",
-    embeddable: false,
   },
 ];
