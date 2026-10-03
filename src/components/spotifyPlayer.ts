@@ -2,67 +2,100 @@ interface Window {
   onSpotifyIframeApiReady: (IFrameAPI: any) => void;
 }
 
+interface PlaybackUpdate {
+  data: { isPaused: boolean; isBuffering: boolean; duration: number; position: number };
+}
+
 interface EmbedController {
-  loadUri: (uri: string) => {};
+  loadUri: (uri: string) => void;
   play: () => void;
   pause: () => void;
+  addListener: (event: "ready" | "playback_update" | "playback_started", cb: (e?: any) => void) => void;
 }
 
-let currentTrackId: string | null = null;
-let EmbedController: EmbedController;
+let controller: EmbedController | undefined;
+let loadedUri: string | null = null;   // contenido cargado en el reproductor
+let activeUri: string | null = null;   // pista marcada como "En reproducción"
+let playWhenReady = false;             // reproducir en cuanto termine de cargar la nueva pista
+let readyTimer: number | undefined;
 
-function labelOf(button: Element | null): HTMLElement | null {
-  return button?.querySelector<HTMLElement>('[data-play-label]') ?? null;
-}
+const trackButtons = () => document.querySelectorAll<HTMLButtonElement>(".track");
+const labelOf = (uri: string | null) =>
+  uri ? document.querySelector<HTMLElement>(`.track[data-spotify-id="${uri}"] [data-play-label]`) : null;
 
-function setPlaying(label: HTMLElement | null, playing: boolean) {
+function setLabel(uri: string | null, playing: boolean) {
+  const label = labelOf(uri);
   if (!label) return;
   label.textContent = playing ? "En reproducción" : "Escuchar";
-  label.classList.toggle('play-text-init', !playing);
-  label.classList.toggle('play-text-selected', playing);
+  label.classList.toggle("play-text-init", !playing);
+  label.classList.toggle("play-text-selected", playing);
+}
+
+function markActive(uri: string | null) {
+  if (activeUri && activeUri !== uri) setLabel(activeUri, false);
+  activeUri = uri;
+  if (uri) setLabel(uri, true);
+}
+
+function playLoaded() {
+  playWhenReady = false;
+  window.clearTimeout(readyTimer);
+  controller?.play();
 }
 
 function onSelect(event: Event) {
-  const trackButton = event.currentTarget as HTMLButtonElement;
-  const selectedTrackId = trackButton.dataset.spotifyId!;
-  const selectedLabel = labelOf(trackButton);
+  if (!controller) return;
+  const uri = (event.currentTarget as HTMLButtonElement).dataset.spotifyId!;
 
-  if (!EmbedController) return;
-
-  if (selectedTrackId === currentTrackId) {
-    setPlaying(selectedLabel, false);
-    currentTrackId = null;
-    EmbedController.pause();
+  // Misma pista sonando: pausar.
+  if (uri === activeUri) {
+    controller.pause();
+    markActive(null);
     return;
   }
 
-  if (currentTrackId) {
-    const previousBtn = document.querySelector(`.track[data-spotify-id="${currentTrackId}"]`);
-    setPlaying(labelOf(previousBtn), false);
+  markActive(uri);
+
+  if (uri === loadedUri) {
+    // Ya está cargada: reproducir directo.
+    playLoaded();
+    return;
   }
 
-  setPlaying(selectedLabel, true);
-  currentTrackId = selectedTrackId;
-  EmbedController.loadUri(selectedTrackId);
-  EmbedController.play();
+  // Cargar la nueva pista y reproducir cuando el reproductor avise que está lista.
+  loadedUri = uri;
+  playWhenReady = true;
+  controller.loadUri(uri);
+  // Respaldo por si el evento "ready" no llega.
+  window.clearTimeout(readyTimer);
+  readyTimer = window.setTimeout(() => { if (playWhenReady) playLoaded(); }, 1200);
 }
 
 window.onSpotifyIframeApiReady = (IFrameAPI: any) => {
-  const element = document.getElementById('embed-iframe');
+  const element = document.getElementById("embed-iframe");
   if (!element) return;
 
-  const first = document.querySelector<HTMLElement>('.track')?.dataset.spotifyId;
+  const first = document.querySelector<HTMLElement>(".track")?.dataset.spotifyId
+    ?? "spotify:track:70XKEDg1fnjLThZTWKcDDn";
+  loadedUri = first;
 
-  const options = {
-    width: '100%',
-    height: '152',
-    uri: first ?? "spotify:track:70XKEDg1fnjLThZTWKcDDn",
-  };
+  IFrameAPI.createController(element, { width: "100%", height: "152", uri: first }, (ctrl: EmbedController) => {
+    controller = ctrl;
 
-  IFrameAPI.createController(element, options, (controller: EmbedController) => {
-    EmbedController = controller;
-    document.querySelectorAll<HTMLButtonElement>(".track").forEach((track) => {
-      track.addEventListener('click', onSelect);
+    ctrl.addListener("ready", () => {
+      if (playWhenReady) playLoaded();
     });
+
+    // Mantener la etiqueta sincronizada con el estado real (p. ej. pausa desde el propio reproductor).
+    ctrl.addListener("playback_update", (e: PlaybackUpdate) => {
+      const { isPaused, isBuffering } = e.data;
+      if (isPaused && !isBuffering && !playWhenReady && activeUri) {
+        markActive(null);
+      } else if (!isPaused && loadedUri && activeUri !== loadedUri) {
+        markActive(loadedUri);
+      }
+    });
+
+    trackButtons().forEach((btn) => btn.addEventListener("click", onSelect));
   });
 };
