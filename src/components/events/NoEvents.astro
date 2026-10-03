@@ -1,0 +1,19 @@
+---
+/**
+ * Tarjeta estática para cuando no hay fechas confirmadas.
+ * Sustituye temporalmente a <EventsSection client:only="preact" /> (que lee la base de datos).
+ */
+import SocialLinks from "../SocialLinks.astro";
+---
+<div class="card p-8 md:p-10 flex flex-col items-center text-center gap-4">
+  <span class="flex h-14 w-14 items-center justify-center rounded-full bg-primary/15 text-primary" aria-hidden="true">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/>
+    </svg>
+  </span>
+  <p class="display text-2xl md:text-3xl text-light">Por ahora no hay eventos confirmados</p>
+  <p class="text-muted max-w-prose">
+    Estoy preparando nuevas fechas. Sígueme en redes para enterarte de la siguiente.
+  </p>
+  <SocialLinks class="pt-2" />
+</div>

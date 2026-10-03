@@ -5,7 +5,8 @@ import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
 import About from '../components/About.astro';
 import SectionHeading from '../components/SectionHeading.astro';
-import EventsSection from '../components/events/EventsSection';
+import NoEvents from '../components/events/NoEvents.astro';
+// import EventsSection from '../components/events/EventsSection'; // eventos desde la base de datos (desactivado por ahora)
 import SpotifyIframe from '../components/SpotifyIframe.astro';
 import PhotoGallery from '../components/PhotoGallery.astro';
 import Videos from '../components/Videos.astro';
@@ -23,7 +24,8 @@ import Contact from '../components/Contact.astro';
           <SectionHeading eyebrow="Eventos" title="Próximas fechas" />
         </div>
         <div class="lg:col-span-8" data-reveal>
-          <EventsSection client:only="preact" />
+          <NoEvents />
+          {/* <EventsSection client:only="preact" /> */}
         </div>
       </div>
     </section>
