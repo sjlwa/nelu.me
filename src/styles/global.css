@@ -11,7 +11,7 @@
   --color-surface: #221b15;   /* tarjetas */
   --color-ink: #0f0c09;       /* pie de página */
 
-  --font-display: 'Fraunces Variable', Georgia, serif;
+  --font-display: 'Outfit Variable', 'Fira Sans', system-ui, sans-serif;
   --font-sans: 'Fira Sans', system-ui, sans-serif;
   --font-condensed: 'Fira Sans Extra Condensed', 'Fira Sans', sans-serif;
 }
@@ -66,8 +66,8 @@ body.is-scrollbar-dragging {
 /* Tipografía */
 .display {
   font-family: var(--font-display);
-  font-variation-settings: "opsz" 144, "wght" 500;
-  letter-spacing: -0.01em;
+  font-weight: 600;
+  letter-spacing: -0.02em;
   line-height: 1;
 }
 
@@ -79,8 +79,8 @@ body.is-scrollbar-dragging {
 .subtitle {
   @apply text-4xl md:text-5xl text-light;
   font-family: var(--font-display);
-  font-variation-settings: "opsz" 144, "wght" 500;
-  letter-spacing: -0.01em;
+  font-weight: 600;
+  letter-spacing: -0.02em;
   line-height: 1.05;
 }
 
