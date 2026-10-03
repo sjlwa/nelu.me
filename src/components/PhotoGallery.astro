@@ -20,9 +20,9 @@ const photos = await Promise.all(
     })
 );
 ---
-<ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 grid-flow-dense gap-4" data-reveal>
+<ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 grid-flow-dense gap-4">
   {photos.map((p, i) => (
-    <li class={p.landscape ? "sm:col-span-2" : ""}>
+    <li class={p.landscape ? "sm:col-span-2" : ""} data-reveal>
       <button
         type="button"
         class={`group relative block w-full ${p.landscape ? "aspect-[4/3] sm:aspect-[18/11]" : "aspect-[4/5]"} overflow-hidden rounded-2xl cursor-zoom-in transition-transform duration-500 hover:scale-[1.02] focus:outline-none focus-visible:ring-2 focus-visible:ring-primary`}
