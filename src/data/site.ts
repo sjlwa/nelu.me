@@ -13,7 +13,7 @@ export const site = {
   tagline: "Cantautora y saxofonista",
   origin: "Colima, México",
   description:
-    "Nelú es cantautora y saxofonista de Colima, México. Jazz, bolero y pop con canciones de amor sáficas. Escucha su música, mira fotos y videos y conoce sus próximas presentaciones.",
+    "Nelú, cantautora y saxofonista independiente de Comala, Colima. Jazz, bolero y pop para contar historias de amor entre mujeres con metáforas curiosas.",
   url: "https://nelu.me",
   ogImage: "/open-graph-image.jpg",
   contactEmail: "hola@nelu.me",
