@@ -3,7 +3,8 @@ import { Image } from "astro:assets";
 import Name from "./../assets/nelu-name.svg?raw";
 import heroPhoto from "./../assets/photos/nelu-guitarra-libro.webp";
 import MusicPlatformsLinks from "./MusicPlatformsLinks.astro";
-import SteamCup from "./SteamCup.astro";
+import Equalizer from "./Equalizer.astro";
+import Marquee from "./Marquee.astro";
 import { site } from "../data/site";
 
 ---
@@ -72,7 +73,12 @@ import { site } from "../data/site";
 
         <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-6 border-t border-light/15 pt-6">
             <MusicPlatformsLinks />
-            <SteamCup class="hidden sm:block h-12 w-auto" />
+            <Equalizer class="hidden sm:flex" />
         </div>
+
+        <Marquee
+            class="-mx-5 border-t border-light/10 py-3"
+            items={[...site.genres, "Canciones de amor sáficas", site.origin, "Cantautora y saxofonista"]}
+        />
     </div>
 </section>

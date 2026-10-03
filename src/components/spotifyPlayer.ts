@@ -31,6 +31,12 @@ function setLabel(uri: string | null, playing: boolean) {
   label.classList.toggle("play-text-selected", playing);
 }
 
+/** Enciende/apaga el ecualizador del hero (ver Equalizer.astro). */
+function setPlaying(playing: boolean) {
+  if (playing) document.documentElement.dataset.playing = "";
+  else delete document.documentElement.dataset.playing;
+}
+
 function markActive(uri: string | null) {
   if (activeUri && activeUri !== uri) setLabel(activeUri, false);
   activeUri = uri;
@@ -51,6 +57,7 @@ function onSelect(event: Event) {
   if (uri === activeUri) {
     controller.pause();
     markActive(null);
+    setPlaying(false);
     return;
   }
 
@@ -89,6 +96,7 @@ window.onSpotifyIframeApiReady = (IFrameAPI: any) => {
     // Mantener la etiqueta sincronizada con el estado real (p. ej. pausa desde el propio reproductor).
     ctrl.addListener("playback_update", (e: PlaybackUpdate) => {
       const { isPaused, isBuffering } = e.data;
+      setPlaying(!isPaused);
       if (isPaused && !isBuffering && !playWhenReady && activeUri) {
         markActive(null);
       } else if (!isPaused && loadedUri && activeUri !== loadedUri) {
