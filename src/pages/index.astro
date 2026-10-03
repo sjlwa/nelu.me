@@ -21,9 +21,6 @@ import Contact from '../components/Contact.astro';
       <div class="mx-auto w-full max-w-6xl px-5 py-24 grid gap-10 lg:grid-cols-12">
         <div class="lg:col-span-4 flex flex-col gap-4">
           <SectionHeading eyebrow="Eventos" title="Próximas fechas" />
-          <p class="text-light/75" data-reveal>
-            Noches de jazz, bolero y canciones nuevas. Ven a tomarte un té conmigo.
-          </p>
         </div>
         <div class="lg:col-span-8" data-reveal>
           <EventsSection client:only="preact" />
