@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets";
 import { tracks } from "../data/tracks";
 import MusicPlatformsLinks from "./MusicPlatformsLinks.astro";
 ---
@@ -13,7 +14,7 @@ import MusicPlatformsLinks from "./MusicPlatformsLinks.astro";
           data-spotify-id={track.uri}>
           <span class="font-condensed text-primary/70 w-6 tabular-nums text-sm">{String(i + 1).padStart(2, '0')}</span>
           <span class={`w-12 h-12 shrink-0 overflow-hidden rounded-lg ${!track.img ? 'bg-clay/60' : ''}`}>
-            {track.img && <img class="w-full h-full object-cover" src={track.img} alt="" loading="lazy" />}
+            {track.img && <Image class="w-full h-full object-cover" src={track.img} width={96} height={96} alt="" loading="lazy" />}
           </span>
           <span class="flex flex-col flex-1 min-w-0">
             <span class="font-semibold truncate">{track.title}</span>
